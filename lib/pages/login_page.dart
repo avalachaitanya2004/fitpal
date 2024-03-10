@@ -1,11 +1,14 @@
 // import 'dart:js_util';
 
 import 'dart:async';
+import 'dart:ui';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:fit_pal/loadingPages/loadingpage1.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:lottie/lottie.dart';
 
 class LoginPage extends StatefulWidget {
   final VoidCallback showRegPage;
@@ -16,9 +19,11 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  BuildContext? dialogContext;
   final _email = TextEditingController();
   final _password = TextEditingController();
-
+  bool is_loading = false;
+  bool is_loading1 = false;
   @override
   void dispose() {
     _email.dispose();
@@ -29,12 +34,52 @@ class _LoginPageState extends State<LoginPage> {
 
   Future signin() async {
     try {
+      // showDialog(
+      //     context: context,
+      //     builder: (context) {
+      //       print('in builder $context');
+      //       // dialogContext = context;
+      //       return BackdropFilter(
+      //         filter: ImageFilter.blur(sigmaX: 4, sigmaY: 4),
+      //         child: Center(
+      //             child: Lottie.asset(
+      //           'assets/animations/loading_balance.json',
+      //           height: 200,
+      //         )),
+      //       );
+      //     });
+      setState(() {
+        is_loading = true;
+      });
+      // print('before fnd $context');
+      // dialogContext = context;
       UserCredential userCredential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(
               email: _email.text.trim(), password: _password.text.trim());
-
-      Navigator.pushReplacementNamed(context, '/home');
+      // print('after fnd $context');
+      // Navigator.of(dialogContext!).pop;
+      setState(() {
+        is_loading = false;
+      });
+      setState(() {
+        is_loading1 = true;
+      });
+      Future.delayed(Duration(seconds: 1), () {
+        // setState(() {
+        //   is_loading1 = false;
+        // });
+        Navigator.pushReplacementNamed(context, '/home');
+      });
     } on FirebaseAuthException catch (e) {
+      // print('closing dialog');
+      // print('dialog context ${dialogContext}');
+      // print('context is $context');
+      // Navigator.of(context).pop;
+      // Navigator.pop();
+      // dialogContext?.pop();
+      setState(() {
+        is_loading = false;
+      });
       print('Failed with error code: ${e.code}');
 
       if (e.code == 'INVALID_LOGIN_CREDENTIALS') {
@@ -43,6 +88,7 @@ class _LoginPageState extends State<LoginPage> {
         });
       }
     }
+    // Navigator.of(context).pop;
     // if(UserCredential != null){}
   }
 
@@ -134,250 +180,261 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-      ),
-      body: SafeArea(
-        child: Center(
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                //logo
+    return !is_loading1
+        ? Scaffold(
+            backgroundColor: Colors.white,
+            appBar: AppBar(
+              backgroundColor: Colors.white,
+              elevation: 0,
+            ),
+            body: SafeArea(
+              child: Center(
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      //logo
 
-                // title\
-                const Text(
-                  'FitPal',
-                  style: TextStyle(
-                    fontFamily: 'Bebas_Neue',
-                    fontSize: 70,
-                  ),
-                ),
-                const Text(
-                  'Welcome Back!',
-                  style: TextStyle(
-                    fontFamily: 'Roboto',
-                    fontSize: 24,
-                  ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                //email
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                  child: TextField(
-                    controller: _email,
-                    decoration: InputDecoration(
-                        prefixIcon: const Icon(Icons.email),
-                        fillColor: Colors.grey[50],
-                        filled: true,
-                        isDense: true,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15),
-                          // borderSide: BorderSide(color: Colors.lightBlue, width: 4),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15),
-                          borderSide: (if_no_email ||
-                                  email_not_entered ||
-                                  !if_valid_email)
-                              ? const BorderSide(color: Colors.red)
-                              : const BorderSide(color: Colors.blue),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15),
-                          borderSide: (if_no_email ||
-                                  email_not_entered ||
-                                  !if_valid_email)
-                              ? const BorderSide(color: Colors.red)
-                              : const BorderSide(color: Colors.blue),
-                        ),
-                        labelText: return_label_text_email(),
-                        labelStyle: (if_no_email ||
-                                email_not_entered ||
-                                !if_valid_email)
-                            ? const TextStyle(
-                                color: Colors.red,
-                              )
-                            : null,
-                        floatingLabelStyle: TextStyle(
-                          color: (if_no_email ||
-                                  email_not_entered ||
-                                  !if_valid_email)
-                              ? Colors.red
-                              : Colors.blue,
-                        )
-
-                        // hintText: 'Username',
-                        ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                //password
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                  child: TextField(
-                    controller: _password,
-                    obscureText: !is_visible,
-                    decoration: InputDecoration(
-                        fillColor: Colors.grey[50],
-                        filled: true,
-                        isDense: true,
-                        prefixIcon: const Icon(Icons.lock),
-                        suffixIcon: GestureDetector(
-                            onTap: changeVisibility,
-                            child: Icon(is_visible
-                                ? Icons.visibility
-                                : Icons.visibility_off)),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15),
-                          borderSide: const BorderSide(color: Colors.blue),
-                        ),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15),
-                          borderSide: const BorderSide(color: Colors.lightBlue),
-                        ),
-                        labelText: 'Password',
-                        errorText: password_not_entered
-                            ? 'Please enter password'
-                            : (password_no_match
-                                ? 'Either your email or password is incorrect'
-                                : null),
-                        floatingLabelStyle: TextStyle(
-                          color: (password_not_entered || password_no_match)
-                              ? Colors.red
-                              : Colors.blue,
-                        )),
-                  ),
-                ),
-                const SizedBox(
-                  height: 14,
-                ),
-                // forgot password
-                const Align(
-                    alignment: Alignment.centerRight,
-                    child: Padding(
-                      padding: EdgeInsets.only(right: 18.0),
-                      child: Text(
-                        'Forgot password?',
+                      // title\
+                      const Text(
+                        'FitPal',
                         style: TextStyle(
-                          fontSize: 14,
-                          color: Colors.blue,
+                          fontFamily: 'Bebas_Neue',
+                          fontSize: 70,
                         ),
                       ),
-                    )),
-                const SizedBox(
-                  height: 50,
-                ),
-                //login button
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                  child: GestureDetector(
-                    onTap: sign_in_done,
-                    child: Container(
-                      width: double.infinity,
-                      height: 60,
-                      decoration: BoxDecoration(
-                        color: Colors.blue,
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                      child: const Center(
-                          child: Text(
-                        'Sign In',
+                      const Text(
+                        'Welcome Back!',
                         style: TextStyle(
-                          fontSize: 20,
                           fontFamily: 'Roboto',
-                          color: Colors.white,
+                          fontSize: 24,
                         ),
-                      )),
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Row(
-                  children: [
-                    Expanded(
-                        child: Container(
-                      margin: const EdgeInsets.only(left: 30, right: 10),
-                      child: const Divider(),
-                    )),
-                    const Text("or sign in with"),
-                    Expanded(
-                        child: Container(
-                      margin: const EdgeInsets.only(left: 10, right: 30),
-                      child: const Divider(),
-                    )),
-                  ],
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                //google or apple
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      // padding: EdgeInsets.all(20),
-                      // decoration: BoxDecoration(
-                      //   border: Border.all(),
-                      // ),
-                      child: Image.asset(
-                        'assets/images/Google.png',
-                        height: 40,
                       ),
-                    ),
-                    const SizedBox(width: 30),
-                    Container(
-                      // decoration: BoxDecoration(
-                      //   border: Border.all(),
-                      // ),
-                      child: Image.asset(
-                        'assets/images/Apple.png',
-                        height: 45,
+                      const SizedBox(
+                        height: 20,
                       ),
-                    )
-                  ],
-                ),
-                const SizedBox(
-                  height: 40,
-                ),
+                      //email
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                        child: TextField(
+                          controller: _email,
+                          decoration: InputDecoration(
+                              prefixIcon: const Icon(Icons.email),
+                              fillColor: Colors.grey[50],
+                              filled: true,
+                              isDense: true,
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(15),
+                                // borderSide: BorderSide(color: Colors.lightBlue, width: 4),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(15),
+                                borderSide: (if_no_email ||
+                                        email_not_entered ||
+                                        !if_valid_email)
+                                    ? const BorderSide(color: Colors.red)
+                                    : const BorderSide(color: Colors.blue),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(15),
+                                borderSide: (if_no_email ||
+                                        email_not_entered ||
+                                        !if_valid_email)
+                                    ? const BorderSide(color: Colors.red)
+                                    : const BorderSide(color: Colors.blue),
+                              ),
+                              labelText: return_label_text_email(),
+                              labelStyle: (if_no_email ||
+                                      email_not_entered ||
+                                      !if_valid_email)
+                                  ? const TextStyle(
+                                      color: Colors.red,
+                                    )
+                                  : null,
+                              floatingLabelStyle: TextStyle(
+                                color: (if_no_email ||
+                                        email_not_entered ||
+                                        !if_valid_email)
+                                    ? Colors.red
+                                    : Colors.blue,
+                              )
 
-                // no account
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text("Dont have an account yet?"),
-                    SizedBox(
-                      width: 4,
-                    ),
-                    GestureDetector(
-                      onTap: widget.showRegPage,
-                      child: Container(
-                        child: Text(
-                          'Register',
-                          style: TextStyle(
-                            color: Colors.blue,
+                              // hintText: 'Username',
+                              ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      //password
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                        child: TextField(
+                          controller: _password,
+                          obscureText: !is_visible,
+                          decoration: InputDecoration(
+                              fillColor: Colors.grey[50],
+                              filled: true,
+                              isDense: true,
+                              prefixIcon: const Icon(Icons.lock),
+                              suffixIcon: GestureDetector(
+                                  onTap: changeVisibility,
+                                  child: Icon(is_visible
+                                      ? Icons.visibility
+                                      : Icons.visibility_off)),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(15),
+                                borderSide:
+                                    const BorderSide(color: Colors.blue),
+                              ),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(15),
+                                borderSide:
+                                    const BorderSide(color: Colors.lightBlue),
+                              ),
+                              labelText: 'Password',
+                              errorText: password_not_entered
+                                  ? 'Please enter password'
+                                  : (password_no_match
+                                      ? 'Either your email or password is incorrect'
+                                      : null),
+                              floatingLabelStyle: TextStyle(
+                                color:
+                                    (password_not_entered || password_no_match)
+                                        ? Colors.red
+                                        : Colors.blue,
+                              )),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 14,
+                      ),
+                      // forgot password
+                      const Align(
+                          alignment: Alignment.centerRight,
+                          child: Padding(
+                            padding: EdgeInsets.only(right: 18.0),
+                            child: Text(
+                              'Forgot password?',
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: Colors.blue,
+                              ),
+                            ),
+                          )),
+                      const SizedBox(
+                        height: 50,
+                      ),
+                      //login button
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                        child: GestureDetector(
+                          onTap: sign_in_done,
+                          child: Container(
+                            width: double.infinity,
+                            height: 60,
+                            decoration: BoxDecoration(
+                              color: Colors.blue,
+                              borderRadius: BorderRadius.circular(16),
+                            ),
+                            child: !is_loading
+                                ? const Center(
+                                    child: Text(
+                                    'Sign In',
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      fontFamily: 'Roboto',
+                                      color: Colors.white,
+                                    ),
+                                  ))
+                                : const Center(
+                                    child: CircularProgressIndicator(
+                                      color: Colors.white,
+                                    ),
+                                  ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
-                )
-              ],
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Row(
+                        children: [
+                          Expanded(
+                              child: Container(
+                            margin: const EdgeInsets.only(left: 30, right: 10),
+                            child: const Divider(),
+                          )),
+                          const Text("or sign in with"),
+                          Expanded(
+                              child: Container(
+                            margin: const EdgeInsets.only(left: 10, right: 30),
+                            child: const Divider(),
+                          )),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      //google or apple
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            // padding: EdgeInsets.all(20),
+                            // decoration: BoxDecoration(
+                            //   border: Border.all(),
+                            // ),
+                            child: Image.asset(
+                              'assets/images/Google.png',
+                              height: 40,
+                            ),
+                          ),
+                          const SizedBox(width: 30),
+                          Container(
+                            // decoration: BoxDecoration(
+                            //   border: Border.all(),
+                            // ),
+                            child: Image.asset(
+                              'assets/images/Apple.png',
+                              height: 45,
+                            ),
+                          )
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 40,
+                      ),
+
+                      // no account
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text("Dont have an account yet?"),
+                          SizedBox(
+                            width: 4,
+                          ),
+                          GestureDetector(
+                            onTap: widget.showRegPage,
+                            child: Container(
+                              child: Text(
+                                'Register',
+                                style: TextStyle(
+                                  color: Colors.blue,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+              ),
             ),
-          ),
-        ),
-      ),
-    );
+          )
+        : const LoadingScreen1();
   }
 }
