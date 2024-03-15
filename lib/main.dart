@@ -4,7 +4,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 // import 'package:fit_pal/Controllers/check_login.dart';
 import 'package:fit_pal/Controllers/login_register_controller.dart';
 import 'package:fit_pal/loadingPages/loadingpage1.dart';
+import 'package:fit_pal/pages/getStarted.dart';
 import 'package:fit_pal/pages/home_page.dart';
+import 'package:fit_pal/pages/introPages/intro_page.dart';
+import 'package:fit_pal/pages/introPages/intro_page_2.dart';
 import 'package:fit_pal/pages/login_page.dart';
 import 'package:fit_pal/pages/pre_login.dart';
 import 'package:fit_pal/pages/register_page.dart';
@@ -39,10 +42,12 @@ class MyApp extends StatelessWidget {
         '/login': (context) => RegisterLoginController(from_pre_login: false),
         '/register': (context) => RegisterLoginController(from_pre_login: true),
         '/preLogin': (context) => PreLogin(),
+        '/getStarted': (context) => GetStarted(),
+        '/fields': (context) => IntroPage2(),
       },
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
-      home: const PreLogin(),
+      home: GetStarted(),
     );
   }
 }

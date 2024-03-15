@@ -28,8 +28,11 @@ class _RegisterPageState extends State<RegisterPage> {
     _passwordConfirm.dispose();
     super.dispose();
   }
-  //focus nodes
 
+  //focus nodes
+  final snackBar = SnackBar(
+    content: Text('Something went wrong please try again'),
+  );
   // FocusNode emailnode = FocusNode();
   // FocusNode passwordnode = FocusNode();
   // FocusNode passwordconfirmnode = FocusNode();
@@ -155,6 +158,11 @@ class _RegisterPageState extends State<RegisterPage> {
           });
         }
       }
+    } catch (e) {
+      setState(() {
+        is_loading = false;
+      });
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
     }
   }
 

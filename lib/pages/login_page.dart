@@ -87,11 +87,19 @@ class _LoginPageState extends State<LoginPage> {
           password_no_match = true;
         });
       }
+    } catch (e) {
+      setState(() {
+        is_loading = false;
+      });
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
     }
     // Navigator.of(context).pop;
     // if(UserCredential != null){}
   }
 
+  final snackBar = SnackBar(
+    content: Text('Something went wrong please try again'),
+  );
   bool if_valid_email = true;
   bool email_not_entered = false;
   bool if_no_email = false;
