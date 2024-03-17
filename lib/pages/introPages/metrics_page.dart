@@ -29,6 +29,7 @@ class _MetricsPageState extends State<MetricsPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             FloatingActionButton.small(
+              elevation: 0,
               onPressed: () {
                 setState(() {
                   indx = true;
@@ -45,6 +46,7 @@ class _MetricsPageState extends State<MetricsPage> {
               ),
             ),
             FloatingActionButton.small(
+              elevation: 0,
               onPressed: () {
                 setState(() {
                   indx = false;

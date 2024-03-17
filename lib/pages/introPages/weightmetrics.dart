@@ -28,6 +28,7 @@ class _WeightMetricsState extends State<WeightMetrics> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             FloatingActionButton.small(
+              elevation: 0,
               onPressed: () {
                 setState(() {
                   indx = true;
@@ -44,6 +45,7 @@ class _WeightMetricsState extends State<WeightMetrics> {
               ),
             ),
             FloatingActionButton.small(
+              elevation: 0,
               onPressed: () {
                 setState(() {
                   indx = false;
