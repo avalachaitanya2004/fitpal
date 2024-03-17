@@ -104,7 +104,7 @@ class DecimalNumberPicker extends StatelessWidget {
 
   void _onIntChanged(int intValue) {
     final newValue =
-        (value - value.floor() + intValue).clamp(minValue, maxValue);
+        (value - value.floor() + intValue).clamp(minValue, maxValue + 1);
     onChanged(newValue.toDouble());
   }
 

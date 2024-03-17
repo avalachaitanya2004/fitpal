@@ -66,7 +66,7 @@ class DecimalNumberPicker2 extends StatelessWidget {
         //height in ft/in 3 to 8' 11''
         //in cm 91 to 271 cm
         //weight 30 to 300.9 kg
-        //weight 66 to 66.9 lb
+        //weight 66 to 660.9 lb
         //age 13 to 99
         //
         NumberPicker(
@@ -112,7 +112,7 @@ class DecimalNumberPicker2 extends StatelessWidget {
 
   void _onIntChanged(int intValue) {
     final newValue =
-        (value - value.floor() + intValue).clamp(minValue, maxValue);
+        (value - value.floor() + intValue).clamp(minValue, maxValue + 1);
     onChanged(newValue.toDouble());
   }
 

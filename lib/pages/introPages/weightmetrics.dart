@@ -11,6 +11,8 @@ class WeightMetrics extends StatefulWidget {
 bool indx = true;
 
 class _WeightMetricsState extends State<WeightMetrics> {
+  double _currentDoubleValuelbs = 66.0;
+  double _currentDoubleValuekg = 30.0;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -22,7 +24,36 @@ class _WeightMetricsState extends State<WeightMetrics> {
           ),
         ),
         const SizedBox(height: 100),
-        if (indx) _WeightInp() else _WeightInp2(),
+        if (indx)
+          Column(
+            children: <Widget>[
+              DecimalNumberPicker2(
+                haptics: true,
+                value: _currentDoubleValuekg,
+                minValue: 30,
+                maxValue: 300,
+                units: 'kg',
+                decimalPlaces: 1,
+                onChanged: (value) =>
+                    setState(() => _currentDoubleValuekg = value),
+              ),
+            ],
+          )
+        else
+          Column(
+            children: <Widget>[
+              DecimalNumberPicker2(
+                haptics: true,
+                value: _currentDoubleValuelbs,
+                minValue: 66,
+                maxValue: 660,
+                units: 'lb',
+                decimalPlaces: 1,
+                onChanged: (value) =>
+                    setState(() => _currentDoubleValuelbs = value),
+              ),
+            ],
+          ),
         const SizedBox(height: 70),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -32,6 +63,17 @@ class _WeightMetricsState extends State<WeightMetrics> {
               onPressed: () {
                 setState(() {
                   indx = true;
+                  double temp = _currentDoubleValuekg;
+                  if (_currentDoubleValuelbs == 66.0) {
+                    _currentDoubleValuekg = 30.0;
+                  } else {
+                    _currentDoubleValuekg = _currentDoubleValuelbs / 2.20462262;
+                    _currentDoubleValuekg =
+                        double.parse(_currentDoubleValuekg.toStringAsFixed(1));
+                  }
+                  if (_currentDoubleValuelbs == 660.9) {
+                    _currentDoubleValuekg = temp;
+                  }
                 });
               },
               splashColor: Colors.grey[600],
@@ -49,6 +91,13 @@ class _WeightMetricsState extends State<WeightMetrics> {
               onPressed: () {
                 setState(() {
                   indx = false;
+                  if (_currentDoubleValuekg > 299.7) {
+                    _currentDoubleValuelbs = 660.9;
+                  } else {
+                    _currentDoubleValuelbs = _currentDoubleValuekg * 2.20462262;
+                    _currentDoubleValuelbs =
+                        double.parse(_currentDoubleValuelbs.toStringAsFixed(1));
+                  }
                 });
               },
               splashColor: Colors.grey[600],
@@ -62,56 +111,6 @@ class _WeightMetricsState extends State<WeightMetrics> {
               ),
             ),
           ],
-        ),
-      ],
-    );
-  }
-}
-
-class _WeightInp extends StatefulWidget {
-  @override
-  __WeightInpState createState() => __WeightInpState();
-}
-
-class __WeightInpState extends State<_WeightInp> {
-  double _currentDoubleValue = 30.0;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        DecimalNumberPicker2(
-          value: _currentDoubleValue,
-          minValue: 30,
-          maxValue: 300,
-          units: 'kg',
-          decimalPlaces: 1,
-          onChanged: (value) => setState(() => _currentDoubleValue = value),
-        ),
-      ],
-    );
-  }
-}
-
-class _WeightInp2 extends StatefulWidget {
-  @override
-  __WeightInp2State createState() => __WeightInp2State();
-}
-
-class __WeightInp2State extends State<_WeightInp2> {
-  double _currentDoubleValue = 66.0;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        DecimalNumberPicker2(
-          value: _currentDoubleValue,
-          minValue: 66,
-          maxValue: 660,
-          units: 'lb',
-          decimalPlaces: 1,
-          onChanged: (value) => setState(() => _currentDoubleValue = value),
         ),
       ],
     );

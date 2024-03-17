@@ -3,6 +3,7 @@ import 'package:fit_pal/pages/introPages/intro_page_1.dart';
 import 'package:fit_pal/pages/introPages/metrics_page.dart';
 import 'package:fit_pal/pages/introPages/name_page.dart';
 import 'package:fit_pal/pages/introPages/weightmetrics.dart';
+import 'package:fit_pal/pages/introPages/activity_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:iconsax/iconsax.dart';
@@ -54,7 +55,7 @@ class _IntroPage2State extends State<IntroPage2>
 
   final ButtonStyle buttonPrimary = ElevatedButton.styleFrom(
       minimumSize: Size(327, 50),
-      backgroundColor: Colors.blue,
+      backgroundColor: Colors.black,
       elevation: 0,
       shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(50))));
@@ -69,7 +70,7 @@ class _IntroPage2State extends State<IntroPage2>
           PageView(
             onPageChanged: (index) {
               setState(() {
-                if (index == 3) {
+                if (index == 4) {
                   onlastPage = true;
                   _con?.forward();
                 } else {
@@ -87,6 +88,7 @@ class _IntroPage2State extends State<IntroPage2>
               ),
               const MetricsPage(),
               const WeightMetrics(),
+              const ActivityPage(),
               const GoalsPage(),
             ],
           ),
@@ -102,9 +104,10 @@ class _IntroPage2State extends State<IntroPage2>
                         SmoothPageIndicator(
                             // effect: WormEffect(),
                             controller: _pages,
-                            count: 4,
+                            count: 5,
                             // effect: SlideEffect(),
                             effect: ScrollingDotsEffect(
+                              activeDotColor: Colors.black,
                               activeStrokeWidth: 2.6,
                               activeDotScale: 1.3,
                               maxVisibleDots: 5,
@@ -132,7 +135,7 @@ class _IntroPage2State extends State<IntroPage2>
                           style: ElevatedButton.styleFrom(
                             shape: CircleBorder(),
                             padding: EdgeInsets.all(20),
-                            backgroundColor: Colors.blue,
+                            backgroundColor: Colors.black,
                           ),
                         )
                       ],
