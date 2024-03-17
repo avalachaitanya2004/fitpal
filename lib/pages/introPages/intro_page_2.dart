@@ -2,6 +2,7 @@ import 'package:fit_pal/pages/introPages/goals_page.dart';
 import 'package:fit_pal/pages/introPages/intro_page_1.dart';
 import 'package:fit_pal/pages/introPages/metrics_page.dart';
 import 'package:fit_pal/pages/introPages/name_page.dart';
+import 'package:fit_pal/pages/introPages/weightmetrics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:iconsax/iconsax.dart';
@@ -68,7 +69,7 @@ class _IntroPage2State extends State<IntroPage2>
           PageView(
             onPageChanged: (index) {
               setState(() {
-                if (index == 2) {
+                if (index == 3) {
                   onlastPage = true;
                   _con?.forward();
                 } else {
@@ -85,6 +86,7 @@ class _IntroPage2State extends State<IntroPage2>
                 entered_name: entered_name,
               ),
               const MetricsPage(),
+              const WeightMetrics(),
               const GoalsPage(),
             ],
           ),
@@ -100,7 +102,7 @@ class _IntroPage2State extends State<IntroPage2>
                         SmoothPageIndicator(
                             // effect: WormEffect(),
                             controller: _pages,
-                            count: 3,
+                            count: 4,
                             // effect: SlideEffect(),
                             effect: ScrollingDotsEffect(
                               activeStrokeWidth: 2.6,
