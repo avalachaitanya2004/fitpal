@@ -13,6 +13,8 @@ class MetricsPage extends StatefulWidget {
 bool indx = true;
 
 class _MetricsPageState extends State<MetricsPage> {
+  double _currentDoubleValueftin = 3.0;
+  int _currentValuecm = 91;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -23,7 +25,45 @@ class _MetricsPageState extends State<MetricsPage> {
           style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
         )),
         const SizedBox(height: 100),
-        if (indx) _HeightInp() else _HeightInp2(),
+        if (indx)
+          Container(
+            height: 270,
+            width: 500,
+            child: Column(
+              children: <Widget>[
+                DecimalNumberPicker(
+                  haptics: true,
+                  value: _currentDoubleValueftin,
+                  minValue: 3,
+                  maxValue: 9,
+                  decimalPlaces: 2,
+                  onChanged: (value) =>
+                      setState(() => _currentDoubleValueftin = value),
+                ),
+              ],
+            ),
+          )
+        else
+          Container(
+            height: 270,
+            width: 400,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                NumberPicker(
+                  haptics: true,
+                  value: _currentValuecm,
+                  minValue: 91,
+                  maxValue: 271,
+                  onChanged: (value) => setState(() => _currentValuecm = value),
+                ),
+                const Text(
+                  'cm',
+                  style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
+          ),
         const SizedBox(height: 50),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -33,6 +73,12 @@ class _MetricsPageState extends State<MetricsPage> {
               onPressed: () {
                 setState(() {
                   indx = true;
+                  int inches = (_currentValuecm / 2.54).floor();
+                  double foot = ((_currentValuecm / 2.54) / 12).floorToDouble();
+                  _currentDoubleValueftin = foot + ((inches - foot * 12) / 100);
+                  if (_currentValuecm == 91) {
+                    _currentDoubleValueftin = 3.0;
+                  }
                 });
               },
               splashColor: Colors.grey[600],
@@ -50,6 +96,12 @@ class _MetricsPageState extends State<MetricsPage> {
               onPressed: () {
                 setState(() {
                   indx = false;
+                  _currentValuecm =
+                      ((_currentDoubleValueftin.floor() * 12) * 2.54).floor() +
+                          ((_currentDoubleValueftin -
+                                      _currentDoubleValueftin.floor()) *
+                                  254)
+                              .floor();
                 });
               },
               splashColor: Colors.grey[600],
@@ -68,67 +120,3 @@ class _MetricsPageState extends State<MetricsPage> {
     );
   }
 }
-
-<<<<<<< HEAD
-=======
-class _HeightInp extends StatefulWidget {
-  @override
-  __HeightInpState createState() => __HeightInpState();
-}
-
-class __HeightInpState extends State<_HeightInp> {
-  double _currentDoubleValue = 3.0;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 270,
-      width: 500,
-      child: Column(
-        children: <Widget>[
-          DecimalNumberPicker(
-            value: _currentDoubleValue,
-            minValue: 3,
-            maxValue: 9,
-            decimalPlaces: 2,
-            onChanged: (value) => setState(() => _currentDoubleValue = value),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _HeightInp2 extends StatefulWidget {
-  @override
-  __HeightInp2State createState() => __HeightInp2State();
-}
-
-class __HeightInp2State extends State<_HeightInp2> {
-  int _currentValue = 91;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 270,
-      width: 400,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          NumberPicker(
-            haptics: true,
-            value: _currentValue,
-            minValue: 91,
-            maxValue: 271,
-            onChanged: (value) => setState(() => _currentValue = value),
-          ),
-          const Text(
-            'cm',
-            style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
-          ),
-        ],
-      ),
-    );
-  }
-}
->>>>>>> 620686e4a55b300eb5684d94838399570ab17f0d
