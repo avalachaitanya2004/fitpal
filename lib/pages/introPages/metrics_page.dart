@@ -1,7 +1,7 @@
 import 'dart:ffi';
 
 import 'package:flutter/material.dart';
-import 'package:numberpicker/numberpicker.dart';
+import 'package:fit_pal/numberpicker/numberpicker.dart';
 
 class MetricsPage extends StatefulWidget {
   const MetricsPage({super.key});
