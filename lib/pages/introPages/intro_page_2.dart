@@ -145,7 +145,9 @@ class _IntroPage2State extends State<IntroPage2>
                       child: Padding(
                         padding: EdgeInsets.only(bottom: 20),
                         child: ElevatedButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              // Navigator.pushNamed(context, '/home');
+                            },
                             style: buttonPrimary,
                             child: Text(
                               'Done',
