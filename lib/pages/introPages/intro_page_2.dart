@@ -133,8 +133,8 @@ class _IntroPage2State extends State<IntroPage2>
                             size: 30,
                           ),
                           style: ElevatedButton.styleFrom(
-                            shape: CircleBorder(),
-                            padding: EdgeInsets.all(20),
+                            // shape: CircleBorder(),
+                            padding: EdgeInsets.all(8),
                             backgroundColor: Colors.black,
                           ),
                         )
