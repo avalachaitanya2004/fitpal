@@ -85,7 +85,11 @@ class _ActivityPageState extends State<ActivityPage> {
                   },
                   leading: CircleAvatar(
                     backgroundColor: const Color.fromARGB(211, 215, 215, 215),
-                    child: Icon(icon[index]),
+                    child: Icon(
+                      icon[index],
+                      color: Colors.black,
+                      size: 28,
+                    ),
                   ),
                   title: Text(
                     activity[index],

@@ -20,11 +20,10 @@ class _GetStartedState extends State<GetStarted> {
               Padding(
                 padding: const EdgeInsets.only(top: 30.0),
                 child: Center(
-                    //     child: Lottie.asset(
-                    //   'assets/animations/gettingStarted.json',
-                    //   height: 450,
-                    // )
-                    ),
+                    child: Lottie.asset(
+                  'assets/animations/gettingStarted.json',
+                  height: 450,
+                )),
               ),
               // const SizedBox(
               //   height: 5,
@@ -60,8 +59,8 @@ class _GetStartedState extends State<GetStarted> {
                   Navigator.pushNamed(context, '/fields');
                 },
                 child: Center(
-                  // child: Lottie.asset('assets/animations/next.json',
-                  //     height: 100)
+                  // child:
+                  //     Lottie.asset('assets/animations/next.json', height: 100)
                   child: Icon(
                     Icons.arrow_right,
                     size: 100,
