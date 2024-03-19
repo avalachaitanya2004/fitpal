@@ -4,21 +4,30 @@ import 'package:flutter/widgets.dart';
 import 'package:fit_pal/numberpicker/numberpicker.dart';
 
 class NamePage extends StatefulWidget {
-  const NamePage({super.key, required this.name, required this.entered_name});
+  NamePage(
+      {super.key,
+      required this.name,
+      required this.entered_name,
+      required this.isFirstTime});
   final TextEditingController name;
-  final bool entered_name;
+  bool entered_name;
+  final bool isFirstTime;
 
   @override
-  State<NamePage> createState() =>
-      _NamePageState(name: name, entered_name: entered_name);
+  State<NamePage> createState() => _NamePageState(
+      name: name, entered_name: entered_name, isFirstTime: isFirstTime);
 }
 
 class _NamePageState extends State<NamePage> {
   // final _name = TextEditingController();
-  _NamePageState({required this.name, required this.entered_name});
+  _NamePageState(
+      {required this.name,
+      required this.entered_name,
+      required this.isFirstTime});
   // TextEditingController name2 =${widget.name};
   TextEditingController name;
   bool entered_name;
+  bool isFirstTime;
   DateTime age = DateTime(2024, 3, 15);
   int _currentValue = 18;
   // print('bool is ${entered_name}');
@@ -42,7 +51,7 @@ class _NamePageState extends State<NamePage> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20.0),
                 child: TextField(
-                  // autofocus: true,
+                  autofocus: isFirstTime ? true : false,
                   // focusNode: emailnode,
                   controller: name,
                   decoration: InputDecoration(

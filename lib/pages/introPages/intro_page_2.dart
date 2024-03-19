@@ -4,6 +4,7 @@ import 'package:fit_pal/pages/introPages/metrics_page.dart';
 import 'package:fit_pal/pages/introPages/name_page.dart';
 import 'package:fit_pal/pages/introPages/weightmetrics.dart';
 import 'package:fit_pal/pages/introPages/activity_page.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:iconsax/iconsax.dart';
@@ -46,11 +47,12 @@ class _IntroPage2State extends State<IntroPage2>
     }
   }
 
+  bool isFirstTime = true;
   bool entered_name = true;
   final TextEditingController name = TextEditingController();
   AnimationController? _con;
   late Animation<double> ani;
-  PageController _pages = PageController();
+  final PageController _pages = PageController();
   bool onlastPage = false;
 
   final ButtonStyle buttonPrimary = ElevatedButton.styleFrom(
@@ -64,12 +66,22 @@ class _IntroPage2State extends State<IntroPage2>
     print('sending bool');
     print(entered_name);
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(),
+      backgroundColor: Colors.white,
       body: Stack(
         children: [
           PageView(
+            physics: entered_name
+                ? const BouncingScrollPhysics()
+                : const NeverScrollableScrollPhysics(),
             onPageChanged: (index) {
               setState(() {
+                isFirstTime = false;
+                FocusScopeNode currentFocus = FocusScope.of(context);
+                if (!currentFocus.hasPrimaryFocus) {
+                  currentFocus.unfocus();
+                }
                 if (index == 4) {
                   onlastPage = true;
                   _con?.forward();
@@ -81,10 +93,23 @@ class _IntroPage2State extends State<IntroPage2>
             controller: _pages,
             children: [
               // const DescriptionPage(),
-
-              NamePage(
-                name: name,
-                entered_name: entered_name,
+              GestureDetector(
+                onTap: () {
+                  setState(() {
+                    if (!isFirstTime) {
+                      check_name();
+                    }
+                  });
+                  FocusScopeNode currentFocus = FocusScope.of(context);
+                  if (!currentFocus.hasPrimaryFocus) {
+                    currentFocus.unfocus();
+                  }
+                },
+                child: NamePage(
+                  name: name,
+                  entered_name: entered_name,
+                  isFirstTime: isFirstTime,
+                ),
               ),
               const MetricsPage(),
               const WeightMetrics(),
@@ -93,7 +118,7 @@ class _IntroPage2State extends State<IntroPage2>
             ],
           ),
           Container(
-            alignment: Alignment(0, 0.85),
+            alignment: const Alignment(0, 0.85),
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 40.0),
               child: !onlastPage
@@ -106,7 +131,7 @@ class _IntroPage2State extends State<IntroPage2>
                             controller: _pages,
                             count: 5,
                             // effect: SlideEffect(),
-                            effect: ScrollingDotsEffect(
+                            effect: const ScrollingDotsEffect(
                               activeDotColor: Colors.black,
                               activeStrokeWidth: 2.6,
                               activeDotScale: 1.3,
@@ -118,24 +143,24 @@ class _IntroPage2State extends State<IntroPage2>
                             )),
                         ElevatedButton(
                           onPressed: () {
-                            print(name.text);
+                            // print(name.text);
                             if (check_name()) {
                               setState(() {
                                 _pages.nextPage(
-                                    duration: Duration(milliseconds: 500),
+                                    duration: const Duration(milliseconds: 500),
                                     curve: Curves.ease);
                               });
                             }
                           },
-                          child: Icon(
+                          style: ElevatedButton.styleFrom(
+                            // shape: CircleBorder(),
+                            padding: const EdgeInsets.all(8),
+                            backgroundColor: Colors.black,
+                          ),
+                          child: const Icon(
                             Iconsax.arrow_right_1,
                             color: Colors.white,
                             size: 30,
-                          ),
-                          style: ElevatedButton.styleFrom(
-                            // shape: CircleBorder(),
-                            padding: EdgeInsets.all(8),
-                            backgroundColor: Colors.black,
                           ),
                         )
                       ],
@@ -143,13 +168,13 @@ class _IntroPage2State extends State<IntroPage2>
                   : FadeTransition(
                       opacity: ani,
                       child: Padding(
-                        padding: EdgeInsets.only(bottom: 20),
+                        padding: const EdgeInsets.only(bottom: 20),
                         child: ElevatedButton(
                             onPressed: () {
-                              // Navigator.pushNamed(context, '/home');
+                              Navigator.pushNamed(context, '/home');
                             },
                             style: buttonPrimary,
-                            child: Text(
+                            child: const Text(
                               'Done',
                               style: TextStyle(
                                   fontFamily: 'Roboto',
