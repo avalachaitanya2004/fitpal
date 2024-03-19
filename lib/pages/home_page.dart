@@ -119,12 +119,14 @@ class _HomePageState extends State<HomePage>
             Padding(
                 padding: EdgeInsets.only(left: 0.0),
                 child: CircleAvatar(
-                  backgroundColor:
-                      buttons[0] ? Colors.purple[100] : Colors.white,
+                  backgroundColor: Colors.white,
+
+                  // buttons[0] ? Colors.purple[100] : Colors.white,
+
                   radius: 30,
                   child: IconButton(
                     enableFeedback: true,
-                    highlightColor: Colors.purple[100],
+                    // highlightColor: Colors.purple[100],
                     onPressed: () {
                       setState(() {
                         buttons = [true, false, false, false];
@@ -133,7 +135,7 @@ class _HomePageState extends State<HomePage>
                     },
                     icon: Icon(
                       Icons.home_rounded,
-                      color: buttons[0] ? Colors.white : Colors.grey[800],
+                      color: buttons[0] ? Colors.black : Colors.grey[800],
                     ),
                     iconSize: buttons[0] ? 35 : 30,
                     padding:
@@ -146,12 +148,12 @@ class _HomePageState extends State<HomePage>
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   CircleAvatar(
-                    backgroundColor:
-                        buttons[1] ? Colors.purple[100] : Colors.white,
+                    backgroundColor: Colors.white,
+                    // buttons[1] ? Colors.purple[100] : Colors.white,
                     radius: 30,
                     child: IconButton(
                       enableFeedback: true,
-                      highlightColor: Colors.purple[100],
+                      // highlightColor: Colors.purple[100],
                       onPressed: () {
                         setState(() {
                           buttons = [false, true, false, false];
@@ -160,7 +162,7 @@ class _HomePageState extends State<HomePage>
                       },
                       icon: Icon(
                         Icons.pie_chart_rounded,
-                        color: buttons[1] ? Colors.white : Colors.grey[800],
+                        color: buttons[1] ? Colors.black : Colors.grey[800],
                       ),
                       iconSize: buttons[1] ? 35 : 30,
                       padding:
@@ -173,12 +175,12 @@ class _HomePageState extends State<HomePage>
             Padding(
                 padding: EdgeInsets.only(left: 45.0),
                 child: CircleAvatar(
-                  backgroundColor:
-                      buttons[2] ? Colors.purple[100] : Colors.white,
+                  backgroundColor: Colors.white,
+                  // buttons[2] ? Colors.purple[100] : Colors.white,
                   radius: 30,
                   child: IconButton(
                     enableFeedback: true,
-                    highlightColor: Colors.purple[100],
+                    // highlightColor: Colors.purple[100],
                     onPressed: () {
                       setState(() {
                         buttons = [false, false, true, false];
@@ -187,7 +189,7 @@ class _HomePageState extends State<HomePage>
                     },
                     icon: Icon(
                       Icons.document_scanner_outlined,
-                      color: buttons[2] ? Colors.white : Colors.grey[800],
+                      color: buttons[2] ? Colors.black : Colors.grey[800],
                     ),
                     iconSize: buttons[2] ? 35 : 30,
                     padding:
@@ -200,12 +202,12 @@ class _HomePageState extends State<HomePage>
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   CircleAvatar(
-                    backgroundColor:
-                        buttons[3] ? Colors.purple[100] : Colors.white,
+                    backgroundColor: Colors.white,
+                    // buttons[3] ? Colors.purple[100] : Colors.white,
                     radius: 30,
                     child: IconButton(
                       enableFeedback: true,
-                      highlightColor: Colors.purple[100],
+                      // highlightColor: Colors.purple[100],
                       onPressed: () {
                         setState(() {
                           buttons = [false, false, false, true];
@@ -214,7 +216,7 @@ class _HomePageState extends State<HomePage>
                       },
                       icon: Icon(
                         Icons.person_2_rounded,
-                        color: buttons[3] ? Colors.white : Colors.grey[800],
+                        color: buttons[3] ? Colors.black : Colors.grey[800],
                       ),
                       iconSize: buttons[3] ? 35 : 30,
                       padding:
