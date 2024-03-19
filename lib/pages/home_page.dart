@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fit_pal/pages/HomePages/home.dart';
 import 'package:flutter/material.dart';
 // import 'package:iconsax_flutter/iconsax_flutter.dart';
 
@@ -11,19 +12,36 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage>
+    with SingleTickerProviderStateMixin {
   Future logout() async {
     await FirebaseAuth.instance.signOut();
     Navigator.pushReplacementNamed(context, '/preLogin');
+  }
+
+  late Animation<double> _pos;
+  late Animation<double> _curve;
+
+  late AnimationController _con;
+  @override
+  void initState() {
+    _con = AnimationController(vsync: this, duration: Duration(seconds: 1));
+    _curve = CurvedAnimation(parent: _con, curve: Curves.easeInOut);
+    _pos = Tween(begin: -0.5, end: -1.0).animate(_curve);
+    super.initState();
   }
 
   List<bool> buttons = [true, false, false, false];
   PageController _Page = PageController(initialPage: 0);
   @override
   Widget build(BuildContext context) {
+    // _con.forward();
     return Scaffold(
+      backgroundColor: Colors.blue,
+      extendBodyBehindAppBar: true,
       appBar: AppBar(
-        title: Text('Home Page'),
+        backgroundColor: Colors.transparent,
+        // title: Text('Home Page'),
         leading:
             GestureDetector(onTap: logout, child: Icon(Icons.logout_rounded)),
       ),
@@ -33,11 +51,12 @@ class _HomePageState extends State<HomePage> {
           print('Page Changes to index $int');
         },
         children: <Widget>[
-          Center(
-            child: Container(
-              child: Text('Empty Body 0'),
-            ),
-          ),
+          Home(),
+          // Center(
+          //   child: Container(
+          //     child: Text('Empty Body 0'),
+          //   ),
+          // ),
           Center(
             child: Container(
               child: Text('Empty Body 1'),
@@ -208,6 +227,58 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
+      // body: Column(
+      //   mainAxisAlignment: MainAxisAlignment.center,
+      //   children: <Widget>[
+      //     DatePicker(
+      //       DateTime.now(),
+      //       initialSelectedDate: DateTime.now(),
+      //       selectionColor: Colors.black,
+      //       selectedTextColor: Colors.white,
+      //       onDateChange: (date) {
+      //         // New date selected
+      //         setState(() {
+      //           // _selectedValue = date;
+      //         });
+      //       },
+      //     ),
+      //   ],
+      // ),
+      // body: AnimatedContainer(
+      //   duration: Duration(seconds: 1),
+      //   height: double.maxFinite,
+      //   width: double.maxFinite,
+      //   decoration: BoxDecoration(
+      //       gradient: RadialGradient(
+      //     radius: 1.5,
+      //     // center: Alignment(0, _pos.value),
+      //     center: Alignment(0, -1),
+      //     // radius:0.5,
+      //     colors: [Color.fromARGB(255, 69, 75, 232), Colors.white],
+      //     stops: [0.0, 1.0],
+      //   )),
+      //   // color: Colors.blue,
+      //   child: Column(
+      //     mainAxisAlignment: MainAxisAlignment.start,
+      //     children: <Widget>[
+      //       Padding(
+      //         padding: const EdgeInsets.only(top: 120, left: 20, right: 20),
+      //         child: DatePicker(
+      //           DateTime.now(),
+      //           initialSelectedDate: DateTime.now(),
+      //           selectionColor: Colors.black,
+      //           selectedTextColor: Colors.white,
+      //           onDateChange: (date) {
+      //             // New date selected
+      //             setState(() {
+      //               // _selectedValue = date;
+      //             });
+      //           },
+      //         ),
+      //       ),
+      //     ],
+      //   ),
+      // )
     );
   }
 }
