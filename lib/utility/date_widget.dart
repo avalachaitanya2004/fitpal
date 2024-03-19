@@ -36,6 +36,7 @@ class DateWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       child: ClipRRect(
+        borderRadius: BorderRadius.circular(50),
         child: BackdropFilter(
           filter: is_selected
               ? ImageFilter.blur(sigmaX: 50, sigmaY: 50)
