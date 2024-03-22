@@ -44,6 +44,19 @@ class _HomeState extends State<Home> {
               },
             ),
           ),
+
+          // page view for calorie intake and exit with an indicator
+          PageView(
+            children: [
+              Container(
+                child: Text(
+                  '1286',
+                ),
+              )
+            ],
+          )
+
+          // A tab view for meals, activity, water.
         ],
       ),
     );
