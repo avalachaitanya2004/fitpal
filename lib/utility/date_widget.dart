@@ -70,6 +70,7 @@ class DateWidget extends StatelessWidget {
                         .substring(0, 1), // WeekDay
                     // style: dayTextStyle
                     style: TextStyle(
+                        decoration: TextDecoration.none,
                         // backgroundColor: Colors.blue,
                         color: Colors.white.withOpacity(0.6),
                         fontSize: 12,
@@ -88,6 +89,7 @@ class DateWidget extends StatelessWidget {
                     date.day.toString(), // Date
                     // style: dateTextStyle
                     style: TextStyle(
+                      decoration: TextDecoration.none,
                       fontWeight: FontWeight.bold,
                       fontSize: 16,
                       // backgroundColor: Colors.blue,

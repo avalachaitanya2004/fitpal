@@ -42,8 +42,22 @@ class _HomePageState extends State<HomePage>
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         // title: Text('Home Page'),
-        leading:
-            GestureDetector(onTap: logout, child: Icon(Icons.logout_rounded)),
+        leading: Padding(
+          padding: const EdgeInsets.only(left: 16.0),
+          child: Container(
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              border: Border.all(
+                color: Colors.black, // You can set the border color here
+                width: 1.0, // You can set the border width here
+              ),
+            ),
+            child: CircleAvatar(
+              backgroundImage: AssetImage('assets/images/profile_demo.jpeg'),
+            ),
+          ),
+        ),
+        // GestureDetector(onTap: logout, child: Icon(Icons.logout_rounded)),
       ),
       body: PageView(
         controller: _Page,

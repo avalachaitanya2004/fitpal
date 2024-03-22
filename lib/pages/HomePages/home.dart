@@ -18,11 +18,11 @@ class _HomeState extends State<Home> {
       width: double.maxFinite,
       decoration: BoxDecoration(
           gradient: RadialGradient(
-        radius: 1.2,
+        radius: 1.5,
         // center: Alignment(0, _pos.value),
         center: Alignment(0, -1),
         // radius:0.5,
-        colors: [Color.fromARGB(253, 104, 23, 255), Colors.white],
+        colors: [Color.fromARGB(255, 123, 69, 232), Colors.white],
         stops: [0.0, 1.0],
       )),
       // color: Colors.blue,
