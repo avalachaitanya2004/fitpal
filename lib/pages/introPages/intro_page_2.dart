@@ -1,5 +1,5 @@
 import 'package:fit_pal/pages/introPages/goals_page.dart';
-import 'package:fit_pal/pages/introPages/intro_page_1.dart';
+import 'package:fit_pal/pages/introPages/gender_page.dart';
 import 'package:fit_pal/pages/introPages/metrics_page.dart';
 import 'package:fit_pal/pages/introPages/name_page.dart';
 import 'package:fit_pal/pages/introPages/weightmetrics.dart';
@@ -82,7 +82,7 @@ class _IntroPage2State extends State<IntroPage2>
                 if (!currentFocus.hasPrimaryFocus) {
                   currentFocus.unfocus();
                 }
-                if (index == 4) {
+                if (index == 5) {
                   onlastPage = true;
                   _con?.forward();
                 } else {
@@ -111,6 +111,7 @@ class _IntroPage2State extends State<IntroPage2>
                   isFirstTime: isFirstTime,
                 ),
               ),
+              const GenderPage(),
               const MetricsPage(),
               const WeightMetrics(),
               const ActivityPage(),
@@ -129,7 +130,7 @@ class _IntroPage2State extends State<IntroPage2>
                         SmoothPageIndicator(
                             // effect: WormEffect(),
                             controller: _pages,
-                            count: 5,
+                            count: 6,
                             // effect: SlideEffect(),
                             effect: const ScrollingDotsEffect(
                               activeDotColor: Colors.black,
