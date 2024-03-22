@@ -19,6 +19,8 @@ class GlassMorphism extends StatelessWidget {
       child: BackdropFilter(
         filter: ImageFilter.blur(sigmaX: blur, sigmaY: blur),
         child: Container(
+          margin: const EdgeInsets.all(10),
+          height: 80,
           decoration: BoxDecoration(
               color: Colors.white.withOpacity((opacity)),
               borderRadius: BorderRadius.all(Radius.circular(20)),
