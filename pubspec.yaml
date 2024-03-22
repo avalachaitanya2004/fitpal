@@ -46,6 +46,7 @@ dependencies:
   date_picker_timeline: ^1.2.5
   glassmorphism: ^3.0.0
   glassmorphism_ui: ^0.3.0
+  custom_sliding_segmented_control: ^1.8.1
 dev_dependencies:
   flutter_test:
     sdk: flutter
