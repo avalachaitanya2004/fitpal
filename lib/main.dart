@@ -11,6 +11,7 @@ import 'package:fit_pal/pages/introPages/intro_page_2.dart';
 import 'package:fit_pal/pages/login_page.dart';
 import 'package:fit_pal/pages/pre_login.dart';
 import 'package:fit_pal/pages/register_page.dart';
+import 'package:fit_pal/pages/side_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 // import 'dart:js_util';

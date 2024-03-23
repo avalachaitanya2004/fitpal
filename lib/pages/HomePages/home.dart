@@ -1,3 +1,5 @@
+import 'package:fit_pal/models/food.dart';
+import 'package:fit_pal/models/food_card.dart';
 import 'package:fit_pal/utility/GlassMorphism.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -15,24 +17,33 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  List<Food> today = [
+    Food('BreakFast', 1000, 10, 22, 33),
+    Food('Lunch', 3090, 33, 22, 53),
+    Food('Dinner', 8003, 99, 82, 33),
+    Food('Supper', 1500, 18, 92, 33)
+  ];
   final PageController _pages1 = PageController();
+  final TextStyle _slider = TextStyle(
+      fontFamily: 'Roboto', fontSize: 15, fontWeight: FontWeight.w500);
+  int _page = 0;
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Container(
-        // duration: Duration(seconds: 1),
-        height: double.maxFinite,
-        width: double.maxFinite,
-        decoration: BoxDecoration(
-            gradient: RadialGradient(
-          radius: 1.2,
-          // center: Alignment(0, _pos.value),
-          center: Alignment(0, -1),
-          // radius:0.5,
-          colors: [Color.fromARGB(255, 123, 69, 232), Colors.white],
-          stops: [0.0, 1.0],
-        )),
-        // color: Colors.blue,
+    return Container(
+      // duration: Duration(seconds: 1),
+      height: double.maxFinite,
+      width: double.maxFinite,
+      decoration: BoxDecoration(
+          gradient: RadialGradient(
+        radius: 1.2,
+        // center: Alignment(0, _pos.value),
+        center: Alignment(0, -1),
+        // radius:0.5,
+        colors: [Color.fromARGB(255, 123, 69, 232), Colors.white],
+        stops: [0.0, 1.0],
+      )),
+      // color: Colors.blue,
+      child: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
@@ -273,8 +284,85 @@ class _HomeState extends State<Home> {
               ),
             ),
 
+            // Container(
+            //   child: SegmentedControl(),
+            // ),
+            const SizedBox(
+              height: 10,
+            ),
+
             Container(
-              child: SegmentedControl(),
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              // color: Colors.blue,
+              // width: 500,
+              child: CustomSlidingSegmentedControl<int>(
+                // fixedWidth: 130,
+                // height: 50,
+                isStretch: true,
+                initialValue: _page,
+                children: {
+                  0: Text(
+                    'Meals',
+                    style: TextStyle(
+                        fontFamily: 'Roboto',
+                        fontSize: 15,
+                        color: _page == 0 ? Colors.black : Colors.grey[700],
+                        fontWeight: FontWeight.w500),
+                  ),
+                  1: Text(
+                    'Activity',
+                    style: TextStyle(
+                        fontFamily: 'Roboto',
+                        fontSize: 15,
+                        color: _page == 1 ? Colors.black : Colors.grey[700],
+                        fontWeight: FontWeight.w500),
+                  ),
+                  2: Text(
+                    'Water',
+                    style: TextStyle(
+                        fontFamily: 'Roboto',
+                        fontSize: 15,
+                        color: _page == 2 ? Colors.black : Colors.grey[700],
+                        fontWeight: FontWeight.w500),
+                  ),
+                },
+                decoration: BoxDecoration(
+                  // color: CupertinoColors.lightBackgroundGray,
+                  color: Colors.grey[100],
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                thumbDecoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(20),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(.3),
+                      blurRadius: 4.0,
+                      spreadRadius: 1.0,
+                      offset: Offset(
+                        0.0,
+                        2.0,
+                      ),
+                    ),
+                  ],
+                ),
+                duration: Duration(milliseconds: 300),
+                curve: Curves.ease,
+                onValueChanged: (v) {
+                  setState(() {
+                    _page = v;
+                  });
+                },
+              ),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Column(
+              // mainAxisAlignment: MainAxisAlignment,
+              children: List.generate(today.length, (index) {
+                return FoodCard(food: today[index]);
+              }),
             ),
 
             // A tab view for meals, activity, water.

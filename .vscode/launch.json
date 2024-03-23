@@ -5,84 +5,90 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "$RG68AHU",
-            "cwd": "$Recycle.Bin\\S-1-5-21-3410487605-2717071087-948159712-1001\\$RG68AHU",
-            "request": "launch",
-            "type": "dart"
-        },
-        {
-            "name": "$RG68AHU (profile mode)",
-            "cwd": "$Recycle.Bin\\S-1-5-21-3410487605-2717071087-948159712-1001\\$RG68AHU",
+            "name": "Dart & Flutter",
             "request": "launch",
             "type": "dart",
-            "flutterMode": "profile"
+            "program": "lib/main.dart",
         },
-        {
-            "name": "$RG68AHU (release mode)",
-            "cwd": "$Recycle.Bin\\S-1-5-21-3410487605-2717071087-948159712-1001\\$RG68AHU",
-            "request": "launch",
-            "type": "dart",
-            "flutterMode": "release"
-        },
-        {
-            "name": "$RPL4CKV",
-            "cwd": "$Recycle.Bin\\S-1-5-21-3410487605-2717071087-948159712-1001\\$RPL4CKV",
-            "request": "launch",
-            "type": "dart"
-        },
-        {
-            "name": "$RPL4CKV (profile mode)",
-            "cwd": "$Recycle.Bin\\S-1-5-21-3410487605-2717071087-948159712-1001\\$RPL4CKV",
-            "request": "launch",
-            "type": "dart",
-            "flutterMode": "profile"
-        },
-        {
-            "name": "$RPL4CKV (release mode)",
-            "cwd": "$Recycle.Bin\\S-1-5-21-3410487605-2717071087-948159712-1001\\$RPL4CKV",
-            "request": "launch",
-            "type": "dart",
-            "flutterMode": "release"
-        },
-        {
-            "name": "fitpal",
-            "cwd": "Users\\nandu\\andr\\fitpal",
-            "request": "launch",
-            "type": "dart"
-        },
-        {
-            "name": "fitpal (profile mode)",
-            "cwd": "Users\\nandu\\andr\\fitpal",
-            "request": "launch",
-            "type": "dart",
-            "flutterMode": "profile"
-        },
-        {
-            "name": "fitpal (release mode)",
-            "cwd": "Users\\nandu\\andr\\fitpal",
-            "request": "launch",
-            "type": "dart",
-            "flutterMode": "release"
-        },
-        {
-            "name": "test0",
-            "cwd": "Users\\nandu\\andr\\test0",
-            "request": "launch",
-            "type": "dart"
-        },
-        {
-            "name": "test0 (profile mode)",
-            "cwd": "Users\\nandu\\andr\\test0",
-            "request": "launch",
-            "type": "dart",
-            "flutterMode": "profile"
-        },
-        {
-            "name": "test0 (release mode)",
-            "cwd": "Users\\nandu\\andr\\test0",
-            "request": "launch",
-            "type": "dart",
-            "flutterMode": "release"
-        }
+        // {
+        //     "name": "$RG68AHU",
+        //     "cwd": "$Recycle.Bin\\S-1-5-21-3410487605-2717071087-948159712-1001\\$RG68AHU",
+        //     "request": "launch",
+        //     "type": "dart"
+        // },
+        // {
+        //     "name": "$RG68AHU (profile mode)",
+        //     "cwd": "$Recycle.Bin\\S-1-5-21-3410487605-2717071087-948159712-1001\\$RG68AHU",
+        //     "request": "launch",
+        //     "type": "dart",
+        //     "flutterMode": "profile"
+        // },
+        // {
+        //     "name": "$RG68AHU (release mode)",
+        //     "cwd": "$Recycle.Bin\\S-1-5-21-3410487605-2717071087-948159712-1001\\$RG68AHU",
+        //     "request": "launch",
+        //     "type": "dart",
+        //     "flutterMode": "release"
+        // },
+        // {
+        //     "name": "$RPL4CKV",
+        //     "cwd": "$Recycle.Bin\\S-1-5-21-3410487605-2717071087-948159712-1001\\$RPL4CKV",
+        //     "request": "launch",
+        //     "type": "dart"
+        // },
+        // {
+        //     "name": "$RPL4CKV (profile mode)",
+        //     "cwd": "$Recycle.Bin\\S-1-5-21-3410487605-2717071087-948159712-1001\\$RPL4CKV",
+        //     "request": "launch",
+        //     "type": "dart",
+        //     "flutterMode": "profile"
+        // },
+        // {
+        //     "name": "$RPL4CKV (release mode)",
+        //     "cwd": "$Recycle.Bin\\S-1-5-21-3410487605-2717071087-948159712-1001\\$RPL4CKV",
+        //     "request": "launch",
+        //     "type": "dart",
+        //     "flutterMode": "release"
+        // },
+        // {
+        //     "name": "fitpal",
+        //     "cwd": "Users\\nandu\\andr\\fitpal",
+        //     "request": "launch",
+        //     "type": "dart"
+        // },
+        // {
+        //     "name": "fitpal (profile mode)",
+        //     "cwd": "Users\\nandu\\andr\\fitpal",
+        //     "request": "launch",
+        //     "type": "dart",
+        //     "flutterMode": "profile"
+        // },
+        // {
+        //     "name": "fitpal (release mode)",
+        //     "cwd": "Users\\nandu\\andr\\fitpal",
+        //     "request": "launch",
+        //     "type": "dart",
+        //     "flutterMode": "release"
+        // },
+        // {
+        //     "name": "test0",
+        //     "cwd": "Users\\nandu\\andr\\test0",
+        //     "request": "launch",
+        //     "type": "dart"
+        // },
+        // {
+        //     "name": "test0 (profile mode)",
+        //     "cwd": "Users\\nandu\\andr\\test0",
+        //     "request": "launch",
+        //     "type": "dart",
+        //     "flutterMode": "profile"
+        // },
+        // {
+        //     "name": "test0 (release mode)",
+        //     "cwd": "Users\\nandu\\andr\\test0",
+        //     "request": "launch",
+        //     "type": "dart",
+        //     "flutterMode": "release"
+        // }
     ]
 }

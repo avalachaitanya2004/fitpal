@@ -2,7 +2,9 @@ import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fit_pal/pages/HomePages/home.dart';
+import 'package:fit_pal/pages/side_menu.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 // import 'package:iconsax_flutter/iconsax_flutter.dart';
 
 class HomePage extends StatefulWidget {
@@ -19,15 +21,28 @@ class _HomePageState extends State<HomePage>
     Navigator.pushReplacementNamed(context, '/preLogin');
   }
 
-  late Animation<double> _pos;
-  late Animation<double> _curve;
+  // late Animation<double> _pos;
+  // late Animation<double> _curve;
+  late AnimationController _anicon;
+  late Animation<double> animation;
+  late Animation<double> scaleanimation;
 
   late AnimationController _con;
+  bool isSideMenuClosed = true;
   @override
   void initState() {
-    _con = AnimationController(vsync: this, duration: Duration(seconds: 1));
-    _curve = CurvedAnimation(parent: _con, curve: Curves.easeInOut);
-    _pos = Tween(begin: -0.5, end: -1.0).animate(_curve);
+    _anicon =
+        AnimationController(vsync: this, duration: Duration(milliseconds: 200))
+          ..addListener(() {
+            setState(() {});
+          });
+    animation = Tween<double>(begin: 0, end: 1)
+        .animate(CurvedAnimation(parent: _anicon, curve: Curves.fastOutSlowIn));
+    scaleanimation = Tween<double>(begin: 1, end: 0.8)
+        .animate(CurvedAnimation(parent: _anicon, curve: Curves.fastOutSlowIn));
+    // _con = AnimationController(vsync: this, duration: Duration(seconds: 1));
+    // _curve = CurvedAnimation(parent: _con, curve: Curves.easeInOut);
+    // _pos = Tween(begin: -0.5, end: -1.0).animate(_curve);
     super.initState();
   }
 
@@ -37,7 +52,7 @@ class _HomePageState extends State<HomePage>
   Widget build(BuildContext context) {
     // _con.forward();
     return Scaffold(
-      backgroundColor: Colors.blue,
+      backgroundColor: Color(0xFF17203A),
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -52,8 +67,20 @@ class _HomePageState extends State<HomePage>
                 width: 1.0, // You can set the border width here
               ),
             ),
-            child: CircleAvatar(
-              backgroundImage: AssetImage('assets/images/profile_demo.jpeg'),
+            child: GestureDetector(
+              onTap: () {
+                // if (isSideMenuClosed) {
+                //   _anicon.forward();
+                // } else {
+                //   _anicon.reverse();
+                // }
+                // setState(() {
+                //   isSideMenuClosed = !isSideMenuClosed;
+                // });
+              },
+              child: CircleAvatar(
+                backgroundImage: AssetImage('assets/images/profile_demo.jpeg'),
+              ),
             ),
           ),
         ),
