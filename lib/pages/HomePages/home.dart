@@ -18,10 +18,10 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   List<Food> today = [
-    Food('BreakFast', 1000, 10, 22, 33),
-    Food('Lunch', 3090, 33, 22, 53),
-    Food('Dinner', 8003, 99, 82, 33),
-    Food('Supper', 1500, 18, 92, 33)
+    Food('BreakFast', 1000, 10, 22, 33, 100),
+    Food('Lunch', 3090, 33, 22, 53, 1000),
+    Food('Dinner', 8003, 99, 82, 33, 99),
+    Food('Supper', 1500, 18, 92, 33, 700)
   ];
   final PageController _pages1 = PageController();
   final TextStyle _slider = TextStyle(

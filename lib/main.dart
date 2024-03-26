@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:camera/camera.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 // import 'package:fit_pal/Controllers/check_login.dart';
 import 'package:fit_pal/Controllers/login_register_controller.dart';
@@ -10,14 +11,18 @@ import 'package:fit_pal/pages/introPages/intro_page.dart';
 import 'package:fit_pal/pages/introPages/intro_page_2.dart';
 import 'package:fit_pal/pages/login_page.dart';
 import 'package:fit_pal/pages/pre_login.dart';
+import 'package:fit_pal/pages/preview_food.dart';
 import 'package:fit_pal/pages/register_page.dart';
 import 'package:fit_pal/pages/side_menu.dart';
+import 'package:fit_pal/pages/take_photo.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-// import 'dart:js_util';
 
+// import 'dart:js_util';
+late List<CameraDescription> cameras;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  cameras = await availableCameras();
 
   Platform.isAndroid
       ? await Firebase.initializeApp(
@@ -48,7 +53,7 @@ class MyApp extends StatelessWidget {
       },
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
-      home: HomePage(),
+      home: PreviewFood(),
     );
   }
 }

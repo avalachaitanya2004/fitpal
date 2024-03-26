@@ -1,8 +1,9 @@
 class Food {
-  Food(this.title, this.calorie, this.protein, this.carbs, this.fat);
+  Food(this.title, this.calorie, this.protein, this.carbs, this.fat, this.size);
   String title;
-  int calorie;
-  int protein;
-  int carbs;
-  int fat;
+  double calorie;
+  double protein;
+  double carbs;
+  double fat;
+  double size;
 }
