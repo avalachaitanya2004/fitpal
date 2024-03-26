@@ -85,8 +85,21 @@ class _PreviewFoodState extends State<PreviewFood>
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 20.0),
                         child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Icon(Icons.arrow_back),
+                            Material(
+                              elevation: 10,
+                              shape: CircleBorder(),
+                              color: Colors.white.withOpacity(0.4),
+                              child: CircleAvatar(
+                                  // elevation:10
+                                  backgroundColor:
+                                      Colors.white.withOpacity(0.4),
+                                  child: Icon(
+                                    Icons.arrow_back,
+                                    color: Colors.black,
+                                  )),
+                            ),
                             Spacer(
                               flex: 5,
                             ),
@@ -116,14 +129,19 @@ class _PreviewFoodState extends State<PreviewFood>
                           child: Container(
                               height: 35,
                               decoration: BoxDecoration(
-                                color: Colors.white,
+                                color: Colors.white.withOpacity(0.5),
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               // alignment: Alignment.topLeft,
 
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
-                                child: Text('${food.title}'),
+                                child: Text(
+                                  '${food.title}',
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w500),
+                                ),
                               )),
                         ),
                       ),
