@@ -254,7 +254,7 @@ class _PreviewFoodState extends State<PreviewFood>
                                     GestureDetector(
                                         onTap: () {
                                           setState(() {
-                                            food.calorie -= 10;
+                                            food.size -= 10;
                                           });
                                         },
                                         child: Icon(Icons.remove)),
@@ -262,7 +262,7 @@ class _PreviewFoodState extends State<PreviewFood>
                                       width: 8,
                                     ),
                                     Text(
-                                      '${food.calorie}g',
+                                      '${food.size}g',
                                       style: TextStyle(
                                         fontSize: 20,
                                       ),
@@ -273,7 +273,7 @@ class _PreviewFoodState extends State<PreviewFood>
                                     GestureDetector(
                                         onTap: () {
                                           setState(() {
-                                            food.calorie += 10;
+                                            food.size += 10;
                                           });
                                         },
                                         child: Icon(Icons.add)),

@@ -69,14 +69,14 @@ class FoodCard extends StatelessWidget {
                         borderRadius: BorderRadius.circular(20),
                         color: Colors.white.withOpacity(0.9),
                       ),
-                      margin: EdgeInsets.all(5),
+                      margin: EdgeInsets.all(4),
                       height: 35,
                       child: Padding(
                         padding: const EdgeInsets.all(10.0),
                         child: Center(
                             child: Text(
                           'Protein ${food.protein}%',
-                          style: TextStyle(fontSize: 12),
+                          style: TextStyle(fontSize: 10),
                         )),
                       )),
                   Container(
@@ -84,14 +84,14 @@ class FoodCard extends StatelessWidget {
                         borderRadius: BorderRadius.circular(20),
                         color: Colors.white.withOpacity(0.9),
                       ),
-                      margin: EdgeInsets.all(5),
+                      margin: EdgeInsets.all(4),
                       height: 35,
                       child: Padding(
                         padding: const EdgeInsets.all(10.0),
                         child: Center(
                             child: Text(
                           'Carbs ${food.carbs}%',
-                          style: TextStyle(fontSize: 12),
+                          style: TextStyle(fontSize: 10),
                         )),
                       )),
                   Container(
@@ -99,14 +99,14 @@ class FoodCard extends StatelessWidget {
                         borderRadius: BorderRadius.circular(20),
                         color: Colors.white.withOpacity(0.9),
                       ),
-                      margin: EdgeInsets.all(5),
+                      margin: EdgeInsets.all(4),
                       height: 35,
                       child: Padding(
                         padding: const EdgeInsets.all(10.0),
                         child: Center(
                             child: Text(
                           'Fat ${food.fat}%',
-                          style: TextStyle(fontSize: 12),
+                          style: TextStyle(fontSize: 10),
                         )),
                       )),
                   Spacer(),

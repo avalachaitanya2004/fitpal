@@ -1,7 +1,9 @@
 import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fit_pal/models/challenges.dart';
 import 'package:fit_pal/pages/HomePages/home.dart';
+import 'package:fit_pal/pages/challenges_page.dart';
 import 'package:fit_pal/pages/side_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -52,7 +54,8 @@ class _HomePageState extends State<HomePage>
   Widget build(BuildContext context) {
     // _con.forward();
     return Scaffold(
-      backgroundColor: Color(0xFF17203A),
+      // backgroundColor: Color(0xFF17203A),
+      backgroundColor: Colors.white,
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -93,16 +96,7 @@ class _HomePageState extends State<HomePage>
         },
         children: <Widget>[
           Home(),
-          // Center(
-          //   child: Container(
-          //     child: Text('Empty Body 0'),
-          //   ),
-          // ),
-          Center(
-            child: Container(
-              child: Text('Empty Body 1'),
-            ),
-          ),
+          ChallengesPage(),
           Center(
             child: Container(
               child: Text('Empty Body 2'),
@@ -119,8 +113,7 @@ class _HomePageState extends State<HomePage>
             ),
           )
         ],
-        physics:
-            NeverScrollableScrollPhysics(), // Comment this if you need to use Swipe.
+        // physics:NeverScrollableScrollPhysics(), // Comment this if you need to use Swipe.
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: Padding(
