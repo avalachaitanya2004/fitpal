@@ -1,5 +1,9 @@
+import 'package:fit_pal/models/excercise_card.dart';
+import 'package:fit_pal/models/excercises.dart';
+import 'package:fit_pal/pages/perform_workout.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 class WorkoutStart extends StatefulWidget {
   const WorkoutStart({super.key});
@@ -9,6 +13,16 @@ class WorkoutStart extends StatefulWidget {
 }
 
 class _WorkoutStartState extends State<WorkoutStart> {
+  List<Excersise> excercises = [
+    Excersise(name: 'JUMPING JACKS', reps: 10),
+    Excersise(name: 'ABDOMINAL CRUNCHES', reps: 20),
+    Excersise(name: 'RUSSIAN TWIST', reps: 15),
+    Excersise(name: 'MOUNTAIN CLIMBER', reps: 10),
+    Excersise(name: 'JUMPING JACKS', reps: 10),
+    Excersise(name: 'ABDOMINAL CRUNCHES', reps: 20),
+    Excersise(name: 'RUSSIAN TWIST', reps: 15),
+    Excersise(name: 'MOUNTAIN CLIMBER', reps: 10),
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,11 +31,12 @@ class _WorkoutStartState extends State<WorkoutStart> {
       children: [
         CustomScrollView(slivers: <Widget>[
           SliverAppBar(
-            surfaceTintColor: Colors.black,
-            backgroundColor: Colors.black,
+            stretch: true,
+            surfaceTintColor: Colors.white,
+            backgroundColor: Colors.white,
             title: Text(
               'Todays Workouts',
-              style: TextStyle(color: Colors.white),
+              style: TextStyle(color: Colors.black),
             ),
             leading: Icon(Icons.arrow_back),
             pinned: true,
@@ -38,10 +53,10 @@ class _WorkoutStartState extends State<WorkoutStart> {
           SliverToBoxAdapter(
             child: Container(
               decoration: BoxDecoration(
-                color: Colors.black,
+                color: Colors.white,
                 // borderRadius: BorderRadius.circular(20),
               ),
-              height: 1000,
+              // height: 1000,
               width: double.infinity,
               child: Column(
                 children: [
@@ -55,17 +70,17 @@ class _WorkoutStartState extends State<WorkoutStart> {
                             Text(
                               '18 min',
                               style:
-                                  TextStyle(color: Colors.white, fontSize: 18),
+                                  TextStyle(color: Colors.black, fontSize: 18),
                             ),
                             Text(
                               'Time',
                               style: TextStyle(
-                                  color: Colors.white.withOpacity(0.5)),
+                                  color: Colors.black.withOpacity(0.5)),
                             ),
                           ],
                         ),
                         VerticalDivider(
-                          color: Colors.white,
+                          color: Colors.black,
                           thickness: 3,
                         ),
                         Column(
@@ -73,17 +88,17 @@ class _WorkoutStartState extends State<WorkoutStart> {
                             Text(
                               '+30',
                               style:
-                                  TextStyle(color: Colors.white, fontSize: 18),
+                                  TextStyle(color: Colors.black, fontSize: 18),
                             ),
                             Text(
                               'XP',
                               style: TextStyle(
-                                  color: Colors.white.withOpacity(0.5)),
+                                  color: Colors.black.withOpacity(0.5)),
                             ),
                           ],
                         ),
                         VerticalDivider(
-                          color: Colors.white,
+                          color: Colors.black,
                           thickness: 3,
                         ),
                         Column(
@@ -91,18 +106,34 @@ class _WorkoutStartState extends State<WorkoutStart> {
                             Text(
                               '500',
                               style:
-                                  TextStyle(color: Colors.white, fontSize: 18),
+                                  TextStyle(color: Colors.black, fontSize: 18),
                             ),
                             Text(
                               'KCal',
                               style: TextStyle(
-                                  color: Colors.white.withOpacity(0.5)),
+                                  color: Colors.black.withOpacity(0.5)),
                             ),
                           ],
                         ),
                       ],
                     ),
-                  )
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Align(
+                      alignment: Alignment.topLeft,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                        child: Text(
+                          'Exercises (${excercises.length})',
+                          style: TextStyle(color: Colors.black, fontSize: 18),
+                        ),
+                      )),
+                  Column(
+                    children: List.generate(excercises.length,
+                        (index) => ExcerciseCard(excersise: excercises[index])),
+                  ),
                 ],
               ),
             ),
@@ -122,10 +153,18 @@ class _WorkoutStartState extends State<WorkoutStart> {
                   color: Colors.blue,
                   borderRadius: BorderRadius.circular(30),
                 ),
-                child: Center(
-                  child: Text(
-                    "Start",
-                    style: TextStyle(color: Colors.white, fontSize: 20),
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return PerformWorkout(excercises: excercises);
+                    }));
+                  },
+                  child: Center(
+                    child: Text(
+                      "Start",
+                      style: TextStyle(color: Colors.white, fontSize: 20),
+                    ),
                   ),
                 ),
               ),
