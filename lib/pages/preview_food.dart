@@ -40,7 +40,7 @@ class _PreviewFoodState extends State<PreviewFood>
   //   _con.forward(from: 1); // Start the animation from the beginning
   // }
 
-  Food food = Food('breakfast', 40.0, 30.0, 20.0, 40.0, 100.0);
+  Food food = Food('breakfast', 40.0, 30.0, 20.0, 40.0, 100.0, 'Apple');
   double returnfraction(double per) {
     if (per >= 12 && per <= 80) {
       return per / 100;

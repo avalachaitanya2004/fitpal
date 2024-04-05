@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fit_pal/models/challenges.dart';
 import 'package:fit_pal/pages/HomePages/home.dart';
 import 'package:fit_pal/pages/challenges_page.dart';
+import 'package:fit_pal/pages/meals_page.dart';
 import 'package:fit_pal/pages/side_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -97,11 +98,7 @@ class _HomePageState extends State<HomePage>
         children: <Widget>[
           Home(),
           ChallengesPage(),
-          Center(
-            child: Container(
-              child: Text('Empty Body 2'),
-            ),
-          ),
+          MealsPage(),
           Center(
             child: Container(
               child: Text('Empty Body 3'),
