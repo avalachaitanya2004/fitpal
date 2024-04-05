@@ -1,5 +1,6 @@
 import 'package:fit_pal/models/excercises.dart';
 import 'package:fit_pal/models/perform_workout_card.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -39,11 +40,16 @@ class PerformWorkout extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
               child: Row(
                 children: [
-                  CircleAvatar(
-                    backgroundColor: Colors.grey[200],
-                    child: Icon(
-                      Icons.close,
-                      color: Colors.black,
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: CircleAvatar(
+                      backgroundColor: Colors.grey[200],
+                      child: Icon(
+                        Icons.close,
+                        color: Colors.black,
+                      ),
                     ),
                   ),
                   Spacer(),
