@@ -83,7 +83,7 @@ class _HomePageState extends State<HomePage>
                 // });
               },
               child: CircleAvatar(
-                backgroundImage: AssetImage('assets/images/profile_demo.jpeg'),
+                backgroundImage: AssetImage('assets/images/default_pic.jpeg'),
               ),
             ),
           ),
@@ -93,7 +93,7 @@ class _HomePageState extends State<HomePage>
       body: PageView(
         controller: _Page,
         onPageChanged: (int) {
-          print('Page Changes to index $int');
+          // print('Page Changes to index $int');
         },
         children: <Widget>[
           Home(),
