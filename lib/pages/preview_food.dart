@@ -1,5 +1,7 @@
+import 'dart:io';
 import 'dart:ui';
 
+import 'package:camera/camera.dart';
 import 'package:fit_pal/models/food.dart';
 import 'package:flutter/animation.dart';
 import 'package:flutter/cupertino.dart';
@@ -7,8 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class PreviewFood extends StatefulWidget {
-  const PreviewFood({super.key});
-
+  const PreviewFood({super.key, required this.image});
+  final XFile image;
   @override
   State<PreviewFood> createState() => _PreviewFoodState();
 }
@@ -26,6 +28,7 @@ class _PreviewFoodState extends State<PreviewFood>
     ani = Tween(begin: 0.0, end: 1.0)
         .animate(CurvedAnimation(parent: _con, curve: Curves.easeOut));
     _con.forward();
+    image = widget.image;
   }
 
   @override
@@ -53,6 +56,7 @@ class _PreviewFoodState extends State<PreviewFood>
     }
   }
 
+  late XFile image;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -68,7 +72,7 @@ class _PreviewFoodState extends State<PreviewFood>
         width: double.infinity,
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/images/calorie_preview.webp'),
+            image: FileImage(File(image.path)),
             fit: BoxFit.cover,
           ),
         ),
@@ -91,14 +95,19 @@ class _PreviewFoodState extends State<PreviewFood>
                               elevation: 10,
                               shape: CircleBorder(),
                               color: Colors.white.withOpacity(0.4),
-                              child: CircleAvatar(
-                                  // elevation:10
-                                  backgroundColor:
-                                      Colors.white.withOpacity(0.4),
-                                  child: Icon(
-                                    Icons.arrow_back,
-                                    color: Colors.black,
-                                  )),
+                              child: GestureDetector(
+                                onTap: () {
+                                  Navigator.pop(context);
+                                },
+                                child: CircleAvatar(
+                                    // elevation:10
+                                    backgroundColor:
+                                        Colors.white.withOpacity(0.4),
+                                    child: Icon(
+                                      Icons.arrow_back,
+                                      color: Colors.black,
+                                    )),
+                              ),
                             ),
                             Spacer(
                               flex: 5,

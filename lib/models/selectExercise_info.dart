@@ -1,10 +1,11 @@
 import 'package:fit_pal/models/excercises.dart';
+import 'package:fit_pal/models/exerciseData.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class ExcerciseInfo extends StatelessWidget {
-  const ExcerciseInfo({super.key, required this.excersise});
-  final Excersise excersise;
+class SelectedExcerciseInfo extends StatelessWidget {
+  const SelectedExcerciseInfo({super.key, required this.exersise});
+  final ExerciseCard exersise;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +22,7 @@ class ExcerciseInfo extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              excersise.name,
+              exersise.name,
               style: TextStyle(
                 fontFamily: 'Roboto',
                 fontSize: 22,
@@ -44,7 +45,7 @@ class ExcerciseInfo extends StatelessWidget {
             ),
             SizedBox(height: 10),
             Text(
-              excersise.generateInst(),
+              exersise.generateInst(),
               style: TextStyle(fontSize: 16),
             ),
             SizedBox(height: 20),

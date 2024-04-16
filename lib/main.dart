@@ -16,6 +16,7 @@ import 'package:fit_pal/pages/register_page.dart';
 import 'package:fit_pal/pages/side_menu.dart';
 import 'package:fit_pal/pages/take_photo.dart';
 import 'package:fit_pal/pages/workout_start_page.dart';
+import 'package:fit_pal/pages/create_playlist.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 
@@ -54,7 +55,7 @@ class MyApp extends StatelessWidget {
       },
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
-      home: WorkoutStart(),
+      home: CreatePlaylist(),
     );
   }
 }

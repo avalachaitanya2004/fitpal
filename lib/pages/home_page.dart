@@ -6,6 +6,7 @@ import 'package:fit_pal/pages/HomePages/home.dart';
 import 'package:fit_pal/pages/challenges_page.dart';
 import 'package:fit_pal/pages/meals_page.dart';
 import 'package:fit_pal/pages/side_menu.dart';
+import 'package:fit_pal/pages/take_photo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 // import 'package:iconsax_flutter/iconsax_flutter.dart';
@@ -67,7 +68,7 @@ class _HomePageState extends State<HomePage>
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               border: Border.all(
-                color: Colors.black, // You can set the border color here
+                color: Colors.white, // You can set the border color here
                 width: 1.0, // You can set the border width here
               ),
             ),
@@ -104,11 +105,6 @@ class _HomePageState extends State<HomePage>
               child: Text('Empty Body 3'),
             ),
           ),
-          Center(
-            child: Container(
-              child: Text('Empty Body 4'),
-            ),
-          )
         ],
         // physics:NeverScrollableScrollPhysics(), // Comment this if you need to use Swipe.
       ),
@@ -119,11 +115,18 @@ class _HomePageState extends State<HomePage>
           height: 85,
           width: 85,
           child: FloatingActionButton(
-            splashColor: Colors.purple[100],
+            // splashColor: Colors.purple[100],
             onPressed: () {
-              setState(() {
-                _Page.jumpToPage(4);
-              });
+              // setState(() {
+              //   _Page.jumpToPage(4);
+              // });
+              // Navigator.pushNamed(context, '/takePhoto');
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => TakePhoto(),
+                ),
+              );
             },
             child: Icon(
               Icons.add,
