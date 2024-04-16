@@ -1,16 +1,11 @@
 import 'package:fit_pal/Controllers/hero_dialog_route.dart';
-import 'package:fit_pal/models/food.dart';
-import 'package:fit_pal/models/food_popup.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:fit_pal/models/excercises.dart';
+import 'package:fit_pal/pages/workout_start_page.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
-class FoodCard extends StatelessWidget {
-  const FoodCard({
-    super.key,
-    required this.food,
-  });
-  final Food food;
+class WorkoutHomeCard extends StatelessWidget {
+  const WorkoutHomeCard({super.key, required this.excercise});
+  final List<Excersise> excercise;
 
   @override
   Widget build(BuildContext context) {
@@ -42,14 +37,14 @@ class FoodCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    food.title,
+                    'Todays Workouts',
                     style: TextStyle(
                         fontFamily: 'Nunito',
                         fontSize: 20,
                         fontWeight: FontWeight.bold),
                   ),
                   Hero(
-                    tag: food.calorie,
+                    tag: 'today-workout',
                     child: Material(
                         borderRadius: BorderRadius.circular(20),
                         color: Colors.white,
@@ -57,7 +52,7 @@ class FoodCard extends StatelessWidget {
                           onTap: () {
                             Navigator.of(context)
                                 .push(HeroDialogRoute(builder: (context) {
-                              return FoodPopup(food: food);
+                              return WorkoutStart(excercises: excercise);
                             }));
                           },
                           child: Padding(
@@ -68,17 +63,17 @@ class FoodCard extends StatelessWidget {
                   ),
                 ],
               ),
-              Align(
-                alignment: Alignment.topLeft,
-                child: Text(
-                  '${food.name}',
-                  // textAlign: TextAlign.left,
-                  style: TextStyle(
-                      // backgroundColor: Colors.green,
-                      fontSize: 20,
-                      color: Colors.black),
-                ),
-              ),
+              // Align(
+              //   alignment: Alignment.topLeft,
+              //   child: Text(
+              //     '${food.name}',
+              //     // textAlign: TextAlign.left,
+              //     style: TextStyle(
+              //         // backgroundColor: Colors.green,
+              //         fontSize: 20,
+              //         color: Colors.black),
+              //   ),
+              // ),
 
               // calories
               Spacer(),
@@ -102,7 +97,7 @@ class FoodCard extends StatelessWidget {
                       )),
                   Spacer(),
                   Text(
-                    '${food.calorie} kcal',
+                    '1000 kcal',
                     // textAlign: TextAlign.left,
                     style: TextStyle(
                         // backgroundColor: Colors.green,

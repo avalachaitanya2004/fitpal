@@ -6,6 +6,7 @@ import 'package:fit_pal/pages/HomePages/home.dart';
 import 'package:fit_pal/pages/challenges_page.dart';
 import 'package:fit_pal/pages/meals_page.dart';
 import 'package:fit_pal/pages/side_menu.dart';
+import 'package:fit_pal/pages/workout_select.dart';
 import 'package:fit_pal/pages/take_photo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -100,11 +101,7 @@ class _HomePageState extends State<HomePage>
           Home(),
           ChallengesPage(),
           MealsPage(),
-          Center(
-            child: Container(
-              child: Text('Empty Body 3'),
-            ),
-          ),
+          WorkoutSelect(),
         ],
         // physics:NeverScrollableScrollPhysics(), // Comment this if you need to use Swipe.
       ),

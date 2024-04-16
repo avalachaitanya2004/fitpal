@@ -1,31 +1,30 @@
+import 'package:fit_pal/models/custom_workouts.dart';
 import 'package:fit_pal/models/excercise_card.dart';
-import 'package:fit_pal/models/excercises.dart';
 import 'package:fit_pal/pages/perform_workout.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
-class WorkoutStart extends StatefulWidget {
-  const WorkoutStart({super.key, required this.excercises});
-  final List<Excersise> excercises;
+class WorkoutStartCustom extends StatefulWidget {
+  const WorkoutStartCustom({super.key, required this.custom});
+  final CustomPlaylist custom;
 
   @override
-  State<WorkoutStart> createState() => _WorkoutStartState();
+  State<WorkoutStartCustom> createState() => _WorkoutStartCustomState();
 }
 
-class _WorkoutStartState extends State<WorkoutStart> {
+class _WorkoutStartCustomState extends State<WorkoutStartCustom> {
   @override
   void initState() {
-    excercises = widget.excercises;
+    // TODO: implement initState
     super.initState();
+    custom = widget.custom;
   }
 
-  late List<Excersise> excercises;
+  late CustomPlaylist custom;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: Hero(
-      tag: 'today-workout',
+      tag: custom.name,
       child: Material(
         child: Stack(
           alignment: Alignment.center,
@@ -128,16 +127,16 @@ class _WorkoutStartState extends State<WorkoutStart> {
                             padding:
                                 const EdgeInsets.symmetric(horizontal: 20.0),
                             child: Text(
-                              'Exercises (${excercises.length})',
+                              'Exercises (${custom.set.length})',
                               style:
                                   TextStyle(color: Colors.black, fontSize: 18),
                             ),
                           )),
                       Column(
                         children: List.generate(
-                            excercises.length,
+                            custom.set.length,
                             (index) =>
-                                ExcerciseCard(excersise: excercises[index])),
+                                ExcerciseCard(excersise: custom.set[index])),
                       ),
                     ],
                   ),
@@ -162,7 +161,7 @@ class _WorkoutStartState extends State<WorkoutStart> {
                       onTap: () {
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) {
-                          return PerformWorkout(excercises: excercises);
+                          return PerformWorkout(excercises: custom.set);
                         }));
                       },
                       child: Center(

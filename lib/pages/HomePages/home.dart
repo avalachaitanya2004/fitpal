@@ -1,5 +1,7 @@
+import 'package:fit_pal/models/excercises.dart';
 import 'package:fit_pal/models/food.dart';
 import 'package:fit_pal/models/food_card.dart';
+import 'package:fit_pal/models/workout_home_card.dart';
 import 'package:fit_pal/utility/GlassMorphism.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +19,11 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  final List<Excersise> excercises = [
+    Excersise(name: "JUMPING JACKS", reps: 20),
+    Excersise(name: "ABDOMINAL CRUNCHES", reps: 20),
+    Excersise(name: "RUSSIAN TWIST", reps: 20)
+  ];
   List<Food> today = [
     Food('BreakFast', 1000, 10, 22, 33, 100, 'Apple'),
     Food('Lunch', 3090, 33, 22, 53, 1000, 'Apple'),
@@ -298,6 +305,7 @@ class _HomeState extends State<Home> {
               child: CustomSlidingSegmentedControl<int>(
                 // fixedWidth: 130,
                 // height: 50,
+
                 isStretch: true,
                 initialValue: _page,
                 children: {
@@ -358,12 +366,14 @@ class _HomeState extends State<Home> {
             const SizedBox(
               height: 10,
             ),
-            Column(
-              // mainAxisAlignment: MainAxisAlignment,
-              children: List.generate(today.length, (index) {
-                return FoodCard(food: today[index]);
-              }),
-            ),
+            if (_page == 0)
+              Column(
+                // mainAxisAlignment: MainAxisAlignment,
+                children: List.generate(today.length, (index) {
+                  return FoodCard(food: today[index]);
+                }),
+              ),
+            if (_page == 1) WorkoutHomeCard(excercise: excercises),
 
             // A tab view for meals, activity, water.
           ],
