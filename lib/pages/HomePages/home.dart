@@ -2,6 +2,7 @@ import 'package:fit_pal/models/excercises.dart';
 import 'package:fit_pal/models/food.dart';
 import 'package:fit_pal/models/food_card.dart';
 import 'package:fit_pal/models/workout_home_card.dart';
+import 'package:fit_pal/pages/water_card.dart';
 import 'package:fit_pal/utility/GlassMorphism.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +10,7 @@ import 'package:custom_sliding_segmented_control/custom_sliding_segmented_contro
 import 'package:fit_pal/utility/date_picker_widget.dart';
 import 'package:fit_pal/pages/HomePages/segmentedcontrol.dart';
 import 'package:flutter/widgets.dart';
+import 'package:liquid_progress_indicator_v2/liquid_progress_indicator.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class Home extends StatefulWidget {
@@ -19,6 +21,8 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  int target = 12;
+  int completed = 4;
   final List<Excersise> excercises = [
     Excersise(name: "JUMPING JACKS", reps: 20),
     Excersise(name: "ABDOMINAL CRUNCHES", reps: 20),
@@ -374,6 +378,54 @@ class _HomeState extends State<Home> {
                 }),
               ),
             if (_page == 1) WorkoutHomeCard(excercise: excercises),
+            if (_page == 2)
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: Container(
+                  color: Colors.grey,
+                  height: 120,
+                  width: double.infinity,
+                  child: Row(
+                    children: [
+                      Container(
+                        // color: Colors.grey,
+                        height: 100,
+                        width: 100,
+                        child: Center(
+                          child: LiquidCircularProgressIndicator(
+                            value: completed / target,
+                            valueColor:
+                                AlwaysStoppedAnimation(Colors.blueAccent),
+                            backgroundColor: Colors.white,
+                            direction: Axis.vertical,
+                            // center: Icon(CupertinoIcons),
+                          ),
+                        ),
+                      ),
+                      Spacer(),
+                      Row(
+                        children: [
+                          GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  completed = completed - 1;
+                                });
+                              },
+                              child: Icon(Icons.add)),
+                          Text('${completed}/${target}'),
+                          GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  completed = completed + 1;
+                                });
+                              },
+                              child: Icon(Icons.add)),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
 
             // A tab view for meals, activity, water.
           ],

@@ -1,6 +1,7 @@
 import 'package:fit_pal/Controllers/hero_dialog_route.dart';
 import 'package:fit_pal/models/custom_workouts.dart';
 import 'package:fit_pal/models/excercises.dart';
+import 'package:fit_pal/pages/create_playlist.dart';
 import 'package:fit_pal/pages/workout_start_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -59,22 +60,26 @@ class _WorkoutSelectState extends State<WorkoutSelect> {
                 const SizedBox(
                   height: 20,
                 ),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.of(context)
-                        .push(HeroDialogRoute(builder: (context) {
-                      return WorkoutStart(
-                        excercises: today,
-                      );
-                    }));
-                  },
-                  child: Hero(
-                    tag: 'today-workout',
-                    child: Material(
+                Hero(
+                  tag: 'today-workout',
+                  child: Material(
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.of(context)
+                            .push(HeroDialogRoute(builder: (context) {
+                          return WorkoutStart(
+                            excercises: today,
+                          );
+                        }));
+                      },
                       child: Container(
                         width: double.infinity,
                         height: 150,
                         decoration: BoxDecoration(
+                          image: DecorationImage(
+                              image:
+                                  AssetImage('assets/images/back_image.jpeg'),
+                              fit: BoxFit.fill),
                           borderRadius: BorderRadius.circular(20),
                           color: Colors.blue,
                         ),
@@ -115,12 +120,26 @@ class _WorkoutSelectState extends State<WorkoutSelect> {
                   height: 20,
                 ),
                 // cutomized workouts
-                Align(
-                    alignment: Alignment.topLeft,
-                    child: Text(
+                Row(
+                  children: [
+                    Text(
                       "Custom Workouts",
                       style: TextStyle(fontSize: 20),
-                    )),
+                    ),
+                    Spacer(),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => CreatePlaylist()));
+                      },
+                      child: CircleAvatar(
+                        child: Icon(Icons.add),
+                      ),
+                    )
+                  ],
+                ),
 
                 Column(
                   children: List.generate(custom.length, (index) {

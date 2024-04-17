@@ -158,23 +158,31 @@ class _CreatePlaylistState extends State<CreatePlaylist> {
             ),
           ),
           if (selected())
-            Positioned(
-              bottom: 15,
-              // left: 0,
-              right: 16,
-              child: Container(
-                width: 75,
-                child: FloatingActionButton(
-                  mini: true,
-                  backgroundColor: Colors.black26,
-                  onPressed: () {},
-                  child: Text(
-                    "Create",
-                    style: TextStyle(
-                      fontFamily: 'Roboto',
-                      fontSize: 15,
-                      color: Colors.black,
-                      fontWeight: FontWeight.w500,
+            Align(
+              alignment: Alignment.bottomRight,
+              child: Positioned(
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 30.0, right: 40),
+                  child: Container(
+                    // width: 75,
+                    child: FloatingActionButton(
+                      shape: CircleBorder(),
+                      // mini: true,
+                      backgroundColor: Colors.blue,
+                      onPressed: () {},
+                      child: Icon(
+                        Icons.check,
+                        size: 30,
+                      ),
+                      // child: Text(
+                      //   "Create",
+                      //   style: TextStyle(
+                      //     fontFamily: 'Roboto',
+                      //     fontSize: 15,
+                      //     color: Colors.black,
+                      //     fontWeight: FontWeight.w500,
+                      //   ),
+                      // ),
                     ),
                   ),
                 ),

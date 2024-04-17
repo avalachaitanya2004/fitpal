@@ -33,6 +33,10 @@ class CustomPlaylistCard extends StatelessWidget {
             width: double.infinity,
             height: 150,
             decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/images/back_image2.jpeg'),
+                fit: BoxFit.cover,
+              ),
               borderRadius: BorderRadius.circular(20),
               color: Colors.blue,
             ),
@@ -57,9 +61,35 @@ class CustomPlaylistCard extends StatelessWidget {
                   Spacer(),
                   Row(
                     children: [
-                      Text('20 min'),
+                      Container(
+                          height: 35,
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(20)),
+                          child: Center(
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text('20 min'),
+                            ),
+                          )),
                       Spacer(),
-                      Text('+35 XP'),
+                      Padding(
+                        padding: const EdgeInsets.all(7.0),
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.bolt,
+                              color: Colors.blue,
+                            ),
+                            Text(
+                              '35 XP',
+                              style: TextStyle(
+                                  // color: Colors.white,
+                                  ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ],
                   ),
                 ],
