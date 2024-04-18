@@ -52,6 +52,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
         // width: double.infinity,
         slivers: [
           SliverAppBar(
+            automaticallyImplyLeading: false,
             title: Column(
               children: [
                 const SizedBox(
@@ -136,6 +137,7 @@ class _ChallengesPageState extends State<ChallengesPage> {
             // ),
           ),
           SliverAppBar(
+            automaticallyImplyLeading: false,
             surfaceTintColor: Colors.white,
             backgroundColor: Colors.white,
             elevation: 0,

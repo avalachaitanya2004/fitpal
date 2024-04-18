@@ -7,6 +7,7 @@ import 'package:fit_pal/pages/challenges_page.dart';
 import 'package:fit_pal/pages/meals_page.dart';
 import 'package:fit_pal/pages/profile_page.dart';
 import 'package:fit_pal/pages/side_menu.dart';
+import 'package:fit_pal/pages/streak_calendar.dart';
 import 'package:fit_pal/pages/workout_select.dart';
 import 'package:fit_pal/pages/take_photo.dart';
 import 'package:flutter/cupertino.dart';
@@ -102,7 +103,7 @@ class _HomePageState extends State<HomePage>
                   onTap: () {
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) {
-                      return ProfilePage();
+                      return StreakCalendar();
                     }));
                   },
                   leading: Icon(

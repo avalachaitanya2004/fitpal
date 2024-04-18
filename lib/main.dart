@@ -18,6 +18,7 @@ import 'package:fit_pal/pages/preview_food.dart';
 import 'package:fit_pal/pages/profile_page.dart';
 import 'package:fit_pal/pages/register_page.dart';
 import 'package:fit_pal/pages/side_menu.dart';
+import 'package:fit_pal/pages/streak_calendar.dart';
 import 'package:fit_pal/pages/take_photo.dart';
 import 'package:fit_pal/pages/workout_start_page.dart';
 import 'package:fit_pal/pages/create_playlist.dart';

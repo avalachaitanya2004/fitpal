@@ -47,6 +47,7 @@ class _WorkoutSelectState extends State<WorkoutSelect> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      color: Colors.white,
       height: double.infinity,
       child: SingleChildScrollView(
         child: SafeArea(
@@ -63,6 +64,7 @@ class _WorkoutSelectState extends State<WorkoutSelect> {
                 Hero(
                   tag: 'today-workout',
                   child: Material(
+                    color: Colors.white,
                     child: GestureDetector(
                       onTap: () {
                         Navigator.of(context)
@@ -81,35 +83,37 @@ class _WorkoutSelectState extends State<WorkoutSelect> {
                                   AssetImage('assets/images/back_image.jpeg'),
                               fit: BoxFit.fill),
                           borderRadius: BorderRadius.circular(20),
-                          color: Colors.blue,
+                          color: Colors.white,
                         ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(20.0),
-                          child: Column(
-                            children: [
-                              Row(
-                                children: [
-                                  Align(
-                                      alignment: Alignment.topLeft,
-                                      child: Text(
-                                        'Todays Workout',
-                                        style: TextStyle(
-                                          fontSize: 24,
-                                        ),
-                                      )),
-                                  Spacer(),
-                                  Text('X${today.length}'),
-                                ],
-                              ),
-                              Spacer(),
-                              Row(
-                                children: [
-                                  Text('20 min'),
-                                  Spacer(),
-                                  Text('+35 XP'),
-                                ],
-                              ),
-                            ],
+                        child: Container(
+                          child: Padding(
+                            padding: const EdgeInsets.all(20.0),
+                            child: Column(
+                              children: [
+                                Row(
+                                  children: [
+                                    Align(
+                                        alignment: Alignment.topLeft,
+                                        child: Text(
+                                          'Todays Workout',
+                                          style: TextStyle(
+                                            fontSize: 24,
+                                          ),
+                                        )),
+                                    Spacer(),
+                                    Text('X${today.length}'),
+                                  ],
+                                ),
+                                Spacer(),
+                                Row(
+                                  children: [
+                                    Text('20 min'),
+                                    Spacer(),
+                                    Text('+35 XP'),
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
@@ -136,11 +140,14 @@ class _WorkoutSelectState extends State<WorkoutSelect> {
                       },
                       child: CircleAvatar(
                         child: Icon(Icons.add),
+                        backgroundColor: Colors.grey[200],
                       ),
-                    )
+                    ),
                   ],
                 ),
-
+                SizedBox(
+                  height: 10,
+                ),
                 Column(
                   children: List.generate(custom.length, (index) {
                     return CustomPlaylistCard(custom: custom[index]);

@@ -24,6 +24,7 @@ class MealsPage extends StatelessWidget {
         child: CustomScrollView(
           slivers: <Widget>[
             SliverAppBar(
+              automaticallyImplyLeading: false,
               // pinned: true,
               floating: true,
               surfaceTintColor: Colors.white,

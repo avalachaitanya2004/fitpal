@@ -60,7 +60,7 @@ class _PreviewFoodState extends State<PreviewFood>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: Colors.blue,
+      backgroundColor: Colors.blue,
       extendBodyBehindAppBar: true,
       // appBar: AppBar(
       //   // title: Text('Nutrition'),

@@ -22,6 +22,7 @@ class CustomPlaylistCard extends StatelessWidget {
     return Hero(
       tag: custom.name,
       child: Material(
+        color: Colors.white,
         child: GestureDetector(
           onTap: () {
             Navigator.of(context).push(HeroDialogRoute(builder: (context) {
