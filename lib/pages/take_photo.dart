@@ -49,6 +49,7 @@ class _TakePhotoState extends State<TakePhoto> {
     Future<void> onTakePictureButtonPressed() async {
       try {
         final XFile? image = await _controller.takePicture();
+        _controller.setFlashMode(FlashMode.off);
         if (image != null) {
           Navigator.push(
             context,
