@@ -15,8 +15,7 @@ class CreatePlaylist extends StatefulWidget {
 
 class _CreatePlaylistState extends State<CreatePlaylist> {
   TextEditingController nameController = TextEditingController();
-  FocusNode focusNode =
-      FocusNode(); // Corrected typo: changed from 'focuNode' to 'focusNode'
+  FocusNode focusNode = FocusNode();
   List<ExerciseCard> exercises = List.generate(
     16,
     (index) => ExerciseCard(
@@ -54,7 +53,6 @@ class _CreatePlaylistState extends State<CreatePlaylist> {
   void updateExercise(ExerciseCard updatedExercise) {
     int index =
         exercises.indexWhere((element) => element.name == updatedExercise.name);
-    print(index);
     if (index != -1) {
       setState(() {
         exercises[index] = updatedExercise;
@@ -89,6 +87,13 @@ class _CreatePlaylistState extends State<CreatePlaylist> {
         title: Text("Create Playlist"),
         backgroundColor: Colors.white,
         surfaceTintColor: Colors.white,
+        leading: GestureDetector(
+          onTap: () => Navigator.pop(context),
+          child: CircleAvatar(
+            backgroundColor: Colors.white.withOpacity(0.4),
+            child: Icon(Icons.arrow_back, color: Colors.black),
+          ),
+        ),
       ),
       body: Stack(
         children: [
@@ -103,8 +108,16 @@ class _CreatePlaylistState extends State<CreatePlaylist> {
                     decoration: InputDecoration(
                       prefixIcon: const Icon(Icons.person),
                       labelText: 'Name',
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15),
+                        borderSide: const BorderSide(color: Colors.black),
+                      ),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(15),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15),
+                        borderSide: const BorderSide(color: Colors.black),
                       ),
                     ),
                   ),
@@ -113,10 +126,16 @@ class _CreatePlaylistState extends State<CreatePlaylist> {
                   padding: const EdgeInsets.symmetric(horizontal: 20.0),
                   child: TextField(
                     onChanged: filter,
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       labelText: "Search",
                       suffixIcon: Icon(Icons.search),
                       border: UnderlineInputBorder(),
+                      focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black),
+                      ),
+                      enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black),
+                      ),
                     ),
                   ),
                 ),

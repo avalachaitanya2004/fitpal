@@ -12,128 +12,167 @@ class FriendSearch extends StatefulWidget {
 
 class _FriendSearchState extends State<FriendSearch> {
   List<String> names = ["John Jacobs", "Steve Jobs", "Mark Zuck"];
+  List<String> foundFriends = [];
   List<bool> friends = [true, false];
+  void filter(String value) {
+    setState(() {
+      foundFriends = value.isEmpty
+          ? names
+          : names
+              .where((card) => card.toLowerCase().contains(value.toLowerCase()))
+              .toList();
+    });
+  }
+
+  void initState() {
+    super.initState();
+    foundFriends = names;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Column(
-            children: [
-              GestureDetector(
-                onTap: () {
-                  Navigator.pop(context);
-                },
-                child: Icon(
-                  Icons.close,
-                  size: 34,
+      body: SingleChildScrollView(
+        child: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: Icon(
+                    Icons.close,
+                    size: 34,
+                  ),
                 ),
-              ),
-              // search bar
+                // search bar
 
-              // tab bar
-              Row(
-                children: [
-                  Expanded(
-                      flex: 1,
-                      child: GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            if (friends[0] == false) {
-                              friends[0] = true;
-                              friends[1] = false;
-                            }
-                          });
-                        },
-                        child: Container(
-                          margin: EdgeInsets.all(20),
-                          height: 80,
-                          decoration: BoxDecoration(
-                            color: friends[0] ? Colors.black : Colors.white,
-                            border: Border.all(color: Colors.grey, width: 2),
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(
-                                CupertinoIcons.person_alt,
-                                size: 30,
-                                color: friends[0] ? Colors.white : Colors.black,
-                              ),
-                              Text(
-                                'Friends',
-                                style: TextStyle(
-                                  fontSize: 18,
+                // tab bar
+                Row(
+                  children: [
+                    Expanded(
+                        flex: 1,
+                        child: GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              if (friends[0] == false) {
+                                friends[0] = true;
+                                friends[1] = false;
+                              }
+                            });
+                          },
+                          child: Container(
+                            margin: EdgeInsets.all(20),
+                            height: 80,
+                            decoration: BoxDecoration(
+                              color: friends[0] ? Colors.black : Colors.white,
+                              border: Border.all(color: Colors.grey, width: 2),
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  CupertinoIcons.person_alt,
+                                  size: 30,
                                   color:
                                       friends[0] ? Colors.white : Colors.black,
                                 ),
-                              ),
-                            ],
+                                Text(
+                                  'Friends',
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    color: friends[0]
+                                        ? Colors.white
+                                        : Colors.black,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                      )),
-                  Expanded(
-                      flex: 1,
-                      child: GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            if (friends[1] == false) {
-                              friends[1] = true;
-                              friends[0] = false;
-                            }
-                          });
-                        },
-                        child: Container(
-                          margin: EdgeInsets.all(20),
-                          height: 80,
-                          decoration: BoxDecoration(
-                            color: friends[1] ? Colors.black : Colors.white,
-                            border: Border.all(color: Colors.grey, width: 2),
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(
-                                CupertinoIcons.person_add_solid,
-                                size: 30,
-                                color: friends[1] ? Colors.white : Colors.black,
-                              ),
-                              Text(
-                                'Add Friends',
-                                style: TextStyle(
-                                  fontSize: 18,
+                        )),
+                    Expanded(
+                        flex: 1,
+                        child: GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              if (friends[1] == false) {
+                                friends[1] = true;
+                                friends[0] = false;
+                              }
+                            });
+                          },
+                          child: Container(
+                            margin: EdgeInsets.all(20),
+                            height: 80,
+                            decoration: BoxDecoration(
+                              color: friends[1] ? Colors.black : Colors.white,
+                              border: Border.all(color: Colors.grey, width: 2),
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  CupertinoIcons.person_add_solid,
+                                  size: 30,
                                   color:
                                       friends[1] ? Colors.white : Colors.black,
                                 ),
-                              ),
-                            ],
+                                Text(
+                                  'Add Friends',
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    color: friends[1]
+                                        ? Colors.white
+                                        : Colors.black,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                      )),
-                ],
-              ),
-              TextField(),
-              const SizedBox(
-                height: 20,
-              ),
-
-              //friends
-              if (friends[0])
-                Column(
-                  children: List.generate(names.length, (index) {
-                    return ProfileCard(name: names[index]);
-                  }),
+                        )),
+                  ],
                 ),
-              if (friends[1])
-                Column(
-                  children: List.generate(names.length,
-                      (index) => ProfileCardAdd(name: names[index])),
-                )
-              // add friends
-            ],
+                TextField(
+                  onChanged: filter,
+                  decoration: InputDecoration(
+                    labelText: "Search",
+                    suffixIcon: Icon(Icons.search),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15),
+                      borderSide: const BorderSide(color: Colors.black),
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15),
+                      borderSide: const BorderSide(color: Colors.black),
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+
+                //friends
+                if (friends[0])
+                  Column(
+                    children: List.generate(foundFriends.length, (index) {
+                      return ProfileCard(name: names[index]);
+                    }),
+                  ),
+                if (friends[1])
+                  Column(
+                    children: List.generate(foundFriends.length,
+                        (index) => ProfileCardAdd(name: names[index])),
+                  )
+                // add friends
+              ],
+            ),
           ),
         ),
       ),

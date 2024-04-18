@@ -8,7 +8,7 @@ class GenderPage extends StatefulWidget {
 }
 
 class _GenderPageState extends State<GenderPage> {
-  final List<String> activity = <String>[
+  final List<String> gender = <String>[
     'Male',
     'Female',
   ];
@@ -32,7 +32,7 @@ class _GenderPageState extends State<GenderPage> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: List.generate(activity.length, (index) {
+            children: List.generate(gender.length, (index) {
               return GestureDetector(
                 onTap: () {
                   setState(
@@ -72,7 +72,7 @@ class _GenderPageState extends State<GenderPage> {
                         ),
                       ),
                       Text(
-                        activity[index],
+                        gender[index],
                         style: const TextStyle(
                             color: Colors.black,
                             fontSize: 16,

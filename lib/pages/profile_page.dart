@@ -1,4 +1,5 @@
 import 'package:bounce_tap/bounce_tap.dart';
+import 'package:fit_pal/pages/edit_profile.dart';
 import 'package:fit_pal/pages/friend_search_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -52,22 +53,28 @@ class _ProfilePageState extends State<ProfilePage> {
             const SizedBox(
               height: 10,
             ),
-            Container(
-                height: 40,
-                width: 160,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: Colors.yellow,
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                  child: Center(
-                    child: Text(
-                      'Edit Profile',
-                      style: TextStyle(fontSize: 18, color: Colors.black),
-                    ),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                    context, MaterialPageRoute(builder: (_) => EditProfile()));
+              },
+              child: Container(
+                  height: 40,
+                  width: 160,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: Colors.black,
                   ),
-                )),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                    child: Center(
+                      child: Text(
+                        'Edit Profile',
+                        style: TextStyle(fontSize: 18, color: Colors.white),
+                      ),
+                    ),
+                  )),
+            ),
             Align(
                 alignment: Alignment.topLeft,
                 child: Text(
