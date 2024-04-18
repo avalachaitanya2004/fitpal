@@ -415,79 +415,110 @@ class _HomeState extends State<Home> {
             if (_page == 2)
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                child: Container(
-                  decoration: BoxDecoration(
-                    // color: Colors.grey,
-                    gradient: LinearGradient(
-                      begin: Alignment(0, -1),
-                      end: Alignment(0, 1),
-                      colors: [
-                        Colors.white.withOpacity(0.6),
-                        Color(0xFFF3E5F5)
-                      ], // Gradient colors
-                    ),
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  height: 120,
-                  width: double.infinity,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                    child: Row(
-                      children: [
-                        Row(
-                          children: [
-                            GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    completed = completed - 1;
-                                  });
-                                },
-                                child: Icon(Icons.remove)),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            Container(
-                              // color: Colors.grey,
-                              height: 100,
-                              width: 100,
-                              child: LiquidCircularProgressIndicator(
-                                center: SizedBox(
-                                  height: 50,
-                                  width: 50,
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(100),
-                                    child: Container(
-                                      color: Colors.grey[100],
-                                      child: Icon(Iconsax.cup4),
+                child: Hero(
+                  tag: "Water",
+                  child: GestureDetector(
+                    onTap: () {},
+                    child: Material(
+                      child: Container(
+                        decoration: BoxDecoration(
+                          // color: Colors.grey,
+                          gradient: LinearGradient(
+                            begin: Alignment(0, -1),
+                            end: Alignment(0, 1),
+                            colors: [
+                              Colors.white.withOpacity(0.6),
+                              Color(0xFFF3E5F5)
+                            ], // Gradient colors
+                          ),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        height: 120,
+                        width: double.infinity,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                          child: Row(
+                            children: [
+                              Row(
+                                children: [
+                                  GestureDetector(
+                                      onTap: () {
+                                        setState(() {
+                                          completed = completed - 1;
+                                        });
+                                      },
+                                      child: Icon(Icons.remove)),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  Container(
+                                    // color: Colors.grey,
+                                    height: 100,
+                                    width: 100,
+                                    child: LiquidCircularProgressIndicator(
+                                      center: SizedBox(
+                                        height: 50,
+                                        width: 50,
+                                        child: ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(100),
+                                          child: Container(
+                                            color: Colors.grey[100],
+                                            child: Icon(Iconsax.cup4),
+                                          ),
+                                        ),
+                                      ),
+                                      value: completed / target,
+                                      valueColor: AlwaysStoppedAnimation(
+                                          Colors.blueAccent),
+                                      backgroundColor: Colors.white,
+                                      direction: Axis.vertical,
+                                      // center: Icon(CupertinoIcons),
                                     ),
                                   ),
-                                ),
-                                value: completed / target,
-                                valueColor:
-                                    AlwaysStoppedAnimation(Colors.blueAccent),
-                                backgroundColor: Colors.white,
-                                direction: Axis.vertical,
-                                // center: Icon(CupertinoIcons),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  GestureDetector(
+                                      onTap: () {
+                                        setState(() {
+                                          completed = completed + 1;
+                                        });
+                                      },
+                                      child: Icon(Icons.add)),
+                                ],
                               ),
-                            ),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    completed = completed + 1;
-                                  });
-                                },
-                                child: Icon(Icons.add)),
-                          ],
+                              Spacer(),
+                              Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  Align(
+                                      alignment: Alignment.topRight,
+                                      child: GestureDetector(
+                                          onTap: () {
+                                            Navigator.push(context,
+                                                MaterialPageRoute(
+                                                    builder: (context) {
+                                              return WaterPage();
+                                            }));
+                                          },
+                                          child: Icon(Icons.menu))),
+                                  Text(
+                                    '${completed} Glasses Done',
+                                    style: TextStyle(fontSize: 20),
+                                  ),
+                                  Text(
+                                    '${target} Glasses ',
+                                    style: TextStyle(fontSize: 20),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
-                        Spacer(),
-                        Text(
-                          '${completed} Glasses Done',
-                          style: TextStyle(fontSize: 20),
-                        ),
-                      ],
+                      ),
                     ),
                   ),
                 ),

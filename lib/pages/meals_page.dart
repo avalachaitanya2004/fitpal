@@ -3,6 +3,7 @@ import 'package:fit_pal/Controllers/hero_dialog_route.dart';
 import 'package:fit_pal/models/food.dart';
 import 'package:fit_pal/models/food_dis.dart';
 import 'package:fit_pal/models/food_popup.dart';
+import 'package:fit_pal/pages/add_food_page.dart';
 import 'package:flutter/material.dart';
 
 class MealsPage extends StatelessWidget {
@@ -24,6 +25,36 @@ class MealsPage extends StatelessWidget {
         child: CustomScrollView(
           slivers: <Widget>[
             SliverAppBar(
+              actions: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 40.0),
+                  child: SizedBox(
+                    height: 50,
+                    width: 50,
+                    child: Hero(
+                      tag: "Add-Food",
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(100),
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) {
+                              return AddFood();
+                            }));
+                          },
+                          child: Container(
+                            color: Colors.blue,
+                            child: Icon(
+                              Icons.add,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                )
+              ],
               automaticallyImplyLeading: false,
               // pinned: true,
               floating: true,

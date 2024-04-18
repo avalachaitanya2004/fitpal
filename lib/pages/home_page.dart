@@ -3,11 +3,13 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fit_pal/models/challenges.dart';
 import 'package:fit_pal/pages/HomePages/home.dart';
+import 'package:fit_pal/pages/Leaderboard.dart';
 import 'package:fit_pal/pages/challenges_page.dart';
 import 'package:fit_pal/pages/meals_page.dart';
 import 'package:fit_pal/pages/profile_page.dart';
 import 'package:fit_pal/pages/side_menu.dart';
 import 'package:fit_pal/pages/streak_calendar.dart';
+import 'package:fit_pal/pages/water_card.dart';
 import 'package:fit_pal/pages/workout_select.dart';
 import 'package:fit_pal/pages/take_photo.dart';
 import 'package:flutter/cupertino.dart';
@@ -87,7 +89,7 @@ class _HomePageState extends State<HomePage>
                   onTap: () {
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) {
-                      return ProfilePage();
+                      return Leaderboard();
                     }));
                   },
                   leading: Icon(
@@ -120,7 +122,7 @@ class _HomePageState extends State<HomePage>
                   onTap: () {
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) {
-                      return ProfilePage();
+                      return WaterPage();
                     }));
                   },
                   leading: Icon(
