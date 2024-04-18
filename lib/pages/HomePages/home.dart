@@ -125,28 +125,39 @@ class _HomeState extends State<Home> {
                                     // height: 80,
                                     // width: 90,
                                     child: Center(
-                                      child: Column(
+                                      child: Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         children: [
-                                          Text(
-                                            'Protein',
-                                            style: TextStyle(
-                                              fontFamily: 'Roboto',
-                                              // color: Colors.blue,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
+                                          Icon(CupertinoIcons.flame),
                                           const SizedBox(
-                                            height: 10,
+                                            width: 10,
                                           ),
-                                          Text(
-                                            '32%',
-                                            style: TextStyle(
-                                              fontSize: 16,
-                                              color:
-                                                  Colors.black.withOpacity(0.7),
-                                            ),
+                                          Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                '1455',
+                                                style: TextStyle(
+                                                  fontFamily: 'Roboto',
+                                                  // color: Colors.blue,
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                              const SizedBox(
+                                                height: 1,
+                                              ),
+                                              Text(
+                                                'Steps',
+                                                style: TextStyle(
+                                                  fontSize: 14,
+                                                  color: Colors.black
+                                                      .withOpacity(0.7),
+                                                ),
+                                              ),
+                                            ],
                                           ),
                                         ],
                                       ),
@@ -160,28 +171,39 @@ class _HomeState extends State<Home> {
                                     // height: 80,
                                     // width: 90,
                                     child: Center(
-                                      child: Column(
+                                      child: Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         children: [
-                                          Text(
-                                            'Carbs',
-                                            style: TextStyle(
-                                              fontFamily: 'Roboto',
-                                              // color: Colors.blue,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
+                                          Icon(CupertinoIcons.flame),
                                           const SizedBox(
-                                            height: 10,
+                                            width: 10,
                                           ),
-                                          Text(
-                                            '44%',
-                                            style: TextStyle(
-                                              fontSize: 16,
-                                              color:
-                                                  Colors.black.withOpacity(0.7),
-                                            ),
+                                          Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                '1455',
+                                                style: TextStyle(
+                                                  fontFamily: 'Roboto',
+                                                  // color: Colors.blue,
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                              const SizedBox(
+                                                height: 1,
+                                              ),
+                                              Text(
+                                                'Steps',
+                                                style: TextStyle(
+                                                  fontSize: 14,
+                                                  color: Colors.black
+                                                      .withOpacity(0.7),
+                                                ),
+                                              ),
+                                            ],
                                           ),
                                         ],
                                       ),
@@ -195,28 +217,39 @@ class _HomeState extends State<Home> {
                                     // height: 80,
                                     // width: 90,
                                     child: Center(
-                                      child: Column(
+                                      child: Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         children: [
-                                          Text(
-                                            'Fat',
-                                            style: TextStyle(
-                                              fontFamily: 'Roboto',
-                                              // color: Colors.blue,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
+                                          Icon(CupertinoIcons.flame),
                                           const SizedBox(
-                                            height: 10,
+                                            width: 10,
                                           ),
-                                          Text(
-                                            '28%',
-                                            style: TextStyle(
-                                              fontSize: 16,
-                                              color:
-                                                  Colors.black.withOpacity(0.7),
-                                            ),
+                                          Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                '1455',
+                                                style: TextStyle(
+                                                  fontFamily: 'Roboto',
+                                                  // color: Colors.blue,
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                              const SizedBox(
+                                                height: 1,
+                                              ),
+                                              Text(
+                                                'Steps',
+                                                style: TextStyle(
+                                                  fontSize: 14,
+                                                  color: Colors.black
+                                                      .withOpacity(0.7),
+                                                ),
+                                              ),
+                                            ],
                                           ),
                                         ],
                                       ),

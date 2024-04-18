@@ -5,9 +5,11 @@ import 'package:fit_pal/models/challenges.dart';
 import 'package:fit_pal/pages/HomePages/home.dart';
 import 'package:fit_pal/pages/challenges_page.dart';
 import 'package:fit_pal/pages/meals_page.dart';
+import 'package:fit_pal/pages/profile_page.dart';
 import 'package:fit_pal/pages/side_menu.dart';
 import 'package:fit_pal/pages/workout_select.dart';
 import 'package:fit_pal/pages/take_photo.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 // import 'package:iconsax_flutter/iconsax_flutter.dart';
@@ -57,39 +59,119 @@ class _HomePageState extends State<HomePage>
   Widget build(BuildContext context) {
     // _con.forward();
     return Scaffold(
+      // appBar: AppBar(),
+      drawer: Drawer(
+        child: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              children: [
+                ListTile(
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return ProfilePage();
+                    }));
+                  },
+                  leading: Icon(
+                    Icons.person_outline_outlined,
+                    size: 30,
+                  ),
+                  title: Text(
+                    'Profile',
+                    style: TextStyle(fontSize: 18),
+                  ),
+                ),
+                ListTile(
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return ProfilePage();
+                    }));
+                  },
+                  leading: Icon(
+                    Icons.place,
+                    size: 30,
+                  ),
+                  title: Text(
+                    'Leaderboard',
+                    style: TextStyle(fontSize: 18),
+                  ),
+                ),
+                ListTile(
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return ProfilePage();
+                    }));
+                  },
+                  leading: Icon(
+                    CupertinoIcons.flame,
+                    size: 30,
+                    color: Colors.red,
+                  ),
+                  title: Text(
+                    'Streak',
+                    style: TextStyle(fontSize: 18),
+                  ),
+                ),
+                ListTile(
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return ProfilePage();
+                    }));
+                  },
+                  leading: Icon(
+                    Icons.water_drop,
+                    color: Colors.blue,
+                    size: 30,
+                  ),
+                  title: Text(
+                    'Water',
+                    style: TextStyle(fontSize: 18),
+                  ),
+                ),
+                Spacer(),
+                GestureDetector(
+                  onTap: () {},
+                  child: Icon(
+                    Icons.logout,
+                    color: Colors.red,
+                    size: 34,
+                  ),
+                )
+              ],
+            ),
+          ),
+        ),
+      ),
       // backgroundColor: Color(0xFF17203A),
       backgroundColor: Colors.white,
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         // title: Text('Home Page'),
-        leading: Padding(
-          padding: const EdgeInsets.only(left: 16.0),
-          child: Container(
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              border: Border.all(
-                color: Colors.white, // You can set the border color here
-                width: 1.0, // You can set the border width here
-              ),
-            ),
-            child: GestureDetector(
-              onTap: () {
-                // if (isSideMenuClosed) {
-                //   _anicon.forward();
-                // } else {
-                //   _anicon.reverse();
-                // }
-                // setState(() {
-                //   isSideMenuClosed = !isSideMenuClosed;
-                // });
-              },
-              child: CircleAvatar(
-                backgroundImage: AssetImage('assets/images/default_pic.jpeg'),
-              ),
-            ),
-          ),
-        ),
+        // leading: Padding(
+        //   padding: const EdgeInsets.only(left: 16.0),
+        //   child: Container(
+        //     decoration: BoxDecoration(
+        //       shape: BoxShape.circle,
+        //       border: Border.all(
+        //         color: Colors.white, // You can set the border color here
+        //         width: 1.0, // You can set the border width here
+        //       ),
+        //     ),
+        //     child: GestureDetector(
+        //       onTap: () {
+        //         Scaffold.of(context).openDrawer();
+        //       },
+        //       child: CircleAvatar(
+        //         backgroundImage: AssetImage('assets/images/default_pic.jpeg'),
+        //       ),
+        //     ),
+        //   ),
+        // ),
         // GestureDetector(onTap: logout, child: Icon(Icons.logout_rounded)),
       ),
       body: PageView(
