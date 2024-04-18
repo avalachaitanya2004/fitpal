@@ -10,6 +10,7 @@ import 'package:custom_sliding_segmented_control/custom_sliding_segmented_contro
 import 'package:fit_pal/utility/date_picker_widget.dart';
 import 'package:fit_pal/pages/HomePages/segmentedcontrol.dart';
 import 'package:flutter/widgets.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:liquid_progress_indicator_v2/liquid_progress_indicator.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -415,47 +416,79 @@ class _HomeState extends State<Home> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20.0),
                 child: Container(
-                  color: Colors.grey,
+                  decoration: BoxDecoration(
+                    // color: Colors.grey,
+                    gradient: LinearGradient(
+                      begin: Alignment(0, -1),
+                      end: Alignment(0, 1),
+                      colors: [
+                        Colors.white.withOpacity(0.6),
+                        Color(0xFFF3E5F5)
+                      ], // Gradient colors
+                    ),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
                   height: 120,
                   width: double.infinity,
-                  child: Row(
-                    children: [
-                      Container(
-                        // color: Colors.grey,
-                        height: 100,
-                        width: 100,
-                        child: Center(
-                          child: LiquidCircularProgressIndicator(
-                            value: completed / target,
-                            valueColor:
-                                AlwaysStoppedAnimation(Colors.blueAccent),
-                            backgroundColor: Colors.white,
-                            direction: Axis.vertical,
-                            // center: Icon(CupertinoIcons),
-                          ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                    child: Row(
+                      children: [
+                        Row(
+                          children: [
+                            GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    completed = completed - 1;
+                                  });
+                                },
+                                child: Icon(Icons.remove)),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Container(
+                              // color: Colors.grey,
+                              height: 100,
+                              width: 100,
+                              child: LiquidCircularProgressIndicator(
+                                center: SizedBox(
+                                  height: 50,
+                                  width: 50,
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(100),
+                                    child: Container(
+                                      color: Colors.grey[100],
+                                      child: Icon(Iconsax.cup4),
+                                    ),
+                                  ),
+                                ),
+                                value: completed / target,
+                                valueColor:
+                                    AlwaysStoppedAnimation(Colors.blueAccent),
+                                backgroundColor: Colors.white,
+                                direction: Axis.vertical,
+                                // center: Icon(CupertinoIcons),
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    completed = completed + 1;
+                                  });
+                                },
+                                child: Icon(Icons.add)),
+                          ],
                         ),
-                      ),
-                      Spacer(),
-                      Row(
-                        children: [
-                          GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  completed = completed - 1;
-                                });
-                              },
-                              child: Icon(Icons.add)),
-                          Text('${completed}/${target}'),
-                          GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  completed = completed + 1;
-                                });
-                              },
-                              child: Icon(Icons.add)),
-                        ],
-                      ),
-                    ],
+                        Spacer(),
+                        Text(
+                          '${completed} Glasses Done',
+                          style: TextStyle(fontSize: 20),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
