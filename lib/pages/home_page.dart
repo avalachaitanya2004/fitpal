@@ -177,6 +177,7 @@ class _HomePageState extends State<HomePage>
                         style: TextStyle(fontSize: 18),
                       ),
                     ),
+                    Spacer(),
                     ListTile(
                       onTap: () {
                         Navigator.push(context,
@@ -228,7 +229,6 @@ class _HomePageState extends State<HomePage>
                         style: TextStyle(fontSize: 18),
                       ),
                     ),
-                    Spacer(),
                     GestureDetector(
                       onTap: () {},
                       child: Icon(

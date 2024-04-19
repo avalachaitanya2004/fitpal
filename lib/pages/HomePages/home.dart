@@ -8,7 +8,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:custom_sliding_segmented_control/custom_sliding_segmented_control.dart';
 import 'package:fit_pal/utility/date_picker_widget.dart';
-import 'package:fit_pal/pages/HomePages/segmentedcontrol.dart';
 import 'package:flutter/widgets.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:liquid_progress_indicator_v2/liquid_progress_indicator.dart';
@@ -328,10 +327,6 @@ class _HomeState extends State<Home> {
                 ),
               ),
             ),
-
-            // Container(
-            //   child: SegmentedControl(),
-            // ),
             const SizedBox(
               height: 10,
             ),
