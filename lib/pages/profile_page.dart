@@ -13,291 +13,123 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  Widget buildHeader() {
+    return Column(
+      children: [
+        CircleAvatar(
+          backgroundImage: NetworkImage(
+              "https://i.pinimg.com/564x/e9/51/25/e951250f7f452c8e278d12ac073b9b5b.jpg"),
+          radius: 60,
+        ),
+        const SizedBox(height: 20),
+        Text('John Jacobs',
+            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+        Text('johnjacobs@gmail.com',
+            style: TextStyle(fontSize: 14, color: Colors.grey)),
+      ],
+    );
+  }
+
+  Widget buildAction(String title, IconData icon, Function() onTap) {
+    return BounceTap(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 12),
+        decoration: BoxDecoration(
+          color: Colors.grey[200],
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(icon, size: 24),
+            const SizedBox(width: 10),
+            Text(title, style: TextStyle(fontSize: 18)),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget buildStatsCard(
+      String title, String value, IconData icon, Color iconColor) {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+              color: Colors.grey.withOpacity(0.3),
+              spreadRadius: 1,
+              blurRadius: 2,
+              offset: Offset(0, 1)),
+        ],
+      ),
+      padding: const EdgeInsets.all(20),
+      child: Row(
+        children: [
+          Icon(icon, size: 30, color: iconColor),
+          const SizedBox(width: 10),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(value,
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+              Text(title, style: TextStyle(fontSize: 16, color: Colors.grey)),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget buildStatsGrid() {
+    return GridView.count(
+      crossAxisCount: 2,
+      shrinkWrap: true,
+      physics: NeverScrollableScrollPhysics(),
+      childAspectRatio: 3 / 2,
+      crossAxisSpacing: 10,
+      mainAxisSpacing: 10,
+      children: [
+        buildStatsCard('Total XP', '4827', Icons.bolt, Colors.amber),
+        buildStatsCard('Streak', '177', CupertinoIcons.flame, Colors.red),
+        buildStatsCard('Weight', 'Value', Icons.settings, Colors.blue),
+        buildStatsCard('Height', '123', Icons.update, Colors.green),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.grey[100],
       appBar: AppBar(
         actions: [
           IconButton(onPressed: () {}, icon: Icon(Icons.share)),
           IconButton(onPressed: () {}, icon: Icon(Icons.logout)),
         ],
-        title: Text('Profile'),
+        title: Text('Profile', style: TextStyle(color: Colors.black)),
         backgroundColor: Colors.white,
+        elevation: 1,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(20),
         child: Column(
           children: [
-            const SizedBox(
-              height: 10,
-            ),
-            CircleAvatar(
-              backgroundImage: NetworkImage(
-                  "https://i.pinimg.com/564x/e9/51/25/e951250f7f452c8e278d12ac073b9b5b.jpg"),
-              radius: 60,
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Text(
-              'John Jacobs',
-              style: TextStyle(fontSize: 24),
-            ),
-            Text(
-              'johnjacobs@gmail.com',
-              style: TextStyle(fontSize: 14),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            GestureDetector(
-              onTap: () {
-                Navigator.push(
-                    context, MaterialPageRoute(builder: (_) => EditProfile()));
-              },
-              child: Container(
-                  height: 40,
-                  width: 160,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: Colors.black,
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                    child: Center(
-                      child: Text(
-                        'Edit Profile',
-                        style: TextStyle(fontSize: 18, color: Colors.white),
-                      ),
-                    ),
-                  )),
-            ),
-            Align(
-                alignment: Alignment.topLeft,
-                child: Text(
-                  'Overview',
-                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-                )),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10.0),
-              child: Row(
-                children: [
-                  Expanded(
-                      flex: 1,
-                      child: Container(
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            // color: Colors.grey,
-                            border: Border.all(color: Colors.grey, width: 2)),
-                        margin: EdgeInsets.all(10),
-                        height: 90,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Icon(
-                                  Icons.bolt,
-                                  size: 30,
-                                  color: Colors.yellow,
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      '4827',
-                                      style: TextStyle(fontSize: 20),
-                                    ),
-                                    Text('Total XP',
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            color:
-                                                Colors.black.withOpacity(0.6))),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      )),
-                  Expanded(
-                      flex: 1,
-                      child: Container(
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            // color: Colors.grey,
-                            border: Border.all(color: Colors.grey, width: 2)),
-                        margin: EdgeInsets.all(10),
-                        height: 90,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Icon(
-                                  CupertinoIcons.flame,
-                                  size: 30,
-                                  color: Colors.red,
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      '177',
-                                      style: TextStyle(fontSize: 20),
-                                    ),
-                                    Text('Day Streak',
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            color:
-                                                Colors.black.withOpacity(0.6))),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      )),
-                ],
-              ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15.0),
-              child: BounceTap(
-                onTap: () {},
-                child: Container(
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                    border: Border.all(color: Colors.grey, width: 2),
-                  ),
-                  height: 50,
-                  child: Center(
-                      child: GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => FriendSearch()));
-                    },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(Icons.person_add_outlined),
-                        Text(
-                          'Add Friends',
-                          style: TextStyle(fontSize: 18),
-                        ),
-                      ],
-                    ),
-                  )),
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Align(
-                alignment: Alignment.topLeft,
-                child: Text(
-                  'Metrics',
-                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-                )),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10.0),
-              child: Row(
-                children: [
-                  Expanded(
-                      flex: 1,
-                      child: Container(
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            // color: Colors.grey,
-                            border: Border.all(color: Colors.grey, width: 2)),
-                        margin: EdgeInsets.all(10),
-                        height: 90,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Icon(
-                                  Icons.bolt,
-                                  size: 30,
-                                  color: Colors.yellow,
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      '4827',
-                                      style: TextStyle(fontSize: 20),
-                                    ),
-                                    Text('Height',
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            color:
-                                                Colors.black.withOpacity(0.6))),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      )),
-                  Expanded(
-                      flex: 1,
-                      child: Container(
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            // color: Colors.grey,
-                            border: Border.all(color: Colors.grey, width: 2)),
-                        margin: EdgeInsets.all(10),
-                        height: 90,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Icon(
-                                  CupertinoIcons.flame,
-                                  size: 30,
-                                  color: Colors.red,
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      '177',
-                                      style: TextStyle(fontSize: 20),
-                                    ),
-                                    Text('Weight',
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            color:
-                                                Colors.black.withOpacity(0.6))),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      )),
-                ],
-              ),
-            ),
+            buildHeader(),
+            const SizedBox(height: 30),
+            buildAction('Edit Profile', Icons.edit, () {
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (_) => EditProfile()));
+            }),
+            const SizedBox(height: 20),
+            buildStatsGrid(),
+            const SizedBox(height: 20),
+            buildAction('Add Friends', Icons.person_add_outlined, () {
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (_) => FriendSearch()));
+            }),
           ],
         ),
       ),

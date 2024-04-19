@@ -31,13 +31,20 @@ class ExcerciseCard extends StatelessWidget {
             children: [
               // picture
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(20.0),
                 child: Container(
-                  height: 80,
-                  width: 80,
+                  height: 60,
+                  width: 60,
                   // color: Colors.getProperty(property),
                   decoration: BoxDecoration(
                     color: Colors.grey,
+                    image: DecorationImage(
+                      alignment: Alignment.center,
+                      filterQuality: FilterQuality.high,
+                      scale: 0.5,
+                      image: AssetImage('assets/images/1.jpg'),
+                      fit: BoxFit.fill,
+                    ),
                     borderRadius: BorderRadius.circular(10),
                   ),
                 ),

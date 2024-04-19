@@ -16,7 +16,7 @@ class _GenderPageState extends State<GenderPage> {
     Icons.male_rounded,
     Icons.female_rounded,
   ];
-  final List<bool> isSelected = <bool>[false, false];
+  final List<bool> isSelected = <bool>[true, false];
   @override
   Widget build(BuildContext context) {
     return Column(

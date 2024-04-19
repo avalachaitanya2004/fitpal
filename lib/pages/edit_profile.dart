@@ -198,7 +198,6 @@ class _EditProfileState extends State<EditProfile> {
                 ],
               ),
               SizedBox(height: 20),
-
               Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: TextField(
@@ -353,20 +352,6 @@ class _EditProfileState extends State<EditProfile> {
                       )),
                 ),
               ),
-              // Padding(
-              //   padding: const EdgeInsets.fromLTRB(20.0, 10, 20, 10),
-              //   child: TextField(
-              //     focusNode: focusNode2,
-              //     controller: newController,
-              //     decoration: InputDecoration(
-              //       prefixIcon: const Icon(Icons.lock),
-              //       labelText: 'New password',
-              //       border: OutlineInputBorder(
-              //         borderRadius: BorderRadius.circular(15),
-              //       ),
-              //     ),
-              //   ),
-              // ),
               Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: ElevatedButton(
@@ -381,18 +366,6 @@ class _EditProfileState extends State<EditProfile> {
                   ),
                 ),
               ),
-
-              // Padding(
-              //   padding: const EdgeInsets.symmetric(horizontal: 20.0),
-              //   child: TextField(
-              //     onChanged: filter,
-              //     decoration: const InputDecoration(
-              //       labelText: "Search",
-              //       suffixIcon: Icon(Icons.search),
-              //       border: UnderlineInputBorder(),
-              //     ),
-              //   ),
-              // ),
             ],
           ),
         ),

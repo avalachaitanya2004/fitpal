@@ -13,7 +13,6 @@ import 'package:fit_pal/pages/edit_profile.dart';
 import 'package:fit_pal/pages/friend_search_page.dart';
 import 'package:fit_pal/pages/getStarted.dart';
 import 'package:fit_pal/pages/home_page.dart';
-import 'package:fit_pal/pages/introPages/intro_page.dart';
 import 'package:fit_pal/pages/introPages/intro_page_2.dart';
 import 'package:fit_pal/pages/login_page.dart';
 import 'package:fit_pal/pages/pre_login.dart';
@@ -30,10 +29,9 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 // import 'dart:js_util';
-late List<CameraDescription> cameras;
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  cameras = await availableCameras();
 
   Platform.isAndroid
       ? await Firebase.initializeApp(

@@ -23,7 +23,7 @@ class _GoalsPageState extends State<GoalsPage> {
     Icons.man_3_rounded,
     Icons.directions_walk_rounded,
   ];
-  final List<bool> isSelected = <bool>[false, false, false, false];
+  final List<bool> isSelected = <bool>[true, false, false];
   @override
   Widget build(BuildContext context) {
     return Column(

@@ -26,7 +26,7 @@ class _ActivityPageState extends State<ActivityPage> {
     Icons.directions_walk_rounded,
     Icons.sports_gymnastics_rounded,
   ];
-  final List<bool> isSelected = <bool>[false, false, false, false];
+  final List<bool> isSelected = <bool>[true, false, false, false];
   @override
   Widget build(BuildContext context) {
     return Column(
