@@ -2,9 +2,6 @@ import 'package:fit_pal/models/excercises.dart';
 import 'package:fit_pal/models/exerciseData.dart';
 import 'package:fit_pal/models/exerciseselect_card.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-// import 'models/exercise_card.dart'; // Ensure you have the correct path to your local models
-// import 'models/exercise_select_card.dart'; // Ensure the correct path, updated name for consistency
 
 class CreatePlaylist extends StatefulWidget {
   const CreatePlaylist({super.key});
@@ -84,14 +81,14 @@ class _CreatePlaylistState extends State<CreatePlaylist> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text("Create Playlist"),
+        title: const Text("Create Playlist"),
         backgroundColor: Colors.white,
         surfaceTintColor: Colors.white,
         leading: GestureDetector(
           onTap: () => Navigator.pop(context),
           child: CircleAvatar(
             backgroundColor: Colors.white.withOpacity(0.4),
-            child: Icon(Icons.arrow_back, color: Colors.black),
+            child: const Icon(Icons.arrow_back, color: Colors.black),
           ),
         ),
       ),
@@ -126,7 +123,7 @@ class _CreatePlaylistState extends State<CreatePlaylist> {
                   padding: const EdgeInsets.symmetric(horizontal: 20.0),
                   child: TextField(
                     onChanged: filter,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       labelText: "Search",
                       suffixIcon: Icon(Icons.search),
                       border: UnderlineInputBorder(),
@@ -140,10 +137,10 @@ class _CreatePlaylistState extends State<CreatePlaylist> {
                   ),
                 ),
                 if (selected())
-                  Align(
+                  const Align(
                       alignment: Alignment.topLeft,
                       child: Padding(
-                        padding: const EdgeInsets.fromLTRB(20.0, 15, 20, 5),
+                        padding: EdgeInsets.fromLTRB(20.0, 15, 20, 5),
                         child: Text(
                           'Selected Exercises',
                           style: TextStyle(color: Colors.black, fontSize: 18),
@@ -158,10 +155,10 @@ class _CreatePlaylistState extends State<CreatePlaylist> {
                     .toList(),
                 if (selected()) const Divider(),
                 // SizedBox(height: nothingSelected() ? 20 : 0),
-                Align(
+                const Align(
                     alignment: Alignment.topLeft,
                     child: Padding(
-                      padding: const EdgeInsets.fromLTRB(20.0, 10, 20, 5),
+                      padding: EdgeInsets.fromLTRB(20.0, 10, 20, 5),
                       child: Text(
                         'Available Exercises',
                         style: TextStyle(color: Colors.black, fontSize: 18),
@@ -177,35 +174,31 @@ class _CreatePlaylistState extends State<CreatePlaylist> {
             ),
           ),
           if (selected())
-            Align(
-              alignment: Alignment.bottomRight,
-              child: Positioned(
-                child: Padding(
-                  padding: const EdgeInsets.only(bottom: 30.0, right: 40),
-                  child: Container(
-                    // width: 75,
-                    child: FloatingActionButton(
-                      shape: CircleBorder(),
-                      // mini: true,
-                      backgroundColor: Colors.blue,
-                      onPressed: () {},
-                      child: Icon(
-                        Icons.check,
-                        size: 30,
-                      ),
-                      // child: Text(
-                      //   "Create",
-                      //   style: TextStyle(
-                      //     fontFamily: 'Roboto',
-                      //     fontSize: 15,
-                      //     color: Colors.black,
-                      //     fontWeight: FontWeight.w500,
-                      //   ),
-                      // ),
-                    ),
-                  ),
+            Positioned(
+              bottom: 20,
+              right: 20,
+              // child: Container(
+              // width: 75,
+              child: FloatingActionButton(
+                shape: const CircleBorder(),
+                // mini: true,
+                backgroundColor: Colors.white,
+                onPressed: () {},
+                child: const Icon(
+                  Icons.check,
+                  size: 30,
                 ),
+                // child: Text(
+                //   "Create",
+                //   style: TextStyle(
+                //     fontFamily: 'Roboto',
+                //     fontSize: 15,
+                //     color: Colors.black,
+                //     fontWeight: FontWeight.w500,
+                //   ),
+                // ),
               ),
+              // ),
             ),
         ],
       ),

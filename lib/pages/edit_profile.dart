@@ -91,14 +91,13 @@ class _EditProfileState extends State<EditProfile> {
                 children: [
                   _image != null
                       ? CircleAvatar(
-                          radius: 80,
+                          radius: 75,
                           backgroundImage: FileImage(_image!),
                         )
                       : CircleAvatar(
-                          radius: 80,
-                          backgroundImage:
-                              NetworkImage('https://via.placeholder.com/150'),
-                          backgroundColor: Colors.grey[200],
+                          radius: 75,
+                          backgroundImage: NetworkImage(
+                              'https://i.pinimg.com/564x/e9/51/25/e951250f7f452c8e278d12ac073b9b5b.jpg'),
                         ),
                   Positioned(
                       bottom: 0,

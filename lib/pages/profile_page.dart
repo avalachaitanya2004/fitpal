@@ -18,6 +18,10 @@ class _ProfilePageState extends State<ProfilePage> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        actions: [
+          IconButton(onPressed: () {}, icon: Icon(Icons.share)),
+          IconButton(onPressed: () {}, icon: Icon(Icons.logout)),
+        ],
         title: Text('Profile'),
         backgroundColor: Colors.white,
       ),
@@ -28,17 +32,10 @@ class _ProfilePageState extends State<ProfilePage> {
             const SizedBox(
               height: 10,
             ),
-            Center(
-              child: SizedBox(
-                height: 120,
-                width: 120,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(100),
-                  child: Container(
-                    color: Colors.grey,
-                  ),
-                ),
-              ),
+            CircleAvatar(
+              backgroundImage: NetworkImage(
+                  "https://i.pinimg.com/564x/e9/51/25/e951250f7f452c8e278d12ac073b9b5b.jpg"),
+              radius: 60,
             ),
             const SizedBox(
               height: 20,

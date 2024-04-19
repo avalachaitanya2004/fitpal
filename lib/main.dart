@@ -7,6 +7,7 @@ import 'package:fit_pal/Controllers/login_register_controller.dart';
 import 'package:fit_pal/loadingPages/loadingpage1.dart';
 import 'package:fit_pal/pages/HomePages/home.dart';
 import 'package:fit_pal/pages/add_food_page.dart';
+import 'package:fit_pal/pages/bottomnav.dart';
 import 'package:fit_pal/pages/edit_profile.dart';
 import 'package:fit_pal/pages/friend_search_page.dart';
 import 'package:fit_pal/pages/getStarted.dart';
