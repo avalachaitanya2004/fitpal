@@ -71,6 +71,7 @@ class _ProfilePageState extends State<ProfilePage> {
           Icon(icon, size: 30, color: iconColor),
           const SizedBox(width: 10),
           Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(value,

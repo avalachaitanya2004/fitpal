@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:custom_sliding_segmented_control/custom_sliding_segmented_control.dart';
 import 'package:fit_pal/utility/date_picker_widget.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:liquid_progress_indicator_v2/liquid_progress_indicator.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -129,7 +130,11 @@ class _HomeState extends State<Home> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         children: [
-                                          Icon(CupertinoIcons.flame),
+                                          SvgPicture.asset(
+                                            'assets/svg/steps.svg',
+                                            width: 18,
+                                            height: 18,
+                                          ),
                                           const SizedBox(
                                             width: 10,
                                           ),
