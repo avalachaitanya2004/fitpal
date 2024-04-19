@@ -406,19 +406,104 @@ class _HomeState extends State<Home> {
                   return FoodCard(food: today[index]);
                 }),
               ),
+            SizedBox(
+              height: 66,
+            ),
             if (_page == 1) WorkoutHomeCard(excercise: excercises),
             if (_page == 2)
-              Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Hero(
-                  tag: "Water",
-                  child: GestureDetector(
-                    onTap: () {},
+              Column(
+                children: [
+                  Hero(
+                    tag: 'Water',
                     child: Material(
-                      child: Stack(
-                        children: [
-                          Align(
-                              alignment: Alignment.topRight,
+                      child: Container(
+                        padding: const EdgeInsets.all(20.0),
+                        child: Stack(
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                color: Colors.grey,
+                                gradient: LinearGradient(
+                                  begin: Alignment(0, -1),
+                                  end: Alignment(0, 1),
+                                  colors: [
+                                    Colors.white.withOpacity(0.6),
+                                    Color(0xFFF3E5F5)
+                                  ], // Gradient colors
+                                ),
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              height: 170,
+                              // width: double.infinity,
+                              // width: 250,
+                              child: Center(
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    GestureDetector(
+                                        onTap: () {
+                                          setState(() {
+                                            completed = completed - 1;
+                                          });
+                                        },
+                                        child: Icon(Icons.remove)),
+                                    const SizedBox(
+                                      width: 10,
+                                    ),
+                                    Container(
+                                      // color: Colors.grey,
+                                      height: 170,
+                                      width: 170,
+                                      child: LiquidCircularProgressIndicator(
+                                        center: SizedBox(
+                                          height: 90,
+                                          width: 90,
+                                          child: ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(100),
+                                            child: Container(
+                                              color: Colors.grey[100],
+                                              child: Center(
+                                                  child: Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  Text(
+                                                    '${completed}/${target}',
+                                                    style:
+                                                        TextStyle(fontSize: 16),
+                                                  ),
+                                                  Icon(Icons.track_changes),
+                                                ],
+                                              )),
+                                            ),
+                                          ),
+                                        ),
+                                        value: completed / target,
+                                        valueColor: AlwaysStoppedAnimation(
+                                            Colors.blueAccent),
+                                        backgroundColor: Colors.white,
+                                        direction: Axis.vertical,
+                                        // center: Icon(CupertinoIcons),
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      width: 10,
+                                    ),
+                                    GestureDetector(
+                                        onTap: () {
+                                          setState(() {
+                                            completed = completed + 1;
+                                          });
+                                        },
+                                        child: Icon(Icons.add)),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Positioned(
+                              right: -15,
+                              top: -15,
                               child: Padding(
                                 padding:
                                     const EdgeInsets.only(right: 20.0, top: 20),
@@ -432,96 +517,18 @@ class _HomeState extends State<Home> {
                                     }));
                                   },
                                 ),
-                              )),
-                          Container(
-                            decoration: BoxDecoration(
-                              // color: Colors.grey,
-                              // gradient: LinearGradient(
-                              //   begin: Alignment(0, -1),
-                              //   end: Alignment(0, 1),
-                              //   colors: [
-                              //     Colors.white.withOpacity(0.6),
-                              //     Color(0xFFF3E5F5)
-                              //   ], // Gradient colors
-                              // ),
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            height: 170,
-                            // width: double.infinity,
-                            // width: 250,
-                            child: Center(
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  GestureDetector(
-                                      onTap: () {
-                                        setState(() {
-                                          completed = completed - 1;
-                                        });
-                                      },
-                                      child: Icon(Icons.remove)),
-                                  const SizedBox(
-                                    width: 10,
-                                  ),
-                                  Container(
-                                    // color: Colors.grey,
-                                    height: 170,
-                                    width: 170,
-                                    child: LiquidCircularProgressIndicator(
-                                      center: SizedBox(
-                                        height: 90,
-                                        width: 90,
-                                        child: ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(100),
-                                          child: Container(
-                                            color: Colors.grey[100],
-                                            child: Center(
-                                                child: Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: [
-                                                Text(
-                                                  '${completed}/${target}',
-                                                  style:
-                                                      TextStyle(fontSize: 16),
-                                                ),
-                                                Icon(Icons.track_changes),
-                                              ],
-                                            )),
-                                          ),
-                                        ),
-                                      ),
-                                      value: completed / target,
-                                      valueColor: AlwaysStoppedAnimation(
-                                          Colors.blueAccent),
-                                      backgroundColor: Colors.white,
-                                      direction: Axis.vertical,
-                                      // center: Icon(CupertinoIcons),
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    width: 10,
-                                  ),
-                                  GestureDetector(
-                                      onTap: () {
-                                        setState(() {
-                                          completed = completed + 1;
-                                        });
-                                      },
-                                      child: Icon(Icons.add)),
-                                ],
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ),
-                ),
+                  SizedBox(
+                    height: 66,
+                  ),
+                ],
               ),
-
-            // A tab view for meals, activity, water.
           ],
         ),
       ),
