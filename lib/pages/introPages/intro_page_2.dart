@@ -50,6 +50,12 @@ class _IntroPage2State extends State<IntroPage2>
   bool isFirstTime = true;
   bool entered_name = true;
   final TextEditingController name = TextEditingController();
+  final TextEditingController age = TextEditingController();
+  final TextEditingController gender = TextEditingController();
+  final TextEditingController height = TextEditingController();
+  final TextEditingController weight = TextEditingController();
+  final TextEditingController activity = TextEditingController();
+  final TextEditingController goal = TextEditingController();
   AnimationController? _con;
   late Animation<double> ani;
   final PageController _pages = PageController();
@@ -109,13 +115,14 @@ class _IntroPage2State extends State<IntroPage2>
                   name: name,
                   entered_name: entered_name,
                   isFirstTime: isFirstTime,
+                  age: age,
                 ),
               ),
-              const GenderPage(),
-              const MetricsPage(),
-              const WeightMetrics(),
-              const ActivityPage(),
-              const GoalsPage(),
+              GenderPage(genders: gender),
+              MetricsPage(height: height),
+              WeightMetrics(weight: weight),
+              ActivityPage(activity: activity),
+              GoalsPage(goal: goal)
             ],
           ),
           Container(
@@ -172,6 +179,12 @@ class _IntroPage2State extends State<IntroPage2>
                         padding: const EdgeInsets.only(bottom: 20),
                         child: ElevatedButton(
                             onPressed: () {
+                              print(name.text);
+                              print(age.text);
+                              print(gender.text);
+                              print(height.text);
+                              print(weight.text);
+                              print(activity.text);
                               Navigator.pushNamed(context, '/home');
                             },
                             style: buttonPrimary,

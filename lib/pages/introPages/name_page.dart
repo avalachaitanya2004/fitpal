@@ -8,8 +8,10 @@ class NamePage extends StatefulWidget {
       {super.key,
       required this.name,
       required this.entered_name,
-      required this.isFirstTime});
+      required this.isFirstTime,
+      required this.age});
   final TextEditingController name;
+  final TextEditingController age;
   bool entered_name;
   final bool isFirstTime;
 
@@ -26,6 +28,13 @@ class _NamePageState extends State<NamePage> {
       required this.isFirstTime});
   // TextEditingController name2 =${widget.name};
   TextEditingController name;
+  late TextEditingController ages;
+  @override
+  void initState() {
+    ages = widget.age;
+    super.initState();
+  }
+
   bool entered_name;
   bool isFirstTime;
   DateTime age = DateTime(2024, 3, 15);
@@ -33,6 +42,7 @@ class _NamePageState extends State<NamePage> {
   // print('bool is ${entered_name}');
   @override
   Widget build(BuildContext context) {
+    ages.text = _currentValue.toString();
     entered_name = widget.entered_name;
     print('bool is ${entered_name}');
     return SingleChildScrollView(

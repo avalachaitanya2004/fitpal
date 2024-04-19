@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:fit_pal/numberpicker/numberpicker.dart';
 
 class MetricsPage extends StatefulWidget {
-  const MetricsPage({super.key});
+  const MetricsPage({super.key, required this.height});
+  final TextEditingController height;
 
   @override
   State<MetricsPage> createState() => _MetricsPageState();
@@ -13,10 +14,19 @@ class MetricsPage extends StatefulWidget {
 bool indx = true;
 
 class _MetricsPageState extends State<MetricsPage> {
+  late TextEditingController height;
+  @override
+  void initState() {
+    // TODO: implement initState
+    height = widget.height;
+    super.initState();
+  }
+
   double _currentDoubleValueftin = 3.0;
   int _currentValuecm = 91;
   @override
   Widget build(BuildContext context) {
+    height.text = _currentValuecm.toString();
     return Column(
       children: [
         const Center(
@@ -37,8 +47,16 @@ class _MetricsPageState extends State<MetricsPage> {
                   minValue: 3,
                   maxValue: 9,
                   decimalPlaces: 2,
-                  onChanged: (value) =>
-                      setState(() => _currentDoubleValueftin = value),
+                  onChanged: (value) => setState(() {
+                    _currentDoubleValueftin = value;
+                    _currentValuecm =
+                        ((_currentDoubleValueftin.floor() * 12) * 2.54)
+                                .floor() +
+                            ((_currentDoubleValueftin -
+                                        _currentDoubleValueftin.floor()) *
+                                    254)
+                                .floor();
+                  }),
                 ),
               ],
             ),
@@ -55,7 +73,17 @@ class _MetricsPageState extends State<MetricsPage> {
                   value: _currentValuecm,
                   minValue: 91,
                   maxValue: 271,
-                  onChanged: (value) => setState(() => _currentValuecm = value),
+                  onChanged: (value) => setState(() {
+                    _currentValuecm = value;
+                    int inches = (_currentValuecm / 2.54).floor();
+                    double foot =
+                        ((_currentValuecm / 2.54) / 12).floorToDouble();
+                    _currentDoubleValueftin =
+                        foot + ((inches - foot * 12) / 100);
+                    if (_currentValuecm == 91) {
+                      _currentDoubleValueftin = 3.0;
+                    }
+                  }),
                 ),
                 const Text(
                   'cm',
@@ -73,12 +101,12 @@ class _MetricsPageState extends State<MetricsPage> {
               onPressed: () {
                 setState(() {
                   indx = true;
-                  int inches = (_currentValuecm / 2.54).floor();
-                  double foot = ((_currentValuecm / 2.54) / 12).floorToDouble();
-                  _currentDoubleValueftin = foot + ((inches - foot * 12) / 100);
-                  if (_currentValuecm == 91) {
-                    _currentDoubleValueftin = 3.0;
-                  }
+                  // int inches = (_currentValuecm / 2.54).floor();
+                  // double foot = ((_currentValuecm / 2.54) / 12).floorToDouble();
+                  // _currentDoubleValueftin = foot + ((inches - foot * 12) / 100);
+                  // if (_currentValuecm == 91) {
+                  //   _currentDoubleValueftin = 3.0;
+                  // }
                 });
               },
               splashColor: Colors.grey[600],
@@ -96,12 +124,12 @@ class _MetricsPageState extends State<MetricsPage> {
               onPressed: () {
                 setState(() {
                   indx = false;
-                  _currentValuecm =
-                      ((_currentDoubleValueftin.floor() * 12) * 2.54).floor() +
-                          ((_currentDoubleValueftin -
-                                      _currentDoubleValueftin.floor()) *
-                                  254)
-                              .floor();
+                  // _currentValuecm =
+                  //     ((_currentDoubleValueftin.floor() * 12) * 2.54).floor() +
+                  //         ((_currentDoubleValueftin -
+                  //                     _currentDoubleValueftin.floor()) *
+                  //                 254)
+                  //             .floor();
                 });
               },
               splashColor: Colors.grey[600],

@@ -1,13 +1,21 @@
 import 'package:flutter/material.dart';
 
 class GenderPage extends StatefulWidget {
-  const GenderPage({super.key});
+  const GenderPage({super.key, required this.genders});
+  final TextEditingController genders;
 
   @override
   State<GenderPage> createState() => _GenderPageState();
 }
 
 class _GenderPageState extends State<GenderPage> {
+  late TextEditingController genders;
+  @override
+  void initState() {
+    genders = widget.genders;
+    super.initState();
+  }
+
   final List<String> gender = <String>[
     'Male',
     'Female',
@@ -17,8 +25,14 @@ class _GenderPageState extends State<GenderPage> {
     Icons.female_rounded,
   ];
   final List<bool> isSelected = <bool>[true, false];
+
   @override
   Widget build(BuildContext context) {
+    if (isSelected[0]) {
+      genders.text = "Male";
+    } else {
+      genders.text = "Female";
+    }
     return Column(
       children: [
         const Center(

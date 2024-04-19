@@ -1,13 +1,22 @@
 import 'package:flutter/material.dart';
 
 class GoalsPage extends StatefulWidget {
-  const GoalsPage({super.key});
+  const GoalsPage({super.key, required this.goal});
+
+  final TextEditingController goal;
 
   @override
   State<GoalsPage> createState() => _GoalsPageState();
 }
 
 class _GoalsPageState extends State<GoalsPage> {
+  late TextEditingController goal;
+  @override
+  void initState() {
+    goal = widget.goal;
+    super.initState();
+  }
+
   final List<String> activity = <String>[
     'Little or No Activity',
     'Lightly Active',
@@ -26,6 +35,13 @@ class _GoalsPageState extends State<GoalsPage> {
   final List<bool> isSelected = <bool>[true, false, false];
   @override
   Widget build(BuildContext context) {
+    int i;
+    for (i = 0; i < 3; i++) {
+      if (isSelected[i]) {
+        goal.text = i.toString();
+        break;
+      }
+    }
     return Column(
       children: [
         const Center(
