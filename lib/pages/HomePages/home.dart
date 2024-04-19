@@ -176,7 +176,7 @@ class _HomeState extends State<Home> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         children: [
-                                          Icon(CupertinoIcons.flame),
+                                          Icon(Icons.local_fire_department),
                                           const SizedBox(
                                             width: 10,
                                           ),
@@ -433,7 +433,7 @@ class _HomeState extends State<Home> {
                           ),
                           borderRadius: BorderRadius.circular(20),
                         ),
-                        height: 120,
+                        height: 170,
                         width: double.infinity,
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 20.0),
@@ -486,33 +486,6 @@ class _HomeState extends State<Home> {
                                         });
                                       },
                                       child: Icon(Icons.add)),
-                                ],
-                              ),
-                              Spacer(),
-                              Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  Align(
-                                      alignment: Alignment.topRight,
-                                      child: GestureDetector(
-                                          onTap: () {
-                                            Navigator.push(context,
-                                                MaterialPageRoute(
-                                                    builder: (context) {
-                                              return WaterPage();
-                                            }));
-                                          },
-                                          child: Icon(Icons.menu))),
-                                  Text(
-                                    '${completed} Glasses Done',
-                                    style: TextStyle(fontSize: 20),
-                                  ),
-                                  Text(
-                                    '${target} Glasses ',
-                                    style: TextStyle(fontSize: 20),
-                                  ),
                                 ],
                               ),
                             ],
