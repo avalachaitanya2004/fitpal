@@ -94,6 +94,16 @@ final List<Person> people = [
     githubUrl: 'https://github.com/diimppulg',
     linkedInUrl: 'https://www.linkedin.com/in/diimppul-g/',
   ),
+  Person(
+    name: 'Perumallapalli Srinivasa Aditya',
+    imageUrl:
+        'https://i.pinimg.com/564x/e9/51/25/e951250f7f452c8e278d12ac073b9b5b.jpg',
+    email: 'perumallapalli_sa@cs.iitr.ac.in',
+    bio:
+        ' A 2nd Year Undergrad at IIT Roorkee. Good coding experience with C++,Python and Java.Holds a keen interest in machine learning , Web and App development',
+    githubUrl: 'https://github.com/Aditya0407',
+    linkedInUrl: 'https://www.linkedin.com/in/srinivasa-aditya-0459a1271/',
+  ),
 ];
 
 void main() => runApp(MaterialApp(home: AboutUsPage()));
