@@ -87,6 +87,7 @@ flutter:
     - assets/images/
     - assets/animations/
     - assets/RiveAssets/
+    - assets/svg/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
@@ -124,6 +125,19 @@ flutter:
     - family: DM_Sans
       fonts:
         - asset: assets/Fonts/DM_Sans/static/DMSans_18pt-Regular.ttf
+    - family: ProductSans
+      fonts:
+        - asset: assets/fonts/ProductSans/ProductSans-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/ProductSans/ProductSans-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/ProductSans/ProductSans-Black.ttf
+        - asset: assets/fonts/ProductSans/ProductSans-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/ProductSans/ProductSans-Light.ttf
+          weight: 300
+        - asset: assets/fonts/ProductSans/ProductSans-Thin.ttf
+          weight: 100
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

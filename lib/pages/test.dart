@@ -34,78 +34,37 @@ class Person {
 
 final List<Person> people = [
   Person(
-    name: 'Seemakurthi Nandan Sri Siva Ramakrishna',
+    name: 'Nandu',
     imageUrl:
         'https://i.pinimg.com/564x/e9/51/25/e951250f7f452c8e278d12ac073b9b5b.jpg',
-    email: 'seemakurthi_nssr@cs.iitr.ac.in',
+    email: 'chunduri_a@cs.iitr.ac.in',
     bio:
         'A 2nd Year Undergrad at IIT Roorkee. Good coding experience with C++ and Java. Interest lies in software development.',
-    githubUrl: 'https://github.com/Nandu-25',
-    linkedInUrl:
-        'https://www.linkedin.com/in/nandan-sri-siva-ramakrishna-seemakurthi/',
-  ),
-  Person(
-    name: 'Ogireddy Sree Sudeep Reddy',
-    imageUrl:
-        'https://i.pinimg.com/564x/e9/51/25/e951250f7f452c8e278d12ac073b9b5b.jpg',
-    email: 'ogireddy_ssr@cs.iitr.ac.in',
-    bio:
-        'A 2nd Year Undergrad at IIT Roorkee. Good coding experience with C++ and Java. Interest lies in software development.',
-    githubUrl: 'https://github.com/sudeepreddy999',
+    githubUrl: 'https://github.com/abhijitch1',
     linkedInUrl: '',
   ),
   Person(
-    name: 'Mudasani Rushikesh Reddy',
+    name: 'Sudeep',
     imageUrl:
         'https://i.pinimg.com/564x/e9/51/25/e951250f7f452c8e278d12ac073b9b5b.jpg',
-    email: 'mudasani_r@cs.iitr.ac.in',
-    bio:
-        'A 2nd Year Undergrad at IIT Roorkee. Good coding experience with C++ and Java. Interest lies in machine learning and software development.',
-    githubUrl: 'https://github.com/Iknowimalone',
-    linkedInUrl: 'https://www.linkedin.com/in/rushikesh-reddy/',
-  ),
-  Person(
-    name: 'Avala Chaitanya Lakshmi Prakash Yadav',
-    imageUrl:
-        'https://i.pinimg.com/564x/e9/51/25/e951250f7f452c8e278d12ac073b9b5b.jpg',
-    email: 'avala_clpy@cs.iitr.ac.in',
-    bio:
-        'A 2nd Year Undergrad at IIT Roorkee. Have good coding experience with C++ and Java. Interest lies in software development.',
-    githubUrl: 'https://github.com/avalachaitanya2004',
-    linkedInUrl: 'https://www.linkedin.com/in/chaitanya-avala/',
-  ),
-  Person(
-    name: 'Dharavath Madhu',
-    imageUrl:
-        'https://i.pinimg.com/564x/e9/51/25/e951250f7f452c8e278d12ac073b9b5b.jpg',
-    email: 'dharavath_m@cs.iitr.ac.in',
-    bio:
-        'A 2nd Year Undergrad at IIT Roorkee. Have good coding experience with C++ and Java. Interest lies in software development.',
-    githubUrl: 'https://github.com/Madhudharavath',
-    linkedInUrl: 'https://www.linkedin.com/in/dharavath-madhu/',
-  ),
-  Person(
-    name: 'Gavireddy Diimppul',
-    imageUrl:
-        'https://i.pinimg.com/564x/e9/51/25/e951250f7f452c8e278d12ac073b9b5b.jpg',
-    email: 'gavireddy_d@cs.iitr.ac.in',
+    email: 'chunduri_a@cs.iitr.c.in',
     bio:
         'A 2nd Year Undergrad at IIT Roorkee. Good coding experience with C++ and Java. Interest lies in software development.',
-    githubUrl: 'https://github.com/diimppulg',
-    linkedInUrl: 'https://www.linkedin.com/in/diimppul-g/',
+    githubUrl: 'https://github.com/abhijitch1',
+    linkedInUrl: '',
   ),
 ];
 
-void main() => runApp(MaterialApp(home: AboutUsPage()));
+void main() => runApp(MaterialApp(home: TEST()));
 
-class AboutUsPage extends StatefulWidget {
-  const AboutUsPage({Key? key}) : super(key: key);
+class TEST extends StatefulWidget {
+  const TEST({Key? key}) : super(key: key);
 
   @override
-  State<AboutUsPage> createState() => _AboutUsPageState();
+  State<TEST> createState() => _TESTState();
 }
 
-class _AboutUsPageState extends State<AboutUsPage> {
+class _TESTState extends State<TEST> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

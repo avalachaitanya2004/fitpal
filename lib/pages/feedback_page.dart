@@ -1,9 +1,6 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:flutter_email_sender/flutter_email_sender.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class FeedbackPage extends StatefulWidget {
   const FeedbackPage({Key? key}) : super(key: key);
@@ -14,71 +11,20 @@ class FeedbackPage extends StatefulWidget {
 
 class _FeedbackPageState extends State<FeedbackPage> {
   TextEditingController _controller = TextEditingController();
-
-  Future<void> send(String query) async {
-    final Email email = Email(
-      body: query,
-      subject: 'Feedback',
-      recipients: ["explorewithvoyager@gmail.com"],
-    );
-
-    String platformResponse;
-
-    try {
-      await FlutterEmailSender.send(email);
-      platformResponse = 'success';
-    } catch (error) {
-      print(error);
-      platformResponse = error.toString();
-    }
-
-    if (!mounted) return;
-
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(
-          'Submitted Successfully',
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            fontSize: 20,
-          ),
-        ),
-        backgroundColor: Colors.green,
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
-    // final themeProvider = Provider.of<ThemeProvider>(context);
     return Scaffold(
-      // backgroundColor: themeProvider.themeMode == ThemeMode.dark
-      //     ? darkColorScheme.background
-      //     : lightColorScheme.background,
       backgroundColor: Colors.white,
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back_ios,
-            // color: themeProvider.themeMode == ThemeMode.dark
-            //     ? Colors.white
-            //     : Colors.black,
-            color: Colors.black,
-            size: 20,
-          ),
+          icon: Icon(Icons.arrow_back_ios, color: Colors.black, size: 20),
           onPressed: () {
             Navigator.pop(context);
           },
         ),
-        // backgroundColor: themeProvider.themeMode == ThemeMode.dark
-        //     ? darkColorScheme.background
-        //     : lightColorScheme.background,
         backgroundColor: Colors.white,
         title: Text('Feedback',
             style: TextStyle(
-                // color: themeProvider.themeMode == ThemeMode.dark
-                //     ? Colors.white
-                //     : Colors.black,
                 color: Colors.black,
                 fontWeight: FontWeight.bold,
                 fontFamily: 'ProductSans')),
@@ -91,22 +37,23 @@ class _FeedbackPageState extends State<FeedbackPage> {
             TextFormField(
               controller: _controller,
               style: TextStyle(
-                  // color: themeProvider.themeMode == ThemeMode.dark
-                  //     ? Colors.white
-                  //     : Colors.black,
-                  color: Colors.black,
-                  fontFamily: 'ProductSans',
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20),
+                color: Colors.black,
+                fontFamily: 'ProductSans',
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+              ),
               decoration: InputDecoration(
                 hintText: 'Enter your feedback',
                 hintStyle: TextStyle(
-                    color: Colors.grey.shade800,
-                    fontFamily: 'ProductSans',
-                    fontWeight: FontWeight.w400),
-                border: OutlineInputBorder(),
+                  color: Colors.grey.shade800,
+                  fontFamily: 'ProductSans',
+                  fontWeight: FontWeight.w400,
+                ),
+                border: OutlineInputBorder(
+                  borderRadius: const BorderRadius.all(Radius.circular(15.0)),
+                ),
               ),
-              maxLines: 5,
+              maxLines: 7,
             ),
             SizedBox(height: 20),
             ElevatedButton(
@@ -114,24 +61,36 @@ class _FeedbackPageState extends State<FeedbackPage> {
                 backgroundColor: Colors.blueAccent,
               ),
               onPressed: () {
-                // Submit feedback logic
-                String text = _controller.text;
-                send(text);
+                _launchEmail(_controller.text, context);
                 FocusManager.instance.primaryFocus?.unfocus();
               },
-              child: Text('Submit',
-                  style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      // color: themeProvider.themeMode == ThemeMode.dark
-                      //     ? Colors.white
-                      //     : Colors.white,
-                      color: Colors.black,
-                      fontFamily: 'ProductSans')),
+              child: Text(
+                'Submit',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.white,
+                  fontFamily: 'ProductSans',
+                ),
+              ),
             ),
           ],
         ),
       ),
     );
+  }
+
+  void _launchEmail(String Feedback, BuildContext context) async {
+    final Uri emailLaunchUri = Uri(
+      scheme: 'mailto',
+      path: 'nanduseemakurthi257@gmail.com',
+      query: 'subject=Feedback from App&body=$Feedback',
+    );
+
+    if (!await launchUrl(emailLaunchUri)) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Could not launch email')),
+      );
+    }
   }
 }

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 final List<FAQItem> _data = [
   FAQItem(
@@ -140,71 +139,46 @@ class FAQPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final themeProvider = Provider.of<ThemeProvider>(context);
+    var textStyle = TextStyle(
+      fontFamily: 'ProductSans',
+      color: Colors.black,
+    );
+
     return Scaffold(
-      // backgroundColor: themeProvider.themeMode == ThemeMode.dark
-      //     ? darkColorScheme.background
-      //     : lightColorScheme.background,
       backgroundColor: Colors.white,
       appBar: AppBar(
         leading: IconButton(
-          // icon: Icon(Icons.arrow_back_ios, color:
-          //     ? Colors.white
-          //     : Colors.black, size: 20,),
-          icon: Icon(
-            Icons.arrow_back_ios,
-            color: Colors.black,
-            size: 20,
-          ),
-          onPressed: () {
-            Navigator.pop(context);
-          },
+          icon: Icon(Icons.arrow_back_ios, color: textStyle.color, size: 20),
+          onPressed: () => Navigator.pop(context),
         ),
-        // backgroundColor: themeProvider.themeMode == ThemeMode.dark
-        //     ? darkColorScheme.background
-        //     : lightColorScheme.background,
         backgroundColor: Colors.white,
-        title: Text(
-          'FAQ',
-          style: TextStyle(
-            fontFamily: 'ProductSans',
-            fontWeight: FontWeight.bold,
-            // color: themeProvider.themeMode == ThemeMode.dark
-            //     ? Colors.white
-            //     : Colors.black,
-            color: Colors.black,
-          ),
-        ),
+        title:
+            Text('FAQ', style: textStyle.copyWith(fontWeight: FontWeight.bold)),
+        elevation: 0,
       ),
       body: ListView.builder(
         itemCount: _data.length,
         itemBuilder: (context, index) {
           final item = _data[index];
-          return ExpansionTile(
-            title: Text(item.title,
-                style: TextStyle(
-                  fontFamily: 'ProductSans',
-                  fontSize: 16.0,
-                  // color: themeProvider.themeMode == ThemeMode.dark
-                  //     ? Colors.white
-                  //     : Colors.black,
-                  color: Colors.black,
+          return Theme(
+            data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+            child: ExpansionTile(
+              title:
+                  Text(item.title, style: textStyle.copyWith(fontSize: 16.0)),
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Text(item.answer,
+                      style: textStyle.copyWith(fontSize: 14.0, height: 1.5)),
                 ),
-                textAlign: TextAlign.left),
-            children: [
-              Padding(
-                padding: EdgeInsets.all(12.0),
-                child: Text(item.answer,
-                    style: TextStyle(
-                      fontSize: 14.0,
-                      // color: themeProvider.themeMode == ThemeMode.dark
-                      //     ? Colors.white
-                      //     : Colors.black,
-                      color: Colors.black,
-                    ),
-                    textAlign: TextAlign.left),
-              ),
-            ],
+              ],
+              iconColor: Colors.black,
+              collapsedIconColor: Colors.grey[700],
+              backgroundColor: Colors.white,
+              childrenPadding:
+                  const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+              tilePadding: const EdgeInsets.symmetric(horizontal: 16.0),
+            ),
           );
         },
       ),

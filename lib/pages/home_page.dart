@@ -501,19 +501,44 @@ class _HomePageState extends State<HomePage>
                     bottomNavItems.length,
                     (index) {
                       Menu navBar = bottomNavItems[index];
-                      return BtmNavItem(
-                        navBar: navBar,
-                        press: () {
-                          RiveUtils.chnageSMIBoolState(navBar.rive.status!);
-                          updateSelectedBtmNav(navBar);
-                          jump(index);
-                        },
-                        riveOnInit: (artboard) {
-                          navBar.rive.status = RiveUtils.getRiveInput(artboard,
-                              stateMachineName: navBar.rive.stateMachineName);
-                        },
-                        selectedNav: selectedBottonNav,
-                      );
+                      if (index == 2)
+                        return Container(
+                          // height: 20,
+                          // width: 20,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(100),
+                              color: Colors.white.withOpacity(0.35)),
+                          child: BtmNavItem(
+                            navBar: navBar,
+                            press: () {
+                              RiveUtils.chnageSMIBoolState(navBar.rive.status!);
+                              updateSelectedBtmNav(navBar);
+                              jump(index);
+                            },
+                            riveOnInit: (artboard) {
+                              navBar.rive.status = RiveUtils.getRiveInput(
+                                  artboard,
+                                  stateMachineName:
+                                      navBar.rive.stateMachineName);
+                            },
+                            selectedNav: selectedBottonNav,
+                          ),
+                        );
+                      else
+                        return BtmNavItem(
+                          navBar: navBar,
+                          press: () {
+                            RiveUtils.chnageSMIBoolState(navBar.rive.status!);
+                            updateSelectedBtmNav(navBar);
+                            jump(index);
+                          },
+                          riveOnInit: (artboard) {
+                            navBar.rive.status = RiveUtils.getRiveInput(
+                                artboard,
+                                stateMachineName: navBar.rive.stateMachineName);
+                          },
+                          selectedNav: selectedBottonNav,
+                        );
                     },
                   ),
                 ],
