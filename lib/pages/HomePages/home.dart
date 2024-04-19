@@ -409,32 +409,49 @@ class _HomeState extends State<Home> {
             if (_page == 1) WorkoutHomeCard(excercise: excercises),
             if (_page == 2)
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                padding: const EdgeInsets.all(20.0),
                 child: Hero(
                   tag: "Water",
                   child: GestureDetector(
                     onTap: () {},
                     child: Material(
-                      child: Container(
-                        decoration: BoxDecoration(
-                          // color: Colors.grey,
-                          gradient: LinearGradient(
-                            begin: Alignment(0, -1),
-                            end: Alignment(0, 1),
-                            colors: [
-                              Colors.white.withOpacity(0.6),
-                              Color(0xFFF3E5F5)
-                            ], // Gradient colors
-                          ),
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        height: 170,
-                        width: double.infinity,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                          child: Row(
-                            children: [
-                              Row(
+                      child: Stack(
+                        children: [
+                          Align(
+                              alignment: Alignment.topRight,
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.only(right: 20.0, top: 20),
+                                child: IconButton(
+                                  icon: Icon(Icons.settings),
+                                  onPressed: () {
+                                    print("pushed");
+                                    Navigator.push(context,
+                                        MaterialPageRoute(builder: (context) {
+                                      return WaterPage();
+                                    }));
+                                  },
+                                ),
+                              )),
+                          Container(
+                            decoration: BoxDecoration(
+                              // color: Colors.grey,
+                              // gradient: LinearGradient(
+                              //   begin: Alignment(0, -1),
+                              //   end: Alignment(0, 1),
+                              //   colors: [
+                              //     Colors.white.withOpacity(0.6),
+                              //     Color(0xFFF3E5F5)
+                              //   ], // Gradient colors
+                              // ),
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            height: 170,
+                            // width: double.infinity,
+                            // width: 250,
+                            child: Center(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   GestureDetector(
                                       onTap: () {
@@ -448,18 +465,30 @@ class _HomeState extends State<Home> {
                                   ),
                                   Container(
                                     // color: Colors.grey,
-                                    height: 100,
-                                    width: 100,
+                                    height: 170,
+                                    width: 170,
                                     child: LiquidCircularProgressIndicator(
                                       center: SizedBox(
-                                        height: 50,
-                                        width: 50,
+                                        height: 90,
+                                        width: 90,
                                         child: ClipRRect(
                                           borderRadius:
                                               BorderRadius.circular(100),
                                           child: Container(
                                             color: Colors.grey[100],
-                                            child: Icon(Iconsax.cup4),
+                                            child: Center(
+                                                child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Text(
+                                                  '${completed}/${target}',
+                                                  style:
+                                                      TextStyle(fontSize: 16),
+                                                ),
+                                                Icon(Icons.track_changes),
+                                              ],
+                                            )),
                                           ),
                                         ),
                                       ),
@@ -483,9 +512,9 @@ class _HomeState extends State<Home> {
                                       child: Icon(Icons.add)),
                                 ],
                               ),
-                            ],
+                            ),
                           ),
-                        ),
+                        ],
                       ),
                     ),
                   ),
