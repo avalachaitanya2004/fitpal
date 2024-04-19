@@ -97,44 +97,6 @@ class _ChallengesPageState extends State<ChallengesPage> {
             centerTitle: false,
             backgroundColor: Colors.white,
             surfaceTintColor: Colors.white,
-            // flexibleSpace: FlexibleSpaceBar(
-            //   background: Column(
-            //     children: [
-            //       const SizedBox(
-            //         height: 50,
-            //       ),
-            //       Align(
-            //         alignment: Alignment.topLeft,
-            //         child: Padding(
-            //           padding: const EdgeInsets.symmetric(horizontal: 20.0),
-            //           child: Column(
-            //             crossAxisAlignment: CrossAxisAlignment.start,
-            //             children: [
-            //               Text(
-            //                 'Fitness',
-            //                 style: TextStyle(
-            //                     fontFamily: 'Roboto',
-            //                     fontSize: 44,
-            //                     height: 0.5,
-            //                     fontWeight: FontWeight.bold),
-            //               ),
-            //               Text(
-            //                 'Challenges',
-            //                 style: TextStyle(
-            //                     fontFamily: 'Roboto',
-            //                     fontSize: 44,
-            //                     fontWeight: FontWeight.bold),
-            //               ),
-            //             ],
-            //           ),
-            //         ),
-            //       ),
-            //       const SizedBox(
-            //         height: 20,
-            //       ),
-            //     ],
-            //   ),
-            // ),
           ),
           SliverAppBar(
             automaticallyImplyLeading: false,
@@ -208,130 +170,17 @@ class _ChallengesPageState extends State<ChallengesPage> {
                 )),
           ),
           SliverList(
-              delegate: SliverChildBuilderDelegate(
-                  (BuildContext context, index) => ChallengesCard(
-                      isTapped: false, challenge: challenges[index]),
-                  childCount: 3))
+            delegate: SliverChildBuilderDelegate(
+                (BuildContext context, index) => ChallengesCard(
+                    isTapped: false, challenge: challenges[index]),
+                childCount: challenges.length),
+          ),
+          SliverToBoxAdapter(
+            child: SizedBox(
+              height: 76,
+            ),
+          )
         ],
-        // child: SingleChildScrollView(
-        //   child: Column(
-        //     children: [
-        //       const SizedBox(
-        //         height: 50,
-        //       ),
-        //       Align(
-        //         alignment: Alignment.topLeft,
-        //         child: Padding(
-        //           padding: const EdgeInsets.symmetric(horizontal: 20.0),
-        //           child: Column(
-        //             crossAxisAlignment: CrossAxisAlignment.start,
-        //             children: [
-        //               Text(
-        //                 'Fitness',
-        //                 style: TextStyle(
-        //                     fontFamily: 'Roboto',
-        //                     fontSize: 44,
-        //                     height: 0.5,
-        //                     fontWeight: FontWeight.bold),
-        //               ),
-        //               Text(
-        //                 'Challenges',
-        //                 style: TextStyle(
-        //                     fontFamily: 'Roboto',
-        //                     fontSize: 44,
-        //                     fontWeight: FontWeight.bold),
-        //               ),
-        //             ],
-        //           ),
-        //         ),
-        //       ),
-        //       const SizedBox(
-        //         height: 20,
-        //       ),
-        //       SingleChildScrollView(
-        //           scrollDirection: Axis.horizontal,
-        //           child: Row(
-        //             children: [
-        //               SizedBox(width: 16),
-        //               ...[
-        //                 0,
-        //                 1,
-        //                 2,
-        //                 3,
-        //                 4,
-        //               ].map((e) => GestureDetector(
-        //                     onTap: () {
-        //                       setState(() {
-        //                         if (e != 0) {
-        //                           if (fields[e]) {
-        //                             fields[e] = !fields[e];
-        //                           } else {
-        //                             fields[e] = !fields[e];
-        //                             fields[0] = false;
-        //                           }
-        //                         } else {
-        //                           if (!fields[0]) {
-        //                             fields[0] = !fields[0];
-        //                             int i;
-        //                             for (i = 1; i <= 4; i++) {
-        //                               fields[i] = false;
-        //                             }
-        //                           } else {
-        //                             fields[0] = !fields[0];
-        //                           }
-        //                         }
-        //                       });
-        //                     },
-        //                     child: Container(
-        //                       height: 45,
-        //                       decoration: BoxDecoration(
-        //                           color:
-        //                               fields[e] ? Colors.black : Colors.white,
-        //                           borderRadius: BorderRadius.circular(40),
-        //                           // color: Colors.blue,
-        //                           border: Border.all(
-        //                               color: Colors.grey.withOpacity(0.5),
-        //                               width: 1)),
-        //                       margin: EdgeInsets.all(5),
-        //                       child: Padding(
-        //                         padding: const EdgeInsets.symmetric(
-        //                             horizontal: 20.0),
-        //                         child: Center(
-        //                             child: Text(
-        //                           findField(e),
-        //                           style: TextStyle(
-        //                               color: !fields[e]
-        //                                   ? Colors.black
-        //                                   : Colors.white,
-        //                               fontWeight: FontWeight.w600,
-        //                               fontSize: 14),
-        //                         )),
-        //                       ),
-        //                     ),
-        //                   )),
-        //             ],
-        //           )),
-        //       SizedBox(
-        //         height: 30,
-        //       ),
-        //       // Expanded(
-        //       //   child:
-        //       // Container(
-        //       // child: SingleChildScrollView(
-        //       // child:
-        //       Column(
-        //         children: List.generate(challenges.length, (index) {
-        //           return ChallengesCard(
-        //               isTapped: false, challenge: challenges[index]);
-        //         }),
-        //       ),
-        //       // ),
-        //       // ),
-        //       // ),
-        //     ],
-        //   ),
-        // ),
-        // ),
       ),
     );
   }

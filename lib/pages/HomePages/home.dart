@@ -406,15 +406,22 @@ class _HomeState extends State<Home> {
             ),
             if (_page == 0)
               Column(
-                // mainAxisAlignment: MainAxisAlignment,
-                children: List.generate(today.length, (index) {
-                  return FoodCard(food: today[index]);
-                }),
+                children: [
+                  ...List.generate(today.length, (index) {
+                    return FoodCard(food: today[index]);
+                  }),
+                  SizedBox(height: 76),
+                ],
               ),
-            SizedBox(
-              height: 66,
-            ),
-            if (_page == 1) WorkoutHomeCard(excercise: excercises),
+            if (_page == 1)
+              Column(
+                children: [
+                  WorkoutHomeCard(excercise: excercises),
+                  SizedBox(
+                    height: 76,
+                  ),
+                ],
+              ),
             if (_page == 2)
               Column(
                 children: [

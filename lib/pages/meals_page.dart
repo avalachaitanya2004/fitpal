@@ -79,25 +79,33 @@ class MealsPage extends StatelessWidget {
               ),
             ),
             SliverList(
-                delegate: SliverChildBuilderDelegate(
-                    childCount: today.length,
-                    (context, index) => GestureDetector(
-                        onTap: () {
-                          Navigator.of(context)
-                              .push(HeroDialogRoute(builder: (context) {
-                            return FoodPopup(food: today[index]);
-                          }));
-                        },
-                        child: Hero(
-                            tag: today[index].calorie,
-                            // createRectTween: (begin, end) {
-                            //   return CustomRectTween(begin: begin!, end: end!);
-                            // },
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(vertical: 10.0),
-                              child: FoodDisplay(food: today[index]),
-                            )))))
+              delegate: SliverChildBuilderDelegate(
+                childCount: today.length,
+                (context, index) => GestureDetector(
+                  onTap: () {
+                    Navigator.of(context)
+                        .push(HeroDialogRoute(builder: (context) {
+                      return FoodPopup(food: today[index]);
+                    }));
+                  },
+                  child: Hero(
+                    tag: today[index].calorie,
+                    // createRectTween: (begin, end) {
+                    //   return CustomRectTween(begin: begin!, end: end!);
+                    // },
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 10.0),
+                      child: FoodDisplay(food: today[index]),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            SliverToBoxAdapter(
+              child: SizedBox(
+                height: 76,
+              ),
+            )
           ],
         ),
       ),

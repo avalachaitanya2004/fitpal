@@ -153,6 +153,9 @@ class _WorkoutSelectState extends State<WorkoutSelect> {
                     return CustomPlaylistCard(custom: custom[index]);
                   }),
                 ),
+                SizedBox(
+                  height: 76,
+                ),
               ],
             ),
           ),
