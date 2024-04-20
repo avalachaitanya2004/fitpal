@@ -1,3 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fit_pal/DataBaseServices/Intialziedata.dart';
+import 'package:fit_pal/DataBaseServices/useruid.dart';
 import 'package:fit_pal/pages/introPages/goals_page.dart';
 import 'package:fit_pal/pages/introPages/gender_page.dart';
 import 'package:fit_pal/pages/introPages/metrics_page.dart';
@@ -185,6 +188,21 @@ class _IntroPage2State extends State<IntroPage2>
                               print(height.text);
                               print(weight.text);
                               print(activity.text);
+                              String? uid = AuthService.getUID();
+                              if (uid != null) {
+                                Dataservices dataservices =
+                                    Dataservices(uid: uid);
+                                dataservices.initializeData(
+                                  name: name.text,
+                                  age: int.tryParse(age.text) ?? 0,
+                                  gender: gender.text,
+                                  height: int.tryParse(height.text) ?? 0,
+                                  weight: double.tryParse(weight.text) ?? 0.0,
+                                  check: int.tryParse(activity.text) ?? 0,
+                                  count: 1,
+                                  goal: int.tryParse(goal.text) ?? 0,
+                                );
+                              }
                               Navigator.pushNamed(context, '/home');
                             },
                             style: buttonPrimary,

@@ -4,6 +4,9 @@ import 'dart:async';
 import 'dart:ui';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:fit_pal/DataBaseServices/useruid.dart';
+import 'package:fit_pal/DataChallenges/createChallenge.dart';
+import 'package:fit_pal/DataFriends/getfriends.dart';
 import 'package:fit_pal/loadingPages/loadingpage1.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -24,6 +27,7 @@ class _LoginPageState extends State<LoginPage> {
   final _password = TextEditingController();
   bool is_loading = false;
   bool is_loading1 = false;
+  UserCredential? _userCredential;
   @override
   void dispose() {
     _email.dispose();
@@ -53,9 +57,8 @@ class _LoginPageState extends State<LoginPage> {
       });
       // print('before fnd $context');
       // dialogContext = context;
-      UserCredential userCredential = await FirebaseAuth.instance
-          .signInWithEmailAndPassword(
-              email: _email.text.trim(), password: _password.text.trim());
+      _userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: _email.text.trim(), password: _password.text.trim());
       // print('after fnd $context');
       // Navigator.of(dialogContext!).pop;
       setState(() {
@@ -175,6 +178,17 @@ class _LoginPageState extends State<LoginPage> {
     print(check_allfilled());
     if (check_allfilled()) {
       await signin();
+      if (_userCredential != null) {
+        AuthService.setUID(_userCredential!.user!.uid);
+        UserData userData =
+            UserData(uid: _userCredential!.user!.uid, statusMap: {});
+        await userData.addUsersListToDatabase(
+            _userCredential!.user!.uid); // Await this call
+        AssignChallenge assignChallenge =
+            AssignChallenge(uid: _userCredential!.user!.uid);
+        assignChallenge.assign('85nJuvpNP79aiMtHPN9C');
+        assignChallenge.assign('grNIf8NbMQhG3iw5ENY6');
+      }
     }
   }
 

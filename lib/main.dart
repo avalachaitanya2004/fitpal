@@ -62,7 +62,7 @@ class MyApp extends StatelessWidget {
       },
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
-      home: IntroPage2(),
+      home: PreLogin(),
     );
   }
 }

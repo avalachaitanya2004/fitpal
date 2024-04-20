@@ -1,4 +1,6 @@
 import 'dart:io';
+import 'package:fit_pal/DataBaseServices/Intialziedata.dart';
+import 'package:fit_pal/DataBaseServices/useruid.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
@@ -48,7 +50,18 @@ class _EditProfileState extends State<EditProfile> {
     });
   }
 
-  void saveProfile() {}
+  Future<void> saveProfile() async {
+    String newName = nameController.text.trim();
+
+    // Update name
+    if (newName.isNotEmpty) {
+      // Update name in Firestore
+      Dataservices dataservices = Dataservices(uid: AuthService.getUID()!);
+      setState(() {
+        dataservices.updateName(newName);
+      });
+    }
+  }
 
   final List<String> gender = <String>[
     'Camera',

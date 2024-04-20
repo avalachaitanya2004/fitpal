@@ -1,58 +1,68 @@
-import 'package:chiclet/chiclet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:fit_pal/DataBaseServices/useruid.dart';
+import 'package:fit_pal/DataFriends/getfriends.dart';
 import 'package:bounce_tap/bounce_tap.dart';
 
 class FriendSearch extends StatefulWidget {
-  const FriendSearch({super.key});
+  const FriendSearch({Key? key});
 
   @override
   State<FriendSearch> createState() => _FriendSearchState();
 }
 
 class _FriendSearchState extends State<FriendSearch> {
-  final List<String> names = ["John Jacobs", "Steve Jobs", "Mark Zuck"];
+  List<String> names = [];
   List<String> foundFriends = [];
   int selectedTab = 0; // 0 for "Friends", 1 for "Add Friends"
 
   @override
   void initState() {
     super.initState();
-    foundFriends = names;
+    loadUserData();
+  }
+
+  Future<void> loadUserData() async {
+    UserData userData = UserData(uid: AuthService.getUID()!, statusMap: {});
+    names = await userData.getUserIdsWithStatusU();
+    foundFriends = await userData.getUserIdsWithStatusF();
+    setState(() {});
   }
 
   void filter(String value) {
     setState(() {
-      foundFriends = value.isEmpty
-          ? names
-          : names
-              .where((name) => name.toLowerCase().contains(value.toLowerCase()))
-              .toList();
+      foundFriends = names;
     });
   }
 
   Widget buildTab(int index, String title, IconData icon) {
     bool isSelected = selectedTab == index;
-    return ChicletOutlinedAnimatedButton(
+    return SizedBox(
       height: 100,
-      width: MediaQuery.sizeOf(context).width / 3,
-      backgroundColor: isSelected ? Colors.deepPurple : Colors.white,
-      onPressed: () {
-        setState(() {
-          selectedTab = index;
-        });
-      },
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(icon, size: 30, color: isSelected ? Colors.white : Colors.black),
-          SizedBox(
-            height: 5,
-          ),
-          Text(title,
-              style:
-                  TextStyle(color: isSelected ? Colors.white : Colors.black)),
-        ],
+      width: MediaQuery.of(context).size.width / 3,
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: isSelected ? Colors.yellow : Colors.green,
+        ),
+        onPressed: () {
+          setState(() {
+            selectedTab = index;
+          });
+        },
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(icon,
+                size: 30, color: isSelected ? Colors.white : Colors.black),
+            SizedBox(
+              height: 5,
+            ),
+            Text(
+              title,
+              style: TextStyle(color: isSelected ? Colors.white : Colors.black),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -92,11 +102,10 @@ class _FriendSearchState extends State<FriendSearch> {
               const SizedBox(height: 20),
               Expanded(
                 child: ListView.builder(
-                  itemCount: foundFriends.length,
                   itemBuilder: (context, index) {
                     return selectedTab == 0
                         ? ProfileCard(name: foundFriends[index])
-                        : ProfileCardAdd(name: foundFriends[index]);
+                        : ProfileCardAdd(name: names[index]);
                   },
                 ),
               ),
@@ -109,7 +118,7 @@ class _FriendSearchState extends State<FriendSearch> {
 }
 
 class ProfileCard extends StatelessWidget {
-  const ProfileCard({super.key, required this.name});
+  const ProfileCard({Key? key, required this.name}) : super(key: key);
   final String name;
 
   @override
@@ -126,7 +135,7 @@ class ProfileCard extends StatelessWidget {
 }
 
 class ProfileCardAdd extends StatelessWidget {
-  const ProfileCardAdd({super.key, required this.name});
+  const ProfileCardAdd({Key? key, required this.name}) : super(key: key);
   final String name;
 
   @override

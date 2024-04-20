@@ -1,4 +1,6 @@
 import 'package:bounce_tap/bounce_tap.dart';
+import 'package:fit_pal/DataBaseServices/Intialziedata.dart';
+import 'package:fit_pal/DataBaseServices/useruid.dart';
 import 'package:fit_pal/pages/edit_profile.dart';
 import 'package:fit_pal/pages/friend_search_page.dart';
 import 'package:flutter/cupertino.dart';
@@ -13,6 +15,29 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  late Dataservices dataservices;
+  String name = '';
+  String email = '';
+  double weight = 0.0;
+  int height = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    String? uid = AuthService.getUID();
+    if (uid != null) {
+      dataservices = Dataservices(uid: uid);
+      dataservices.getUserInfo().then((userInfo) {
+        setState(() {
+          name = userInfo['name'] ?? '';
+          email = userInfo['email'] ?? '';
+          weight = userInfo['weight'] ?? '';
+          height = userInfo['height'] ?? '';
+        });
+      });
+    }
+  }
+
   Widget buildHeader() {
     return Column(
       children: [
@@ -22,9 +47,9 @@ class _ProfilePageState extends State<ProfilePage> {
           radius: 60,
         ),
         const SizedBox(height: 20),
-        Text('John Jacobs',
+        Text(name, //NAME
             style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
-        Text('johnjacobs@gmail.com',
+        Text(email, //EMAIL
             style: TextStyle(fontSize: 14, color: Colors.grey)),
       ],
     );
@@ -93,10 +118,11 @@ class _ProfilePageState extends State<ProfilePage> {
       crossAxisSpacing: 10,
       mainAxisSpacing: 10,
       children: [
-        buildStatsCard('Total XP', '4827', Icons.bolt, Colors.amber),
+        buildStatsCard('Total XP', '9090', Icons.bolt, Colors.amber),
         buildStatsCard('Streak', '177', CupertinoIcons.flame, Colors.red),
-        buildStatsCard('Weight', 'Value', Icons.settings, Colors.blue),
-        buildStatsCard('Height', '123', Icons.update, Colors.green),
+        buildStatsCard(
+            'Weight', weight.toString(), Icons.settings, Colors.blue),
+        buildStatsCard('Height', height.toString(), Icons.update, Colors.green),
       ],
     );
   }

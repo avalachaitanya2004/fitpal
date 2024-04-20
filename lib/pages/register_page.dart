@@ -1,6 +1,10 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fit_pal/DataBaseServices/Intialziedata.dart';
+import 'package:fit_pal/DataBaseServices/useruid.dart';
+import 'package:fit_pal/DataFriends/getfriends.dart';
 import 'package:fit_pal/loadingPages/loadingpage1.dart';
+import 'package:fit_pal/pages/introPages/intro_page_2.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -20,6 +24,7 @@ class _RegisterPageState extends State<RegisterPage> {
   final _email = TextEditingController();
   final _password = TextEditingController();
   final _passwordConfirm = TextEditingController();
+  UserCredential? _userCredential;
 
   @override
   void dispose() {
@@ -129,8 +134,9 @@ class _RegisterPageState extends State<RegisterPage> {
       setState(() {
         is_loading = true;
       });
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
-          email: _email.text.trim(), password: _password.text.trim());
+      _userCredential = await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(
+              email: _email.text.trim(), password: _password.text.trim());
       setState(() {
         is_loading = false;
       });
@@ -169,7 +175,28 @@ class _RegisterPageState extends State<RegisterPage> {
   void register_done() async {
     if (check_allfilled()) {
       await register();
+      if (_userCredential != null) {
+        UserData userData =
+            await UserData(uid: _userCredential!.user!.uid, statusMap: {});
+        await userData.addUsersListToDatabase(
+            _userCredential!.user!.uid); // Await this call
+        AuthService.setUID(_userCredential!.user!.uid);
+        Dataservices dataservices =
+            await Dataservices(uid: _userCredential!.user!.uid);
+        dataservices.initializeData(
+            name: '',
+            age: 0,
+            gender: '',
+            height: 0,
+            weight: 0.0,
+            check: 0,
+            count: 0,
+            goal: 0);
+      }
     }
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
+      return IntroPage2();
+    }));
   }
 
   void changeVisibility1() {
