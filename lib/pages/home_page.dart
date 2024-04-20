@@ -11,6 +11,7 @@ import 'package:fit_pal/pages/challenges_page.dart';
 import 'package:fit_pal/pages/feedback_page.dart';
 import 'package:fit_pal/pages/leader_board.dart';
 import 'package:fit_pal/pages/meals_page.dart';
+import 'package:fit_pal/pages/pre_login.dart';
 import 'package:fit_pal/pages/profile_page.dart';
 import 'package:fit_pal/pages/side_menu.dart';
 import 'package:fit_pal/pages/streak_calendar.dart';
@@ -37,6 +38,22 @@ class _HomePageState extends State<HomePage>
   Future logout() async {
     await FirebaseAuth.instance.signOut();
     Navigator.pushReplacementNamed(context, '/preLogin');
+  }
+
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  Future<void> _signOut() async {
+    try {
+      await _auth.signOut();
+      // Navigate to login or home screen after successful logout
+      // Example:
+      // Navigator.of(context).pushReplacementNamed('/login');
+      Navigator.push(context, MaterialPageRoute(builder: (context) {
+        return PreLogin();
+      }));
+    } catch (e) {
+      // Handle logout errors
+      print('Error logging out: $e');
+    }
   }
 
   late AnimationController _anicon;
@@ -230,11 +247,14 @@ class _HomePageState extends State<HomePage>
                       ),
                     ),
                     GestureDetector(
-                      onTap: () {},
-                      child: Icon(
-                        Icons.logout,
-                        color: Colors.red,
-                        size: 34,
+                      onTap: _signOut,
+                      child: Padding(
+                        padding: const EdgeInsets.only(bottom: 50.0),
+                        child: Icon(
+                          Icons.logout,
+                          color: Colors.red,
+                          size: 34,
+                        ),
                       ),
                     )
                   ],

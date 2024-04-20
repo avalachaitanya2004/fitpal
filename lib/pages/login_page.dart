@@ -4,6 +4,7 @@ import 'dart:async';
 import 'dart:ui';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:fit_pal/Controllers/initializationController.dart';
 import 'package:fit_pal/DataBaseServices/useruid.dart';
 import 'package:fit_pal/DataChallenges/createChallenge.dart';
 import 'package:fit_pal/DataFriends/getfriends.dart';
@@ -71,7 +72,10 @@ class _LoginPageState extends State<LoginPage> {
         // setState(() {
         //   is_loading1 = false;
         // });
-        Navigator.pushReplacementNamed(context, '/home');
+        // Navigator.pushReplacementNamed(context, '/home');
+        Navigator.push(context, MaterialPageRoute(builder: (context) {
+          return InitializationController();
+        }));
       });
     } on FirebaseAuthException catch (e) {
       // print('closing dialog');
