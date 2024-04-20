@@ -1,3 +1,4 @@
+import 'package:fit_pal/Controllers/initializationController.dart';
 import 'package:fit_pal/pages/home_page.dart';
 import 'package:fit_pal/pages/pre_login.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +24,7 @@ class _LoginControllerState extends State<LoginController> {
   @override
   Widget build(BuildContext context) {
     if (user != null) {
-      return HomePage();
+      return InitializationController();
     } else {
       return PreLogin();
     }

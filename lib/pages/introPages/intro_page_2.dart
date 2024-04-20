@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fit_pal/Controllers/initializationController.dart';
 import 'package:fit_pal/DataBaseServices/Intialziedata.dart';
 import 'package:fit_pal/DataBaseServices/useruid.dart';
 import 'package:fit_pal/pages/introPages/goals_page.dart';
@@ -203,7 +204,10 @@ class _IntroPage2State extends State<IntroPage2>
                                   goal: int.tryParse(goal.text) ?? 0,
                                 );
                               }
-                              Navigator.pushNamed(context, '/home');
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (context) {
+                                return InitializationController();
+                              }));
                             },
                             style: buttonPrimary,
                             child: const Text(

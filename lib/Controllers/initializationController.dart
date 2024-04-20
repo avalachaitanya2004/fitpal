@@ -1,4 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fit_pal/pages/home_page.dart';
+import 'package:fit_pal/pages/introPages/intro_page_2.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -12,7 +14,8 @@ class InitializationController extends StatefulWidget {
 
 class _InitializationControllerState extends State<InitializationController> {
   late String userId;
-  late String? check;
+  late String? check = "0";
+  bool isloading = true;
 
   Future<String?> getCheckValue() async {
     try {
@@ -25,7 +28,7 @@ class _InitializationControllerState extends State<InitializationController> {
       if (userSnapshot.exists &&
           userSnapshot.data() != null &&
           userSnapshot.data()!.containsKey('count')) {
-        return userSnapshot.data()!['count'] as String?;
+        return userSnapshot.data()!['count'].toString();
       } else {
         return null;
       }
@@ -42,18 +45,27 @@ class _InitializationControllerState extends State<InitializationController> {
     userId = user!.uid;
 
     // print(check);
+    getCheckValue().then((value) {
+      setState(() {
+        check = value; // Assign the result to check after it's fetched
+        print(check);
+        isloading = false;
+      });
+    });
 
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    getCheckValue().then((value) {
-      setState(() {
-        check = value; // Assign the result to check after it's fetched
-        print(check);
-      });
-    });
-    return Scaffold();
+    if (isloading) {
+      return Scaffold();
+    } else {
+      if (check == "0") {
+        return IntroPage2();
+      } else {
+        return HomePage();
+      }
+    }
   }
 }
