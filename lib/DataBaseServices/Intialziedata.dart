@@ -5,6 +5,23 @@ class Dataservices {
   final String uid;
   Dataservices({required this.uid});
 
+  Future<void> initializeWater({
+    required int target,
+    required double quantity,
+  }) async {
+    try {
+      CollectionReference dataCollection =
+          FirebaseFirestore.instance.collection('water');
+      await dataCollection.doc(uid).set({
+        'target': target,
+        'quantity': quantity,
+      });
+      print('Data initialized successfully.');
+    } catch (e) {
+      print('Failed to initialize data: $e');
+    }
+  }
+
   Future<void> initializeData({
     required String name,
     required int age,

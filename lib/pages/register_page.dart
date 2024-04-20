@@ -1,5 +1,6 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fit_pal/Controllers/initializationController.dart';
 import 'package:fit_pal/DataBaseServices/Intialziedata.dart';
 import 'package:fit_pal/DataBaseServices/useruid.dart';
 import 'package:fit_pal/DataFriends/getfriends.dart';
@@ -192,10 +193,11 @@ class _RegisterPageState extends State<RegisterPage> {
             check: 0,
             count: 0,
             goal: 0);
+        dataservices.initializeWater(target: 12, quantity: 250);
       }
     }
     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
-      return IntroPage2();
+      return InitializationController();
     }));
   }
 

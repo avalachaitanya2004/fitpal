@@ -189,8 +189,19 @@ class _IntroPage2State extends State<IntroPage2>
                               print(height.text);
                               print(weight.text);
                               print(activity.text);
-                              String? uid = AuthService.getUID();
+                              // String? uid = AuthService.getUID();
+                              String? uid;
+                              final FirebaseAuth _auth = FirebaseAuth.instance;
+                              final User? user = _auth.currentUser;
+                              uid = user?.uid;
+
+                              if (uid == null) {
+                                print("null is uid");
+                              } else {
+                                print("uid");
+                              }
                               if (uid != null) {
+                                print(uid);
                                 Dataservices dataservices =
                                     Dataservices(uid: uid);
                                 dataservices.initializeData(
@@ -203,6 +214,7 @@ class _IntroPage2State extends State<IntroPage2>
                                   count: 1,
                                   goal: int.tryParse(goal.text) ?? 0,
                                 );
+                                print("done");
                               }
                               Navigator.push(context,
                                   MaterialPageRoute(builder: (context) {
