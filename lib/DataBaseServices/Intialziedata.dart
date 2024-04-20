@@ -22,6 +22,35 @@ class Dataservices {
     }
   }
 
+  Future<void> StreakandWater() async {
+    try {
+      CollectionReference dataCollection =
+          FirebaseFirestore.instance.collection('StreakandWater');
+      DateTime currentDate = DateTime.now();
+      for (int i = 0; i < 60; i++) {
+        // Calculate the date for the current iteration
+        DateTime date = currentDate.add(Duration(days: i));
+
+        // Construct the document ID using the date in yyyy-MM-dd format
+        String documentId = date.toIso8601String().substring(0, 10);
+
+        // Set the document data with integer and boolean variables for each day
+        await dataCollection.doc(uid).collection('dates').doc(documentId).set({
+          'waterintake':
+              0, // Initial integer value (you can set it to any initial value)
+          'streak':
+              false, // Initial boolean value (you can set it to any initial value)
+        });
+      }
+      // await dataCollection.doc(uid).set({
+
+      // });
+      print('Data initialized successfully.');
+    } catch (e) {
+      print('Failed to initialize data: $e');
+    }
+  }
+
   Future<void> initializeData({
     required String name,
     required int age,

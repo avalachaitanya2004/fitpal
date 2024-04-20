@@ -42,7 +42,8 @@ class ExcerciseCard extends StatelessWidget {
                       alignment: Alignment.center,
                       filterQuality: FilterQuality.high,
                       scale: 0.5,
-                      image: AssetImage('assets/images/1.jpg'),
+                      image: AssetImage(excersise.ImagePath() ??
+                          'assets/images/back_image.jpeg'),
                       fit: BoxFit.fill,
                     ),
                     borderRadius: BorderRadius.circular(10),

@@ -16,31 +16,31 @@ class WorkoutSelect extends StatefulWidget {
 
 class _WorkoutSelectState extends State<WorkoutSelect> {
   final List<Excersise> today = [
-    Excersise(name: "JUMPING JACKS", reps: 20),
-    Excersise(name: "ABDOMINAL CRUNCHES", reps: 20),
-    Excersise(name: "RUSSIAN TWIST", reps: 20)
+    Excersise(name: "alternating plank", reps: 20),
+    Excersise(name: "tricep dips", reps: 20),
+    Excersise(name: "inclined pushups", reps: 20)
   ];
 
   final List<CustomPlaylist> custom = [
     CustomPlaylist(name: 'Playlist-1', set: [
-      Excersise(name: "JUMPING JACKS", reps: 20),
-      Excersise(name: "ABDOMINAL CRUNCHES", reps: 20),
-      Excersise(name: "RUSSIAN TWIST", reps: 20)
+      Excersise(name: "prisoners squat", reps: 20),
+      Excersise(name: "running burpees", reps: 20),
+      Excersise(name: "twisted mountain climber", reps: 20)
     ]),
     CustomPlaylist(name: 'Playlist-2', set: [
-      Excersise(name: "JUMPING JACKS", reps: 20),
-      Excersise(name: "ABDOMINAL CRUNCHES", reps: 20),
-      Excersise(name: "RUSSIAN TWIST", reps: 20)
+      Excersise(name: "shoulder tap", reps: 20),
+      Excersise(name: "kneeled narrow pushup", reps: 20),
+      Excersise(name: "twisted mountain climber", reps: 20)
     ]),
     CustomPlaylist(name: 'Playlist-3', set: [
-      Excersise(name: "JUMPING JACKS", reps: 20),
-      Excersise(name: "ABDOMINAL CRUNCHES", reps: 20),
-      Excersise(name: "RUSSIAN TWIST", reps: 20)
+      Excersise(name: "shoulder tap", reps: 20),
+      Excersise(name: "kneeled narrow pushup", reps: 20),
+      Excersise(name: "twisted mountain climber", reps: 20)
     ]),
     CustomPlaylist(name: 'Playlist-4', set: [
-      Excersise(name: "JUMPING JACKS", reps: 20),
-      Excersise(name: "ABDOMINAL CRUNCHES", reps: 20),
-      Excersise(name: "RUSSIAN TWIST", reps: 20)
+      Excersise(name: "shoulder tap", reps: 20),
+      Excersise(name: "kneeled narrow pushup", reps: 20),
+      Excersise(name: "twisted mountain climber", reps: 20)
     ]),
   ];
 

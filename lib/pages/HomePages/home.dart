@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fit_pal/models/excercises.dart';
 import 'package:fit_pal/models/food.dart';
 import 'package:fit_pal/models/food_card.dart';
@@ -22,7 +24,56 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  int target = 12;
+  Future<void> fetchUserData() async {
+    try {
+      CollectionReference<Map<String, dynamic>> waterCollection =
+          FirebaseFirestore.instance.collection('water');
+      CollectionReference<Map<String, dynamic>> streakcollection =
+          FirebaseFirestore.instance.collection('StreakandWater');
+      String? uid;
+      final FirebaseAuth _auth = FirebaseAuth.instance;
+      final User? user = _auth.currentUser;
+      uid = user?.uid;
+
+      // Reference the document for the specified user
+      DocumentSnapshot<Map<String, dynamic>> userDocument =
+          await waterCollection.doc(uid).get();
+      DateTime currentDate = DateTime.now();
+
+      // Construct the document ID using the date in yyyy-MM-dd format
+      String documentId = currentDate.toIso8601String().substring(0, 10);
+      DocumentSnapshot<Map<String, dynamic>> userwater = await streakcollection
+          .doc(uid)
+          .collection('dates')
+          .doc(documentId)
+          .get();
+
+      // Check if the document exists
+      if (userDocument.exists) {
+        // Access the data for the user
+        Map<String, dynamic> userData = userDocument.data()!;
+
+        // Now you can access specific fields from the userData map
+
+        // Replace 'field1' with your field name
+        setState(() {
+          target = userData['target'];
+          completed = userwater['waterintake'];
+        });
+        // Replace 'field2' with your field name
+
+        // Do something with the retrieved data
+      } else {
+        // Document does not exist for the specified user
+        print('Document does not exist for user with UID: $uid');
+      }
+    } catch (e) {
+      // Handle any errors
+      print('Failed to fetch user data: $e');
+    }
+  }
+
+  int target = 10;
   int completed = 4;
   final List<Excersise> excercises = [
     Excersise(name: "JUMPING JACKS", reps: 20),
@@ -40,7 +91,14 @@ class _HomeState extends State<Home> {
       fontFamily: 'Roboto', fontSize: 15, fontWeight: FontWeight.w500);
   int _page = 0;
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    fetchUserData();
     return Container(
       // duration: Duration(seconds: 1),
       height: double.maxFinite,
