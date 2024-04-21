@@ -14,6 +14,7 @@ import 'package:fit_pal/pages/edit_profile.dart';
 import 'package:fit_pal/pages/friend_search_page.dart';
 import 'package:fit_pal/pages/getStarted.dart';
 import 'package:fit_pal/pages/home_page.dart';
+import 'package:fit_pal/pages/interval_page.dart';
 import 'package:fit_pal/pages/introPages/intro_page_2.dart';
 import 'package:fit_pal/pages/login_page.dart';
 import 'package:fit_pal/pages/pre_login.dart';

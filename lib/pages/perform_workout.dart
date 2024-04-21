@@ -1,5 +1,8 @@
+// import 'dart:js';
+
 import 'package:fit_pal/models/excercises.dart';
 import 'package:fit_pal/models/perform_workout_card.dart';
+import 'package:fit_pal/pages/interval_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -8,6 +11,18 @@ class PerformWorkout extends StatelessWidget {
   PerformWorkout({super.key, required this.excercises});
   final List<Excersise> excercises;
   final PageController _pages = PageController();
+  void nextpage() {
+    if (_pages.page! < excercises.length - 1) {
+      _pages.nextPage(
+          duration: Duration(milliseconds: 300), curve: Curves.ease);
+    }
+  }
+
+  // void nextpage1() {
+  //   Navigator.push(context, MaterialPageRoute(builder: (context) {
+  //     return IntervalPage(nextpage: nextpage);
+  //   }));
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -62,9 +77,14 @@ class PerformWorkout extends StatelessWidget {
             Expanded(
                 child: Container(
                     child: PageView(
+              physics: NeverScrollableScrollPhysics(),
               controller: _pages,
-              children: List.generate(excercises.length,
-                  (index) => PerformWorkoutCard(excersise: excercises[index])),
+              children: List.generate(
+                  excercises.length,
+                  (index) => PerformWorkoutCard(
+                        excersise: excercises[index],
+                        nextpage: nextpage,
+                      )),
             ))),
           ],
         ),

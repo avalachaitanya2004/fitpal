@@ -20,8 +20,8 @@ class _ExcerciseInfoState extends State<ExcerciseInfo> {
     // Create and store the VideoPlayerController. The VideoPlayerController
     // offers several different constructors to play videos from assets, files,
     // or the internet.
-    _controller =
-        VideoPlayerController.asset('assets/videos/AlternatingPlankvideo.mp4');
+    _controller = VideoPlayerController.asset(
+        widget.excersise.VideoPath() ?? 'assets/videos/Runninginplace.mp4');
 
     // Initialize the controller and store the Future for later use.
     _initializeVideoPlayerFuture = _controller.initialize();
@@ -40,6 +40,7 @@ class _ExcerciseInfoState extends State<ExcerciseInfo> {
 
   @override
   Widget build(BuildContext context) {
+    _controller.play();
     return SingleChildScrollView(
       child: Container(
         decoration: BoxDecoration(
