@@ -1,187 +1,137 @@
+import 'dart:convert';
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:tflite/tflite.dart';
 
-class HexColor extends Color {
-  static int _getColorFromHex(String hexColor) {
-    hexColor = hexColor.toUpperCase().replaceAll("#", "");
-    if (hexColor.length == 6) {
-      hexColor = "FF" + hexColor;
-    }
-    return int.parse(hexColor, radix: 16);
-  }
-
-  HexColor(final String hexColor) : super(_getColorFromHex(hexColor));
-}
-
-class Person {
-  final String name;
-  final String imageUrl;
-  final String email;
-  final String bio;
-  final String githubUrl;
-  final String linkedInUrl;
-
-  Person({
-    required this.name,
-    required this.imageUrl,
-    required this.email,
-    required this.bio,
-    required this.githubUrl,
-    required this.linkedInUrl,
-  });
-}
-
-final List<Person> people = [
-  Person(
-    name: 'Nandu',
-    imageUrl:
-        'https://i.pinimg.com/564x/e9/51/25/e951250f7f452c8e278d12ac073b9b5b.jpg',
-    email: 'chunduri_a@cs.iitr.ac.in',
-    bio:
-        'A 2nd Year Undergrad at IIT Roorkee. Good coding experience with C++ and Java. Interest lies in software development.',
-    githubUrl: 'https://github.com/abhijitch1',
-    linkedInUrl: '',
-  ),
-  Person(
-    name: 'Sudeep',
-    imageUrl:
-        'https://i.pinimg.com/564x/e9/51/25/e951250f7f452c8e278d12ac073b9b5b.jpg',
-    email: 'chunduri_a@cs.iitr.c.in',
-    bio:
-        'A 2nd Year Undergrad at IIT Roorkee. Good coding experience with C++ and Java. Interest lies in software development.',
-    githubUrl: 'https://github.com/abhijitch1',
-    linkedInUrl: '',
-  ),
-];
-
-void main() => runApp(MaterialApp(home: TEST()));
-
-class TEST extends StatefulWidget {
-  const TEST({Key? key}) : super(key: key);
+class TfliteModel extends StatefulWidget {
+  const TfliteModel({Key? key}) : super(key: key);
 
   @override
-  State<TEST> createState() => _TESTState();
+  _TfliteModelState createState() => _TfliteModelState();
 }
 
-class _TESTState extends State<TEST> {
+class _TfliteModelState extends State<TfliteModel> {
+  late File _image;
+  late List _results;
+  bool imageSelect = false;
+  @override
+  void initState() {
+    super.initState();
+    loadModel();
+  }
+
+  Future loadModel() async {
+    Tflite.close();
+    String res;
+    res = (await Tflite.loadModel(
+        model: "assets/model.tflite", labels: "assets/labels.txt"))!;
+    print("Models loading status: $res");
+  }
+
+  Future imageClassification(File image) async {
+    try {
+      final List? recognitions = await Tflite.runModelOnImage(
+        path: image.path,
+        numResults: 6,
+        threshold: 0,
+        imageMean: 127.5,
+        imageStd: 127.5,
+      );
+      setState(() {
+        _results = recognitions!;
+        _image = image;
+        imageSelect = true;
+        print(_results);
+        var v = recognitions.toString();
+        var dataList = List<Map<String, dynamic>>.from(jsonDecode(v));
+        print(dataList);
+      });
+    } catch (e) {
+      print('Error running model: $e');
+      // Handle the error in a way suitable for your app context
+    }
+  }
+  // Future imageClassification(File image) async {
+  //   int startTime = new DateTime.now().millisecondsSinceEpoch;
+  //   var recognitions = await Tflite.runModelOnImage(
+  //     path: image.path,
+  //     numResults: 6,
+  //     threshold: 0.05,
+  //     imageMean: 127.5,
+  //     imageStd: 127.5,
+  //   );
+  //   setState(() {
+  //     _results = recognitions!;
+  //     // v = recognitions.toString();
+  //     // dataList = List<Map<String, dynamic>>.from(jsonDecode(v));
+  //   });
+  //   print("//////////////////////////////////////////////////");
+  //   print(_results);
+  //   // print(dataList);
+  //   print("//////////////////////////////////////////////////");
+  //   int endTime = new DateTime.now().millisecondsSinceEpoch;
+  //   print("Inference took ${endTime - startTime}ms");
+  // }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('About Us',
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              color: Colors.blueAccent,
-              fontFamily: 'ProductSans',
-            )),
+        title: const Text("Image Classification"),
       ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              SizedBox(height: 20),
-              Text(
-                'Meet the developers of FitPal',
-                style: TextStyle(
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.grey[600],
-                    fontFamily: 'ProductSans'),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              ListView.builder(
-                shrinkWrap: true, // Added shrinkWrap here
-                physics:
-                    NeverScrollableScrollPhysics(), // Ensure does not scroll independently
-                itemCount: people.length,
-                itemBuilder: (context, index) => Padding(
-                  padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-                  child: PersonCard(person: people[index]),
-                ),
-              ),
-              SizedBox(height: 30),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class PersonCard extends StatelessWidget {
-  final Person person;
-
-  PersonCard({required this.person});
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      child: Padding(
-        padding: EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            ListTile(
-              leading: CircleAvatar(
-                radius: 35,
-                backgroundImage: NetworkImage(person.imageUrl),
-              ),
-              title: Text(person.name),
-              subtitle: Text(person.bio),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                IconButton(
-                  icon: Icon(Icons.email),
-                  onPressed: () => _launchEmail(person.email, context),
-                ),
-                IconButton(
-                  icon: SvgPicture.asset(
-                    "assets/svg/github1.svg",
-                    height: 20.0,
-                    color: Colors.black,
+      body: ListView(
+        children: [
+          (imageSelect)
+              ? Container(
+                  margin: const EdgeInsets.all(10),
+                  child: Image.file(_image),
+                )
+              : Container(
+                  margin: const EdgeInsets.all(10),
+                  child: const Opacity(
+                    opacity: 0.8,
+                    child: Center(
+                      child: Text("No image selected"),
+                    ),
                   ),
-                  onPressed: () => _launchURL(person.githubUrl, context),
                 ),
-                IconButton(
-                  icon: SvgPicture.asset(
-                    'assets/svg/linkedin.svg',
-                    height: 20.0,
-                    color: Colors.black,
-                  ),
-                  onPressed: () => _launchURL(person.linkedInUrl, context),
-                ),
-              ],
+          SingleChildScrollView(
+            child: Column(
+              children: (imageSelect)
+                  ? _results.map((result) {
+                      return Card(
+                        child: Container(
+                          margin: EdgeInsets.all(10),
+                          child: Text(
+                            "${result['label']} - ${result['confidence'].toStringAsFixed(2)}",
+                            style: const TextStyle(
+                                color: Colors.red, fontSize: 20),
+                          ),
+                        ),
+                      );
+                    }).toList()
+                  : [],
             ),
-          ],
-        ),
+          )
+        ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: pickImage,
+        tooltip: "Pick Image",
+        child: const Icon(Icons.image),
       ),
     );
   }
 
-  void _launchEmail(String email, BuildContext context) async {
-    final Uri emailLaunchUri = Uri(
-      scheme: 'mailto',
-      path: email,
-      query: 'subject=User of FitPal App&body=Hi, I want to say hi to you.',
+  Future pickImage() async {
+    final ImagePicker _picker = ImagePicker();
+    final XFile? pickedFile = await _picker.pickImage(
+      source: ImageSource.gallery,
     );
-
-    if (!await launchUrl(emailLaunchUri)) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Could not launch $email')),
-      );
-    }
-  }
-
-  void _launchURL(String url, BuildContext context) async {
-    if (!await launchUrl(Uri.parse(url))) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Could not launch $url')),
-      );
-    }
+    File image = File(pickedFile!.path);
+    imageClassification(image);
   }
 }
