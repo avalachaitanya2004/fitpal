@@ -24,6 +24,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  bool streak = true;
   Future<void> fetchUserData() async {
     try {
       CollectionReference<Map<String, dynamic>> waterCollection =
@@ -192,6 +193,7 @@ class _HomeState extends State<Home> {
                                             'assets/svg/steps.svg',
                                             width: 18,
                                             height: 18,
+                                            color: Colors.brown,
                                           ),
                                           const SizedBox(
                                             width: 10,
@@ -233,44 +235,93 @@ class _HomeState extends State<Home> {
                                     // color: Colors.red,
                                     // height: 80,
                                     // width: 90,
-                                    child: Center(
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Icon(Icons.local_fire_department),
-                                          const SizedBox(
-                                            width: 10,
-                                          ),
-                                          Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Text(
-                                                '1455',
-                                                style: TextStyle(
-                                                  fontFamily: 'Roboto',
-                                                  // color: Colors.blue,
-                                                  fontSize: 16,
-                                                  fontWeight: FontWeight.bold,
+                                    child: streak
+                                        ? Center(
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Icon(
+                                                  CupertinoIcons.flame,
+                                                  color: Colors.red,
                                                 ),
-                                              ),
-                                              const SizedBox(
-                                                height: 1,
-                                              ),
-                                              Text(
-                                                'Steps',
-                                                style: TextStyle(
-                                                  fontSize: 14,
-                                                  color: Colors.black
-                                                      .withOpacity(0.7),
+                                                const SizedBox(
+                                                  width: 10,
                                                 ),
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    )),
+                                                Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    Text(
+                                                      '176',
+                                                      style: TextStyle(
+                                                        fontFamily: 'Roboto',
+                                                        // color: Colors.blue,
+                                                        fontSize: 16,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
+                                                    ),
+                                                    const SizedBox(
+                                                      height: 1,
+                                                    ),
+                                                    Text(
+                                                      'Streak',
+                                                      style: TextStyle(
+                                                        fontSize: 14,
+                                                        color: Colors.black
+                                                            .withOpacity(0.7),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                          )
+                                        : Center(
+                                            child: Stack(
+                                              alignment: Alignment.center,
+                                              children: [
+                                                Icon(
+                                                  CupertinoIcons.flame,
+                                                  color: Colors.red,
+                                                  size: 30,
+                                                ),
+                                                Align(
+                                                  alignment:
+                                                      Alignment(0.5, 0.5),
+                                                  child: Positioned(
+                                                    child: Icon(
+                                                      Icons
+                                                          .warning_amber_rounded,
+                                                      color: Colors.red,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            //if steak is false
+                                            // child: Row(
+                                            //   mainAxisAlignment:
+                                            //       MainAxisAlignment.center,
+                                            //   children: [
+                                            //     Icon(
+                                            //       CupertinoIcons.flame,
+                                            //       color: Colors.red,
+                                            //       size: 30,
+                                            //     ),
+                                            //     Column(
+                                            //       children: [
+                                            //         Spacer(),
+                                            //         Icon(
+                                            //           Icons.warning,
+                                            //           color: Colors.red,
+                                            //         ),
+                                            //       ],
+                                            //     ),
+                                            //   ],
+                                            // ),
+                                          )),
                               ),
                               Expanded(
                                 child: GlassMorphism(
@@ -284,7 +335,10 @@ class _HomeState extends State<Home> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         children: [
-                                          Icon(CupertinoIcons.flame),
+                                          Icon(
+                                            CupertinoIcons.drop,
+                                            color: Colors.blue,
+                                          ),
                                           const SizedBox(
                                             width: 10,
                                           ),
@@ -293,7 +347,7 @@ class _HomeState extends State<Home> {
                                                 MainAxisAlignment.center,
                                             children: [
                                               Text(
-                                                '1455',
+                                                '${completed}/${target}',
                                                 style: TextStyle(
                                                   fontFamily: 'Roboto',
                                                   // color: Colors.blue,
@@ -305,7 +359,7 @@ class _HomeState extends State<Home> {
                                                 height: 1,
                                               ),
                                               Text(
-                                                'Steps',
+                                                'Water',
                                                 style: TextStyle(
                                                   fontSize: 14,
                                                   color: Colors.black
@@ -350,6 +404,204 @@ class _HomeState extends State<Home> {
                               fontWeight: FontWeight.w600,
                             ),
                           ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Expanded(
+                                child: GlassMorphism(
+                                    blur: 50,
+                                    // margin: EdgeInsets.all(10),
+                                    // color: Colors.blue,
+                                    // height: 80,
+                                    // width: 90,
+                                    child: Center(
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Icon(
+                                            CupertinoIcons.heart_fill,
+                                            color: Colors.red,
+                                          ),
+                                          const SizedBox(
+                                            width: 10,
+                                          ),
+                                          Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                '120',
+                                                style: TextStyle(
+                                                  fontFamily: 'Roboto',
+                                                  // color: Colors.blue,
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                              const SizedBox(
+                                                height: 1,
+                                              ),
+                                              Text(
+                                                'bpm',
+                                                style: TextStyle(
+                                                  fontSize: 14,
+                                                  color: Colors.black
+                                                      .withOpacity(0.7),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    )),
+                              ),
+                              Expanded(
+                                child: GlassMorphism(
+                                    blur: 50,
+                                    // margin: EdgeInsets.all(10),
+                                    // color: Colors.red,
+                                    // height: 80,
+                                    // width: 90,
+                                    child: streak
+                                        ? Center(
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Icon(
+                                                  CupertinoIcons.flame,
+                                                  color: Colors.red,
+                                                ),
+                                                const SizedBox(
+                                                  width: 10,
+                                                ),
+                                                Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    Text(
+                                                      'Done',
+                                                      style: TextStyle(
+                                                        fontFamily: 'Roboto',
+                                                        // color: Colors.blue,
+                                                        fontSize: 16,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
+                                                    ),
+                                                    const SizedBox(
+                                                      height: 1,
+                                                    ),
+                                                    Text(
+                                                      'Today',
+                                                      style: TextStyle(
+                                                        fontSize: 14,
+                                                        color: Colors.black
+                                                            .withOpacity(0.7),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                          )
+                                        : Center(
+                                            child: Stack(
+                                              alignment: Alignment.center,
+                                              children: [
+                                                Icon(
+                                                  CupertinoIcons.flame,
+                                                  color: Colors.red,
+                                                  size: 30,
+                                                ),
+                                                Align(
+                                                  alignment:
+                                                      Alignment(0.5, 0.5),
+                                                  child: Positioned(
+                                                    child: Icon(
+                                                      Icons
+                                                          .warning_amber_rounded,
+                                                      color: Colors.red,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            //if steak is false
+                                            // child: Row(
+                                            //   mainAxisAlignment:
+                                            //       MainAxisAlignment.center,
+                                            //   children: [
+                                            //     Icon(
+                                            //       CupertinoIcons.flame,
+                                            //       color: Colors.red,
+                                            //       size: 30,
+                                            //     ),
+                                            //     Column(
+                                            //       children: [
+                                            //         Spacer(),
+                                            //         Icon(
+                                            //           Icons.warning,
+                                            //           color: Colors.red,
+                                            //         ),
+                                            //       ],
+                                            //     ),
+                                            //   ],
+                                            // ),
+                                          )),
+                              ),
+                              Expanded(
+                                child: GlassMorphism(
+                                    blur: 50,
+                                    // margin: EdgeInsets.all(10),
+                                    // color: Colors.green,
+                                    // height: 80,
+                                    // width: 90,
+                                    child: Center(
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Icon(
+                                            CupertinoIcons.drop,
+                                            color: Colors.blue,
+                                          ),
+                                          const SizedBox(
+                                            width: 10,
+                                          ),
+                                          Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                '${completed}/${target}',
+                                                style: TextStyle(
+                                                  fontFamily: 'Roboto',
+                                                  // color: Colors.blue,
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                              const SizedBox(
+                                                height: 1,
+                                              ),
+                                              Text(
+                                                'Water',
+                                                style: TextStyle(
+                                                  fontSize: 14,
+                                                  color: Colors.black
+                                                      .withOpacity(0.7),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    )),
+                              ),
+                            ],
+                          )
                         ],
                       ),
                     ),
