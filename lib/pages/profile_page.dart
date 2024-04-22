@@ -1,4 +1,5 @@
 import 'package:bounce_tap/bounce_tap.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fit_pal/DataBaseServices/Intialziedata.dart';
 import 'package:fit_pal/DataBaseServices/useruid.dart';
 import 'package:fit_pal/pages/edit_profile.dart';
@@ -6,6 +7,7 @@ import 'package:fit_pal/pages/friend_search_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:shimmer/shimmer.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -20,11 +22,14 @@ class _ProfilePageState extends State<ProfilePage> {
   String email = '';
   double weight = 0.0;
   int height = 0;
+  bool nameload = false;
 
   @override
   void initState() {
     super.initState();
-    String? uid = AuthService.getUID();
+    User? user = FirebaseAuth.instance.currentUser;
+    // String? uid = AuthService.getUID();
+    String uid = user!.uid;
     if (uid != null) {
       dataservices = Dataservices(uid: uid);
       dataservices.getUserInfo().then((userInfo) {
@@ -33,8 +38,11 @@ class _ProfilePageState extends State<ProfilePage> {
           email = userInfo['email'] ?? '';
           weight = userInfo['weight'] ?? '';
           height = userInfo['height'] ?? '';
+          // nameload = true;
         });
       });
+    } else {
+      print("uid is null");
     }
   }
 
@@ -47,8 +55,25 @@ class _ProfilePageState extends State<ProfilePage> {
           radius: 60,
         ),
         const SizedBox(height: 20),
-        Text(name, //NAME
-            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+        nameload
+            ? Text(name, //NAME
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold))
+            : SizedBox(
+                width: 140,
+                height: 40,
+                child: Shimmer.fromColors(
+                    baseColor: Colors.white,
+                    highlightColor: Color.fromARGB(255, 232, 231, 231),
+                    child: ListView.builder(
+                        itemCount: 1,
+                        itemBuilder: (context, index) {
+                          return Container(
+                            height: 20,
+                            width: 130,
+                            color: Colors.black,
+                          );
+                        })),
+              ),
         Text(email, //EMAIL
             style: TextStyle(fontSize: 14, color: Colors.grey)),
       ],
@@ -130,7 +155,8 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[100],
+      // backgroundColor: Colors.grey[100],
+      backgroundColor: Colors.white,
       appBar: AppBar(
         actions: [
           IconButton(onPressed: () {}, icon: Icon(Icons.share)),

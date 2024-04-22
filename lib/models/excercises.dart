@@ -26,6 +26,14 @@ class Excersise {
     }
   }
 
+  bool? returnBool() {
+    if (exerciseDictionary.containsKey(name)) {
+      return exerciseDictionary[name]?['perMinute'] as bool? ?? false;
+    } else {
+      return true;
+    }
+  }
+
   Excersise({required this.name, required this.reps});
 }
 
