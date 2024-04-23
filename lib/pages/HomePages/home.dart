@@ -495,8 +495,8 @@ class _HomeState extends State<Home> {
                                                   MainAxisAlignment.center,
                                               children: [
                                                 Icon(
-                                                  CupertinoIcons.flame,
-                                                  color: Colors.red,
+                                                  CupertinoIcons.bolt,
+                                                  color: Colors.yellow[900],
                                                 ),
                                                 const SizedBox(
                                                   width: 10,
@@ -506,7 +506,7 @@ class _HomeState extends State<Home> {
                                                       MainAxisAlignment.center,
                                                   children: [
                                                     Text(
-                                                      'Done',
+                                                      '125',
                                                       style: TextStyle(
                                                         fontFamily: 'Roboto',
                                                         // color: Colors.blue,
@@ -589,8 +589,8 @@ class _HomeState extends State<Home> {
                                             MainAxisAlignment.center,
                                         children: [
                                           Icon(
-                                            CupertinoIcons.drop,
-                                            color: Colors.blue,
+                                            CupertinoIcons.bolt_fill,
+                                            color: Colors.yellow[900],
                                           ),
                                           const SizedBox(
                                             width: 10,
@@ -600,7 +600,7 @@ class _HomeState extends State<Home> {
                                                 MainAxisAlignment.center,
                                             children: [
                                               Text(
-                                                '${completed}/${target}',
+                                                '500',
                                                 style: TextStyle(
                                                   fontFamily: 'Roboto',
                                                   // color: Colors.blue,
@@ -612,7 +612,7 @@ class _HomeState extends State<Home> {
                                                 height: 1,
                                               ),
                                               Text(
-                                                'Water',
+                                                'Week',
                                                 style: TextStyle(
                                                   fontSize: 14,
                                                   color: Colors.black

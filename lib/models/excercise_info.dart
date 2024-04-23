@@ -58,7 +58,7 @@ class _ExcerciseInfoState extends State<ExcerciseInfo> {
                 widget.excersise.name,
                 style: TextStyle(
                   fontFamily: 'Roboto',
-                  fontSize: 22,
+                  fontSize: 24,
                   fontWeight: FontWeight.w900,
                 ),
               ),
@@ -88,6 +88,16 @@ class _ExcerciseInfoState extends State<ExcerciseInfo> {
                   )),
               SizedBox(height: 20),
               Text(
+                'About',
+                style: TextStyle(color: Colors.blue, fontSize: 22),
+              ),
+              SizedBox(height: 10),
+              Text(
+                widget.excersise.generateInfo() ?? 'No information available',
+                style: TextStyle(fontSize: 16),
+              ),
+              SizedBox(height: 20),
+              Text(
                 'Instructions',
                 style: TextStyle(color: Colors.blue, fontSize: 22),
               ),
@@ -97,10 +107,6 @@ class _ExcerciseInfoState extends State<ExcerciseInfo> {
                 style: TextStyle(fontSize: 16),
               ),
               SizedBox(height: 20),
-              Text(
-                'Focus Area',
-                style: TextStyle(color: Colors.blue, fontSize: 22),
-              ),
             ],
           ),
         ),

@@ -100,18 +100,6 @@ class _PerformWorkoutState extends State<PerformWorkout> {
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
               child: Row(
                 children: [
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                    child: CircleAvatar(
-                      backgroundColor: Colors.grey[200],
-                      child: Icon(
-                        Icons.close,
-                        color: Colors.black,
-                      ),
-                    ),
-                  ),
                   Spacer(),
                   Column(
                     children: [

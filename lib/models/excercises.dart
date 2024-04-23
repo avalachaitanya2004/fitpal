@@ -4,6 +4,14 @@ class Excersise {
 
   String? generateInst() {
     if (exerciseDictionary.containsKey(name)) {
+      return exerciseDictionary[name]?['hintsForBeginners'] as String?;
+    } else {
+      return "";
+    }
+  }
+
+  String? generateInfo() {
+    if (exerciseDictionary.containsKey(name)) {
       return exerciseDictionary[name]?['info'] as String?;
     } else {
       return "";
@@ -34,6 +42,32 @@ class Excersise {
     }
   }
 
+  // double? getcal() {
+  //   if (exerciseDictionary.containsKey(name)) {
+  //     return exerciseDictionary[name]!['calories'].toDouble();
+  //   } else {
+  //     return 0;
+  //   }
+  // }
+  double? getcal() {
+    if (exerciseDictionary.containsKey(name)) {
+      var calories = exerciseDictionary[name]!['calories'];
+      if (calories != null) {
+        return calories
+            as double; // No need for conversion, it's already a double
+      } else {
+        return null; // Or return another value to indicate that calories are not available
+      }
+    } else {
+      return 0;
+    }
+  }
+
+  double? gettotcal() {
+    double s = reps * getcal()!;
+    return s;
+  }
+
   Excersise({required this.name, required this.reps});
 }
 
@@ -51,7 +85,7 @@ var exerciseDictionary = {
   "running in place": {
     "info":
         "Running in place is a cardiovascular exercise that elevates your heart rate and improves endurance. Begin by standing with your feet hip-width apart, and lift your knees upward alternately, simulating a running motion. Swing your arms naturally to mimic the movement of running. Continue at a brisk pace for the desired duration.",
-    "calories": 8,
+    "calories": 8.0,
     "perMinute": true,
     "hintsForBeginners":
         "Start with a slow pace and gradually increase your speed as you become more comfortable. Focus on maintaining a good posture and engaging your core muscles. Land softly on the balls of your feet to reduce impact on your joints.",
@@ -61,7 +95,7 @@ var exerciseDictionary = {
   "Traise": {
     "info":
         "The T raise is a shoulder exercise that targets the deltoid muscles. Begin by standing with your feet shoulder-width apart, holding a dumbbell in each hand. With a slight bend in your elbows, raise your arms out to the sides until they are parallel to the ground, forming a 'T' shape. Slowly lower the weights back to the starting position and repeat.",
-    "calories": 5,
+    "calories": 5.0,
     "perMinute": true,
     "hintsForBeginners":
         "Start with light weights to ensure proper form. Keep your core engaged and avoid swinging your body as you lift the weights. Focus on controlled movements and maintain a slight bend in your elbows throughout the exercise.",
@@ -71,7 +105,7 @@ var exerciseDictionary = {
   "alternating plank": {
     "info":
         "Alternating plank is a full-body exercise that strengthens your core, shoulders, and arms. Begin in a plank position with your hands directly under your shoulders and your body in a straight line from head to heels. Lift one arm off the ground and touch your opposite shoulder, then return to the starting position and repeat with the other arm.",
-    "calories": 4,
+    "calories": 4.0,
     "perMinute": true,
     "hintsForBeginners":
         "Begin with a modified plank by resting on your knees instead of your toes. Keep your body in a straight line from head to knees. Engage your core to stabilize your body as you lift each arm.",
@@ -91,7 +125,7 @@ var exerciseDictionary = {
   "inclined pushups": {
     "info":
         "Inclined pushups are a modification of traditional pushups that are easier for beginners. They target the chest, shoulders, and triceps. Place your hands on an elevated surface like a bench or countertop, slightly wider than shoulder-width apart. Lower your chest towards the surface by bending your elbows, then push through your palms to return to the starting position.",
-    "calories": 5,
+    "calories": 5.0,
     "perMinute": true,
     "hintsForBeginners":
         "Use an elevated surface like a bench or countertop to perform inclined pushups. Keep your body in a straight line from head to heels and lower your chest toward the surface. Focus on maintaining proper form and gradually increase the depth of your pushup as you get stronger.",
@@ -101,7 +135,7 @@ var exerciseDictionary = {
   "tricep press": {
     "info":
         "Tricep press is an isolation exercise that targets the triceps, the muscles located at the back of the upper arm. Begin by lying flat on your back on a bench or the floor, holding a dumbbell in each hand above your chest with palms facing inward. Lower the dumbbells toward your shoulders by bending your elbows, keeping them close to your body. Extend your arms back up to the starting position, fully straightening your elbows.",
-    "calories": 5,
+    "calories": 5.0,
     "perMinute": true,
     "hintsForBeginners":
         "For beginners, start with a lighter weight to focus on proper form and technique. Keep your elbows stable throughout the movement, avoiding any swinging or momentum. Engage your core to stabilize your body and prevent overarching your lower back. Gradually increase the weight as you become more comfortable with the exercise.",
@@ -111,7 +145,7 @@ var exerciseDictionary = {
   "shoulder push-ups": {
     "info":
         "Shoulder push-ups are an effective bodyweight exercise that targets the shoulders, chest, and triceps. Begin in a plank position with your hands directly under your shoulders and feet hip-width apart. Lower your chest toward the ground while keeping your elbows close to your body. Push back up to the starting position, maintaining a straight line from head to heels.",
-    "calories": 6,
+    "calories": 6.0,
     "perMinute": true,
     "hintsForBeginners":
         "For beginners, start with incline push-ups using a sturdy elevated surface like a bench or a step. Focus on maintaining a neutral spine and engaging your core throughout the movement. As you progress, gradually lower the incline until you can perform push-ups on the ground with proper form.",
@@ -131,7 +165,7 @@ var exerciseDictionary = {
   "running burpees": {
     "info":
         "Running burpees are a high-intensity full-body exercise that combines a squat, plank, pushup, and jump. They improve cardiovascular fitness and strength. Begin in a standing position, then squat down and place your hands on the ground. Jump or step your feet back into a plank position, perform a pushup, then jump or step your feet forward and explode up into a jump.",
-    "calories": 10,
+    "calories": 10.0,
     "perMinute": true,
     "hintsForBeginners":
         "Begin with a modified version by stepping back into the plank position instead of jumping. Focus on maintaining proper form and gradually increase your speed as you get comfortable. Engage your core throughout the exercise to stabilize your body.",
@@ -142,7 +176,7 @@ var exerciseDictionary = {
   "jump squat": {
     "info":
         "Jump squats are a dynamic lower body exercise that enhances strength and explosiveness. Start in a standing position with feet shoulder-width apart. Lower into a squat, keeping your chest up and back straight. Explode upward, jumping as high as you can. Land softly and immediately descend into the next squat.",
-    "calories": 8,
+    "calories": 8.0,
     "perMinute": true,
     "hintsForBeginners":
         "For beginners, perform regular squats focusing on form and depth before adding the jump. Start with small jumps and gradually increase height and intensity. Keep your knees aligned with your toes to prevent injury, and land softly to minimize impact on your joints.",
@@ -152,7 +186,7 @@ var exerciseDictionary = {
   "twisted mountain climber": {
     "info":
         "Twisted mountain climber is a core and cardio exercise that targets the obliques, abs, and shoulders. Begin in a plank position with your hands directly under your shoulders and your body in a straight line from head to heels. Bring one knee towards the opposite elbow while twisting your torso, then return to the starting position and repeat on the other side.",
-    "calories": 12,
+    "calories": 12.0,
     "perMinute": true,
     "hintsForBeginners":
         "Start with slow, controlled movements to get the form right. Keep your core engaged and your hips stable throughout the exercise. Focus on bringing your knee towards your elbow while maintaining a straight back.",
@@ -172,7 +206,7 @@ var exerciseDictionary = {
   "push-up and rotation": {
     "info":
         "Push-up with rotation is a dynamic variation of the traditional push-up that engages the chest, shoulders, triceps, and core muscles. Begin in a plank position with your hands directly under your shoulders. Perform a push-up, then rotate your body to one side, extending the arm upward toward the ceiling. Return to the plank position and repeat on the other side.",
-    "calories": 8,
+    "calories": 8.0,
     "perMinute": true,
     "hintsForBeginners":
         "If you're new to push-ups, start with modified push-ups on your knees to build strength. Focus on keeping your body in a straight line from head to knees. As you progress, work on increasing the depth of your push-ups before adding the rotation. Engage your core throughout the movement to stabilize your body.",
@@ -182,7 +216,7 @@ var exerciseDictionary = {
   "kneeled narrow pushup": {
     "info":
         "Kneeled narrow pushup is a modified version of the narrow pushup that targets the triceps and chest. It's suitable for beginners who may not have the strength to perform regular pushups. Begin on your hands and knees with your hands directly under your shoulders and your knees hip-width apart. Lower your chest towards the ground by bending your elbows, then push through your palms to return to the starting position.",
-    "calories": 10,
+    "calories": 10.0,
     "perMinute": true,
     "hintsForBeginners":
         "Kneel on a mat or soft surface to reduce pressure on your knees. Keep your elbows close to your body as you lower yourself down, and push through your palms to return to the starting position. Engage your core throughout the exercise to maintain proper form.",
@@ -202,7 +236,7 @@ var exerciseDictionary = {
   "t chin-ups": {
     "info":
         "Towel chin-ups are a challenging variation of the traditional chin-up that targets the back, biceps, and grip strength. Begin by draping a towel over a sturdy horizontal bar, gripping each end with an underhand grip. Hang with arms fully extended, then pull yourself up until your chin reaches the height of the bar. Lower yourself back down with control.",
-    "calories": 12,
+    "calories": 12.0,
     "perMinute": true,
     "hintsForBeginners":
         "If you're new to chin-ups, start with assisted chin-ups using a resistance band or a chin-up assist machine. Focus on mastering the proper technique, engaging your back muscles throughout the movement. Gradually decrease assistance as you build strength.",
@@ -232,7 +266,7 @@ var exerciseDictionary = {
   "scapular pushups": {
     "info":
         "Scapular pushups are a shoulder-strengthening exercise that targets the muscles around the shoulder blades. Begin in a plank position with your hands directly under your shoulders and your body in a straight line from head to heels. Lower your chest towards the ground by protracting your shoulder blades, then push through your palms to return to the starting position while retracting your shoulder blades.",
-    "calories": 8,
+    "calories": 8.0,
     "perMinute": true,
     "hintsForBeginners":
         "Focus on moving the shoulder blades smoothly and controlled. Keep your core engaged and avoid shrugging your shoulders towards your ears. Start with a small range of motion and gradually increase as you build strength.",

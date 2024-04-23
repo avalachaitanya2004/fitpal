@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:camera/camera.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -14,7 +17,7 @@ class TakePhoto extends StatefulWidget {
 class _TakePhotoState extends State<TakePhoto> {
   late CameraController? _controller;
   late List<CameraDescription> cameras;
-
+  String imageurl = "";
   @override
   void initState() {
     super.initState();
@@ -138,10 +141,23 @@ class _TakePhotoState extends State<TakePhoto> {
     try {
       final XFile? image = await _controller!.takePicture();
       if (image != null) {
+        String filename = DateTime.now().millisecondsSinceEpoch.toString();
+        Reference referenceroot = FirebaseStorage.instance.ref();
+        Reference referenceDirImages = referenceroot.child('images');
+        Reference referenceimagetoupload = referenceDirImages.child(filename);
+        try {
+          await referenceimagetoupload.putFile(File(image.path));
+          imageurl = await referenceimagetoupload.getDownloadURL();
+          print(imageurl);
+        } catch (e) {}
+
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => PreviewFood(image: image),
+            builder: (context) => PreviewFood(
+              image: image,
+              imagepath: imageurl,
+            ),
           ),
         );
       }

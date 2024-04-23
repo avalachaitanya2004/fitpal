@@ -24,6 +24,17 @@ class ExcerciseCard extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20.0),
         child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20),
+            color: Colors.white,
+            boxShadow: [
+              BoxShadow(
+                  color: Colors.grey.withOpacity(0.3),
+                  spreadRadius: 1,
+                  blurRadius: 1,
+                  offset: Offset(0, 1)),
+            ],
+          ),
           margin: EdgeInsets.symmetric(vertical: 10),
           width: double.infinity,
           child: Row(
@@ -63,10 +74,15 @@ class ExcerciseCard extends StatelessWidget {
                   SizedBox(
                     height: 10,
                   ),
-                  Text(
-                    'x ${excersise.reps}',
-                    style: TextStyle(color: Colors.black, fontSize: 16),
-                  ),
+                  excersise.returnBool() ?? false
+                      ? Text(
+                          'x ${excersise.reps}',
+                          style: TextStyle(color: Colors.black, fontSize: 16),
+                        )
+                      : Text(
+                          '${excersise.reps} s',
+                          style: TextStyle(color: Colors.black, fontSize: 16),
+                        ),
                 ],
               )
               // Text

@@ -80,7 +80,7 @@ class CustomPlaylistCard extends StatelessWidget {
                           children: [
                             Icon(
                               Icons.bolt,
-                              color: Colors.blue,
+                              color: Colors.yellow[900],
                             ),
                             Text(
                               '35 XP',

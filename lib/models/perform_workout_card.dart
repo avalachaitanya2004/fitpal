@@ -4,6 +4,7 @@ import 'dart:async';
 import 'package:fit_pal/models/excercises.dart';
 import 'package:fit_pal/pages/end_workout.dart';
 import 'package:fit_pal/pages/interval_page.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:iconsax/iconsax.dart';
@@ -114,6 +115,13 @@ class _PerformWorkoutCardState extends State<PerformWorkoutCard> {
     super.initState();
   }
 
+  void pausetimer() {
+    setState(() {
+      isrun = false;
+    });
+    _timer.cancel();
+  }
+
   void dispose() {
     // Ensure disposing of the VideoPlayerController to free up resources.
     _controller.dispose();
@@ -138,8 +146,35 @@ class _PerformWorkoutCardState extends State<PerformWorkoutCard> {
         height: MediaQuery.of(context).size.height,
         child: Column(
           children: [
+            Align(
+              alignment: Alignment.topLeft,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 20.0),
+                child: GestureDetector(
+                  onTap: () {
+                    // Navigator.pop(context);
+                    pausetimer();
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return Exitcard(
+                          start: startTimer,
+                        ); // Display custom stateful dialog box
+                      },
+                    );
+                  },
+                  child: CircleAvatar(
+                    backgroundColor: Colors.grey[200],
+                    child: Icon(
+                      Icons.close,
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
+              ),
+            ),
             Expanded(
-                flex: 1,
+                flex: 75,
                 child: Container(
                   color: Colors.white,
                 )),
@@ -160,12 +195,12 @@ class _PerformWorkoutCardState extends State<PerformWorkoutCard> {
               ),
             ),
             Expanded(
-                flex: 1,
+                flex: 100,
                 child: Container(
                   color: Colors.white,
                 )),
             Expanded(
-                flex: 3,
+                flex: 300,
                 child: Container(
                   width: double.infinity,
                   decoration: BoxDecoration(
@@ -229,11 +264,17 @@ class _PerformWorkoutCardState extends State<PerformWorkoutCard> {
                                   ),
                                   width: 130,
                                   height: 50,
-                                  child: Icon(
-                                    Icons.pause_rounded,
-                                    color: Colors.white,
-                                    size: 45,
-                                  ),
+                                  child: isrun
+                                      ? Icon(
+                                          Icons.pause_rounded,
+                                          color: Colors.white,
+                                          size: 45,
+                                        )
+                                      : Icon(
+                                          Icons.play_arrow,
+                                          color: Colors.white,
+                                          size: 45,
+                                        ),
                                 ),
                               ),
                               const SizedBox(
@@ -281,6 +322,31 @@ class _PerformWorkoutCardState extends State<PerformWorkoutCard> {
         height: MediaQuery.of(context).size.height,
         child: Column(
           children: [
+            Align(
+              alignment: Alignment.topLeft,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 20.0),
+                child: GestureDetector(
+                  onTap: () {
+                    // Navigator.pop(context);
+
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return Exitcard1(); // Display custom stateful dialog box
+                      },
+                    );
+                  },
+                  child: CircleAvatar(
+                    backgroundColor: Colors.grey[200],
+                    child: Icon(
+                      Icons.close,
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
+              ),
+            ),
             Expanded(
                 flex: 1,
                 child: Container(
@@ -466,6 +532,146 @@ class _CustomDialogState extends State<CustomDialog> {
             textAlign: TextAlign.center,
             style: TextStyle(fontSize: 100),
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class Exitcard extends StatefulWidget {
+  const Exitcard({super.key, required this.start});
+  final VoidCallback start;
+
+  @override
+  State<Exitcard> createState() => _ExitcardState();
+}
+
+class _ExitcardState extends State<Exitcard> {
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: Text("Are you sure you want to exit?"),
+      icon: Icon(
+        Icons.warning,
+        color: Colors.red,
+        size: 36,
+      ),
+      content: Container(
+        height: 150,
+        child: Column(
+          children: [
+            Text("Any unsaved progress will be lost"),
+            const SizedBox(
+              height: 20,
+            ),
+            GestureDetector(
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.pop(context);
+                Navigator.pop(context);
+              },
+              child: Container(
+                  decoration: BoxDecoration(
+                      color: Colors.blue,
+                      borderRadius: BorderRadius.circular(30)),
+                  height: 35,
+                  width: 130,
+                  child: Center(
+                      child: Text(
+                    'Exit',
+                    style: TextStyle(fontSize: 20, color: Colors.white),
+                  ))),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            GestureDetector(
+              onTap: () {
+                widget.start();
+                Navigator.pop(context);
+              },
+              child: Container(
+                  height: 35,
+                  width: 130,
+                  decoration: BoxDecoration(
+                      // color: Colors.blue,
+                      borderRadius: BorderRadius.circular(30)),
+                  child: Center(
+                      child: Text(
+                    'resume',
+                    style: TextStyle(fontSize: 20, color: Colors.grey[700]),
+                  ))),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class Exitcard1 extends StatefulWidget {
+  const Exitcard1({super.key});
+
+  @override
+  State<Exitcard1> createState() => _Exitcard1State();
+}
+
+class _Exitcard1State extends State<Exitcard1> {
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: Text("Are you sure you want to exit?"),
+      icon: Icon(
+        Icons.warning,
+        color: Colors.red,
+        size: 36,
+      ),
+      content: Container(
+        height: 150,
+        child: Column(
+          children: [
+            Text("Any unsaved progress will be lost"),
+            const SizedBox(
+              height: 20,
+            ),
+            GestureDetector(
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.pop(context);
+                Navigator.pop(context);
+              },
+              child: Container(
+                  decoration: BoxDecoration(
+                      color: Colors.blue,
+                      borderRadius: BorderRadius.circular(30)),
+                  height: 35,
+                  width: 130,
+                  child: Center(
+                      child: Text(
+                    'Exit',
+                    style: TextStyle(fontSize: 20, color: Colors.white),
+                  ))),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            GestureDetector(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              child: Container(
+                  height: 35,
+                  width: 130,
+                  decoration: BoxDecoration(
+                      // color: Colors.blue,
+                      borderRadius: BorderRadius.circular(30)),
+                  child: Center(
+                      child: Text(
+                    'resume',
+                    style: TextStyle(fontSize: 20, color: Colors.grey[700]),
+                  ))),
+            )
+          ],
         ),
       ),
     );

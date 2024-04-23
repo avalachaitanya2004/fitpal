@@ -97,10 +97,15 @@ class _IntervalPageState extends State<IntervalPage> {
                     shape: BoxShape.circle,
                     color: Colors.blue,
                   ),
-                  child: Icon(
-                    Icons.pause,
-                    size: 36,
-                  ),
+                  child: isrun
+                      ? Icon(
+                          Icons.pause,
+                          size: 36,
+                        )
+                      : Icon(
+                          Icons.play_arrow,
+                          size: 36,
+                        ),
                 ),
               ),
               GestureDetector(
