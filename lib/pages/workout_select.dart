@@ -3,23 +3,52 @@ import 'package:fit_pal/models/custom_workouts.dart';
 import 'package:fit_pal/models/excercises.dart';
 import 'package:fit_pal/pages/create_playlist.dart';
 import 'package:fit_pal/pages/workout_start_page.dart';
+import 'package:fit_pal/DataWorkout/assignworkout.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class WorkoutSelect extends StatefulWidget {
-  const WorkoutSelect({super.key});
+  const WorkoutSelect({Key? key}) : super(key: key);
 
   @override
   State<WorkoutSelect> createState() => _WorkoutSelectState();
 }
 
 class _WorkoutSelectState extends State<WorkoutSelect> {
-  final List<Excersise> today = [
-    Excersise(name: "alternating plank", reps: 20),
-    Excersise(name: "tricep dips", reps: 20),
-    Excersise(name: "inclined pushups", reps: 20)
-  ];
+  late String uid;
+  late List<Excersise> today = [];
+
+  @override
+  void initState() {
+    super.initState();
+    retrieveUID();
+    fetchTodayWorkouts();
+  }
+
+  void retrieveUID() {
+    final FirebaseAuth auth = FirebaseAuth.instance;
+    final User? user = auth.currentUser;
+    uid = user?.uid ?? '';
+  }
+
+  void fetchTodayWorkouts() async {
+    InitializeWorkout initializeWorkout = InitializeWorkout(uid: uid);
+    List<Workout> todayWorkouts =
+        await initializeWorkout.getWorkoutsForCurrentDay();
+
+    List<Excersise> convertedWorkouts = todayWorkouts.map((workout) {
+      // Convert each Workout object to Exercise object
+      return Excersise(name: workout.name, reps: workout.reps);
+    }).toList();
+
+    setState(() {
+      today = convertedWorkouts;
+    });
+    print(today);
+    print('kojja');
+  }
 
   final List<CustomPlaylist> custom = [
     CustomPlaylist(name: 'Playlist-1', set: [

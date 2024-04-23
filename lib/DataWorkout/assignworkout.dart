@@ -1,6 +1,7 @@
 import 'package:fit_pal/models/excercises.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fit_pal/DataWorkout/assignworkout.dart';
 
 class Workout {
   final String name;

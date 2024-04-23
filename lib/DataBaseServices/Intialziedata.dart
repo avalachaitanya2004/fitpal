@@ -51,6 +51,120 @@ class Dataservices {
     }
   }
 
+  Future<void> updateTarget(int newTarget) async {
+    try {
+      CollectionReference dataCollection =
+          FirebaseFirestore.instance.collection('water');
+      await dataCollection.doc(uid).update({'target': newTarget});
+      print('Target updated successfully.');
+    } catch (e) {
+      print('Failed to update target: $e');
+    }
+  }
+
+  Future<void> updateQuantity(int newQuantity) async {
+    try {
+      CollectionReference dataCollection =
+          FirebaseFirestore.instance.collection('water');
+      await dataCollection.doc(uid).update({'quantity': newQuantity});
+      print('Quantity updated successfully.');
+    } catch (e) {
+      print('Failed to update quantity: $e');
+    }
+  }
+
+  Future<void> updateComplete(int complete) async {
+    try {
+      // Get the current date
+      DateTime currentDate = DateTime.now();
+
+      // Convert the date to yyyy-MM-dd format to construct the document ID
+      String documentId = currentDate.toIso8601String().substring(0, 10);
+
+      CollectionReference dataCollection =
+          FirebaseFirestore.instance.collection('StreakandWater');
+
+      // Get the document reference for the specified date
+      DocumentReference documentRef =
+          dataCollection.doc(uid).collection('dates').doc(documentId);
+
+      // Get the current water intake value from the document
+      // Increment the water intake by one
+      int updatedWaterIntake = complete;
+
+      // Update the 'waterintake' field for today's date
+      await documentRef.set({'waterintake': updatedWaterIntake});
+
+      print('Water intake updated successfully for $documentId.');
+    } catch (e) {
+      print('Failed to update water intake: $e');
+    }
+  }
+
+  Future<void> updateWaterIntakebyOne() async {
+    try {
+      // Get the current date
+      DateTime currentDate = DateTime.now();
+
+      // Convert the date to yyyy-MM-dd format to construct the document ID
+      String documentId = currentDate.toIso8601String().substring(0, 10);
+
+      CollectionReference dataCollection =
+          FirebaseFirestore.instance.collection('StreakandWater');
+
+      // Get the document reference for the specified date
+      DocumentReference documentRef =
+          dataCollection.doc(uid).collection('dates').doc(documentId);
+
+      // Get the current water intake value from the document
+      DocumentSnapshot documentSnapshot = await documentRef.get();
+      int currentWaterIntake = (documentSnapshot.data()
+              as Map<String, dynamic>?)?['waterintake'] as int? ??
+          0;
+      // Increment the water intake by one
+      int updatedWaterIntake = currentWaterIntake + 1;
+
+      // Update the 'waterintake' field for today's date
+      await documentRef.set({'waterintake': updatedWaterIntake});
+
+      print('Water intake updated successfully for $documentId.');
+    } catch (e) {
+      print('Failed to update water intake: $e');
+    }
+  }
+
+  Future<void> updateWaterIntakebySubOne() async {
+    try {
+      // Get the current date
+      DateTime currentDate = DateTime.now();
+
+      // Convert the date to yyyy-MM-dd format to construct the document ID
+      String documentId = currentDate.toIso8601String().substring(0, 10);
+
+      CollectionReference dataCollection =
+          FirebaseFirestore.instance.collection('StreakandWater');
+
+      // Get the document reference for the specified date
+      DocumentReference documentRef =
+          dataCollection.doc(uid).collection('dates').doc(documentId);
+
+      // Get the current water intake value from the document
+      DocumentSnapshot documentSnapshot = await documentRef.get();
+      int currentWaterIntake = (documentSnapshot.data()
+              as Map<String, dynamic>?)?['waterintake'] as int? ??
+          0;
+      // Increment the water intake by one
+      int updatedWaterIntake = currentWaterIntake - 1;
+
+      // Update the 'waterintake' field for today's date
+      await documentRef.set({'waterintake': updatedWaterIntake});
+
+      print('Water intake updated successfully for $documentId.');
+    } catch (e) {
+      print('Failed to update water intake: $e');
+    }
+  }
+
   Future<void> initializeData({
     required String name,
     required int age,
@@ -124,6 +238,41 @@ class Dataservices {
       print('Name updated successfully.');
     } catch (e) {
       print('Failed to update name: $e');
+    }
+  }
+
+  Future<void> CustomWorkout(
+      String Playlist, String exerciseName, int reps) async {
+    try {
+      // Reference to Firestore instance
+      FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+      // Get the current user's ID
+      final currentUser = FirebaseAuth.instance.currentUser;
+      final userId = currentUser?.uid;
+
+      // Reference to the CustomWorkout collection
+      CollectionReference<Map<String, dynamic>> customWorkoutCollection =
+          firestore.collection('CustomWorkout');
+
+      // Add a new document to the CustomWorkout collection
+      DocumentReference<Map<String, dynamic>> workoutDocRef =
+          customWorkoutCollection.doc(userId);
+
+      // Reference to the Playlist sub-collection inside the CustomWorkout collection
+      CollectionReference<Map<String, dynamic>> playlistCollection =
+          workoutDocRef.collection(Playlist);
+
+      // Add the exercise and reps to the Playlist sub-collection
+      await playlistCollection.add({
+        'exerciseName': exerciseName,
+        'reps': reps,
+        'bool': false,
+      });
+
+      print('Exercise added successfully to the custom workout playlist!');
+    } catch (e) {
+      print('Error adding exercise to custom workout: $e');
     }
   }
 }

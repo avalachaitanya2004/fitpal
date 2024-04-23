@@ -5,6 +5,7 @@ import 'dart:ui';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:fit_pal/Controllers/initializationController.dart';
+import 'package:fit_pal/DataBaseServices/Intialziedata.dart';
 import 'package:fit_pal/DataBaseServices/useruid.dart';
 import 'package:fit_pal/DataChallenges/createChallenge.dart';
 import 'package:fit_pal/DataFriends/getfriends.dart';
@@ -12,6 +13,7 @@ import 'package:fit_pal/loadingPages/loadingpage1.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:fit_pal/DataWorkout/assignworkout.dart';
 import 'package:lottie/lottie.dart';
 
 class LoginPage extends StatefulWidget {
@@ -184,14 +186,26 @@ class _LoginPageState extends State<LoginPage> {
       await signin();
       if (_userCredential != null) {
         AuthService.setUID(_userCredential!.user!.uid);
-        UserData userData =
-            UserData(uid: _userCredential!.user!.uid, statusMap: {});
-        await userData.addUsersListToDatabase(
-            _userCredential!.user!.uid); // Await this call
-        AssignChallenge assignChallenge =
-            AssignChallenge(uid: _userCredential!.user!.uid);
-        assignChallenge.assign('85nJuvpNP79aiMtHPN9C');
-        assignChallenge.assign('grNIf8NbMQhG3iw5ENY6');
+        // UserData userData =
+        //     UserData(uid: _userCredential!.user!.uid, statusMap: {});
+        // await userData.addUsersListToDatabase(
+        //     _userCredential!.user!.uid); // Await this call
+        // AssignChallenge assignChallenge =
+        //     AssignChallenge(uid: _userCredential!.user!.uid);
+        // assignChallenge.assign('85nJuvpNP79aiMtHPN9C');
+        // assignChallenge.assign('grNIf8NbMQhG3iw5ENY6');
+        // InitializeWorkout initializeWorkout =
+        //     InitializeWorkout(uid: _userCredential!.user!.uid);
+        // initializeWorkout.addWorkout('yoga', 60);
+        // initializeWorkout.addWorkout('sleep', 40);
+        // Dataservices dataservices =
+        //     Dataservices(uid: _userCredential!.user!.uid);
+        // dataservices.StreakandWater();
+        // dataservices.initializeWater(target: 12, quantity: 400);
+        // await dataservices.updateWaterIntakebyOne();
+        // await dataservices.updateWaterIntakebyOne();
+        // await dataservices.updateWaterIntakebyOne();
+        // await dataservices.updateWaterIntakebySubOne();
       }
     }
   }

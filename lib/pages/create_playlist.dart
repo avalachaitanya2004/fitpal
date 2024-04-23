@@ -1,7 +1,9 @@
+import 'package:fit_pal/DataBaseServices/Intialziedata.dart';
 import 'package:fit_pal/models/excercises.dart';
 import 'package:fit_pal/models/exerciseData.dart';
 import 'package:fit_pal/models/exerciseselect_card.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class CreatePlaylist extends StatefulWidget {
   const CreatePlaylist({super.key});
@@ -183,7 +185,16 @@ class _CreatePlaylistState extends State<CreatePlaylist> {
                 shape: const CircleBorder(),
                 // mini: true,
                 backgroundColor: Colors.white,
-                onPressed: () {},
+                onPressed: () {
+                  final currentUser = FirebaseAuth.instance.currentUser;
+                  final uid = currentUser?.uid;
+                  Dataservices dataservices = Dataservices(uid: uid.toString());
+                  for (var exercise in selectedExercises) {
+                    // Call the CustomWorkout function for each exercise
+                    dataservices.CustomWorkout(nameController.text.trim(),
+                        exercise.name, exercise.reps);
+                  }
+                },
                 child: const Icon(
                   Icons.check,
                   size: 30,

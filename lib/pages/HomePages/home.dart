@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fit_pal/DataBaseServices/Intialziedata.dart';
 import 'package:fit_pal/models/excercises.dart';
 import 'package:fit_pal/models/food.dart';
 import 'package:fit_pal/models/food_card.dart';
@@ -15,6 +16,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:liquid_progress_indicator_v2/liquid_progress_indicator.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:fit_pal/DataWorkout/assignworkout.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -24,6 +27,41 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  late String uid;
+  late List<Excersise> excercises = [];
+
+  int target = 0;
+  int completed = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    retrieveUID();
+    fetchTodayWorkouts();
+    fetchUserData();
+  }
+
+  void retrieveUID() {
+    final FirebaseAuth auth = FirebaseAuth.instance;
+    final User? user = auth.currentUser;
+    uid = user?.uid ?? '';
+  }
+
+  void fetchTodayWorkouts() async {
+    InitializeWorkout initializeWorkout = InitializeWorkout(uid: uid);
+    List<Workout> todayWorkouts =
+        await initializeWorkout.getWorkoutsForCurrentDay();
+
+    List<Excersise> convertedWorkouts = todayWorkouts.map((workout) {
+      // Convert each Workout object to Exercise object
+      return Excersise(name: workout.name, reps: workout.reps);
+    }).toList();
+
+    setState(() {
+      excercises = convertedWorkouts;
+    });
+  }
+
   bool streak = true;
   Future<void> fetchUserData() async {
     try {
@@ -74,14 +112,7 @@ class _HomeState extends State<Home> {
     }
   }
 
-  int target = 10;
-  int completed = 4;
-  final List<Excersise> excercises = [
-    Excersise(name: "JUMPING JACKS", reps: 20),
-    Excersise(name: "ABDOMINAL CRUNCHES", reps: 20),
-    Excersise(name: "RUSSIAN TWIST", reps: 20)
-  ];
-  List<Food> today = [
+  List<Food> todays = [
     Food('BreakFast', 1000, 10, 22, 33, 100, 'Apple'),
     Food('Lunch', 3090, 33, 22, 53, 1000, 'Apple'),
     Food('Dinner', 8003, 99, 82, 33, 99, 'Apple'),
@@ -91,15 +122,9 @@ class _HomeState extends State<Home> {
   final TextStyle _slider = TextStyle(
       fontFamily: 'Roboto', fontSize: 15, fontWeight: FontWeight.w500);
   int _page = 0;
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
-    fetchUserData();
     return Container(
       // duration: Duration(seconds: 1),
       height: double.maxFinite,
@@ -717,8 +742,8 @@ class _HomeState extends State<Home> {
             if (_page == 0)
               Column(
                 children: [
-                  ...List.generate(today.length, (index) {
-                    return FoodCard(food: today[index]);
+                  ...List.generate(todays.length, (index) {
+                    return FoodCard(food: todays[index]);
                   }),
                   SizedBox(height: 76),
                 ],
@@ -766,6 +791,10 @@ class _HomeState extends State<Home> {
                                         onTap: () {
                                           setState(() {
                                             completed = completed - 1;
+                                            Dataservices dataservices =
+                                                Dataservices(uid: uid);
+                                            dataservices
+                                                .updateWaterIntakebySubOne();
                                           });
                                         },
                                         child: Icon(Icons.remove)),
@@ -816,6 +845,10 @@ class _HomeState extends State<Home> {
                                         onTap: () {
                                           setState(() {
                                             completed = completed + 1;
+                                            Dataservices dataservices =
+                                                Dataservices(uid: uid);
+                                            dataservices
+                                                .updateWaterIntakebyOne();
                                           });
                                         },
                                         child: Icon(Icons.add)),

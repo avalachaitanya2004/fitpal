@@ -38,7 +38,7 @@ class _ProfilePageState extends State<ProfilePage> {
           email = userInfo['email'] ?? '';
           weight = userInfo['weight'] ?? '';
           height = userInfo['height'] ?? '';
-          // nameload = true;
+          nameload = true;
         });
       });
     } else {
