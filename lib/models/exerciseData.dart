@@ -3,6 +3,7 @@ class ExerciseCard {
   final int defaultreps;
   final int repsWanted;
   final bool isSelected;
+  final bool ismin;
   String generateInst() {
     switch (name) {
       case 'JUMPING JACKS':
@@ -21,9 +22,11 @@ class ExerciseCard {
     }
   }
 
-  ExerciseCard(
-      {required this.name,
-      required this.defaultreps,
-      required this.repsWanted,
-      required this.isSelected});
+  ExerciseCard({
+    required this.name,
+    required this.defaultreps,
+    required this.repsWanted,
+    required this.isSelected,
+    required this.ismin,
+  });
 }

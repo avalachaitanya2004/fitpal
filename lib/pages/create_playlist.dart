@@ -15,20 +15,153 @@ class CreatePlaylist extends StatefulWidget {
 class _CreatePlaylistState extends State<CreatePlaylist> {
   TextEditingController nameController = TextEditingController();
   FocusNode focusNode = FocusNode();
-  List<ExerciseCard> exercises = List.generate(
-    16,
-    (index) => ExerciseCard(
-      name: [
-        'JUMPING JACKS',
-        'ABDOMINAL CRUNCHES',
-        'RUSSIAN TWIST',
-        'MOUNTAIN CLIMBER'
-      ][index % 4],
-      defaultreps: [10, 20, 15, 10][index % 4],
-      repsWanted: [10, 20, 15, 10][index % 4],
-      isSelected: false,
-    ),
-  );
+  List<ExerciseCard> exercises = [
+    ExerciseCard(
+        name: 'running in place',
+        defaultreps: 30,
+        repsWanted: 30,
+        isSelected: false,
+        ismin: true),
+    ExerciseCard(
+        name: 'Traise',
+        defaultreps: 20,
+        repsWanted: 20,
+        isSelected: false,
+        ismin: true),
+    ExerciseCard(
+        name: 'alternating plank',
+        defaultreps: 45,
+        repsWanted: 45,
+        isSelected: false,
+        ismin: true),
+    ExerciseCard(
+        name: 'tricep dips',
+        defaultreps: 12,
+        repsWanted: 12,
+        isSelected: false,
+        ismin: false),
+    ExerciseCard(
+        name: 'inclined pushups',
+        defaultreps: 120,
+        repsWanted: 120,
+        isSelected: false,
+        ismin: true),
+    ExerciseCard(
+        name: 'tricep press',
+        defaultreps: 10,
+        repsWanted: 10,
+        isSelected: false,
+        ismin: true),
+    ExerciseCard(
+        name: 'shoulder push-ups',
+        defaultreps: 10,
+        repsWanted: 10,
+        isSelected: false,
+        ismin: true),
+    ExerciseCard(
+        name: 'prisoners squat',
+        defaultreps: 120,
+        repsWanted: 120,
+        isSelected: false,
+        ismin: true),
+    ExerciseCard(
+        name: 'jump squat',
+        defaultreps: 120,
+        repsWanted: 120,
+        isSelected: false,
+        ismin: true),
+    ExerciseCard(
+        name: 'twisted mountain climber',
+        defaultreps: 15,
+        repsWanted: 15,
+        isSelected: false,
+        ismin: true),
+    ExerciseCard(
+        name: 'shoulder tap',
+        defaultreps: 10,
+        repsWanted: 10,
+        isSelected: false,
+        ismin: false),
+    ExerciseCard(
+        name: 'push-up and rotation',
+        defaultreps: 10,
+        repsWanted: 10,
+        isSelected: false,
+        ismin: true),
+    ExerciseCard(
+        name: 'kneeled narrow pushup',
+        defaultreps: 120,
+        repsWanted: 120,
+        isSelected: false,
+        ismin: true),
+    ExerciseCard(
+        name: 'butt kicks',
+        defaultreps: 15,
+        repsWanted: 15,
+        isSelected: false,
+        ismin: false),
+    ExerciseCard(
+        name: 't chin-ups',
+        defaultreps: 120,
+        repsWanted: 120,
+        isSelected: false,
+        ismin: true),
+    ExerciseCard(
+        name: 'pulse rows',
+        defaultreps: 10,
+        repsWanted: 10,
+        isSelected: false,
+        ismin: false),
+    ExerciseCard(
+        name: 'seal pushups',
+        defaultreps: 10,
+        repsWanted: 10,
+        isSelected: false,
+        ismin: false),
+    ExerciseCard(
+        name: 'scapular pushups',
+        defaultreps: 10,
+        repsWanted: 10,
+        isSelected: false,
+        ismin: false),
+    ExerciseCard(
+        name: 'reverse snow angels',
+        defaultreps: 120,
+        repsWanted: 120,
+        isSelected: false,
+        ismin: true),
+    ExerciseCard(
+        name: 'mountain runner',
+        defaultreps: 120,
+        repsWanted: 120,
+        isSelected: false,
+        ismin: true),
+    ExerciseCard(
+        name: 'diamond pushups',
+        defaultreps: 10,
+        repsWanted: 10,
+        isSelected: false,
+        ismin: false),
+    ExerciseCard(
+        name: 'inchworm',
+        defaultreps: 10,
+        repsWanted: 10,
+        isSelected: false,
+        ismin: false),
+    ExerciseCard(
+        name: 'single leg circle',
+        defaultreps: 10,
+        repsWanted: 10,
+        isSelected: false,
+        ismin: false),
+    ExerciseCard(
+        name: 'dynamic rollouts',
+        defaultreps: 10,
+        repsWanted: 10,
+        isSelected: false,
+        ismin: false),
+  ];
+
   List<Excersise> selectedExercises = [];
   List<ExerciseCard> foundExercises = [];
 
@@ -162,7 +295,7 @@ class _CreatePlaylistState extends State<CreatePlaylist> {
                     child: Padding(
                       padding: EdgeInsets.fromLTRB(20.0, 10, 20, 5),
                       child: Text(
-                        'Available Exercises',
+                        'Select Exercises',
                         style: TextStyle(color: Colors.black, fontSize: 18),
                       ),
                     )),

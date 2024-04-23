@@ -4,11 +4,32 @@ import 'package:fit_pal/pages/workout_start_page.dart';
 import 'package:flutter/material.dart';
 
 class WorkoutHomeCard extends StatelessWidget {
-  const WorkoutHomeCard({super.key, required this.excercise});
+  WorkoutHomeCard({super.key, required this.excercise});
   final List<Excersise> excercise;
+  int findxp() {
+    int s = 0;
+    for (int i = 0; i < excercise.length; i++) {
+      s += excercise[i].totalxp().toInt() ??
+          0; // Ensure totalxp() returns double
+    }
+    return s;
+  }
+
+  int XP = 0;
+  double totalCal() {
+    double s = 0;
+    for (int i = 0; i < excercise.length; i++) {
+      s += excercise[i].gettotcal()!;
+    }
+    return s;
+  }
+
+  double cal = 0;
 
   @override
   Widget build(BuildContext context) {
+    XP = findxp();
+    cal = totalCal();
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20.0),
       child: Container(
@@ -52,7 +73,10 @@ class WorkoutHomeCard extends StatelessWidget {
                           onTap: () {
                             Navigator.of(context)
                                 .push(HeroDialogRoute(builder: (context) {
-                              return WorkoutStart(excercises: excercise);
+                              return WorkoutStart(
+                                excercises: excercise,
+                                XP: XP,
+                              );
                             }));
                           },
                           child: Padding(
@@ -97,7 +121,7 @@ class WorkoutHomeCard extends StatelessWidget {
                       )),
                   Spacer(),
                   Text(
-                    '1000 kcal',
+                    '${cal} kcal',
                     // textAlign: TextAlign.left,
                     style: TextStyle(
                         // backgroundColor: Colors.green,

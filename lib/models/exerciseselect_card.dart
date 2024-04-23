@@ -19,6 +19,14 @@ class ExcerciseSelectCard extends StatefulWidget {
 }
 
 class _ExcerciseSelectCardState extends State<ExcerciseSelectCard> {
+  String? ImagePath(String name) {
+    if (exerciseDictionary.containsKey(name)) {
+      return exerciseDictionary[name]?['image'] as String?;
+    } else {
+      return "";
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -50,7 +58,10 @@ class _ExcerciseSelectCardState extends State<ExcerciseSelectCard> {
                 width: 80,
                 // color: Colors.getProperty(property),
                 decoration: BoxDecoration(
-                  color: Colors.grey,
+                  // color: Colors.grey,
+                  image: DecorationImage(
+                      image: AssetImage(
+                          ImagePath(widget.excersise.name) ?? 'null')),
                   borderRadius: BorderRadius.circular(10),
                 ),
               ),
@@ -121,7 +132,8 @@ class _ExcerciseSelectCardState extends State<ExcerciseSelectCard> {
                         name: widget.excersise.name,
                         defaultreps: widget.excersise.defaultreps,
                         repsWanted: widget.excersise.defaultreps,
-                        isSelected: false));
+                        isSelected: false,
+                        ismin: widget.excersise.ismin));
                   },
                   child: Icon(
                     Icons.remove,

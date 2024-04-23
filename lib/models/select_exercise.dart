@@ -7,6 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+import 'package:video_player/video_player.dart';
 
 class SelectExercise extends StatefulWidget {
   const SelectExercise(
@@ -169,10 +170,11 @@ class _SelectExerciseState extends State<SelectExercise> {
                                   int.tryParse(_controller.text) ??
                                       widget.excersise.defaultreps;
                               widget.onUpdateExercise(ExerciseCard(
-                                  name: widget.excersise.name,
+                                  name: widget.excersise.name.capitalize(),
                                   defaultreps: widget.excersise.defaultreps,
                                   repsWanted: updatedReps,
-                                  isSelected: true));
+                                  isSelected: true,
+                                  ismin: widget.excersise.ismin));
                               Navigator.pop(context);
                             },
                             child: Text("ADD", style: _textStyle(1)),

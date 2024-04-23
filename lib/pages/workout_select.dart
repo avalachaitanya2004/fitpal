@@ -26,6 +26,8 @@ class _WorkoutSelectState extends State<WorkoutSelect> {
   @override
   void initState() {
     print("started");
+    XP = findxp();
+    time = findtime();
     super.initState();
     retrieveUID();
     fetchTodayWorkouts();
@@ -54,6 +56,26 @@ class _WorkoutSelectState extends State<WorkoutSelect> {
     print(today);
     print('kojja');
   }
+
+  int time = 0;
+
+  int findtime() {
+    int time = 0;
+    for (int i = 0; i < today.length; i++) {
+      time += today[i].returntime() ?? 0; // Ensure totalxp() returns double
+    }
+    return time;
+  }
+
+  int findxp() {
+    int s = 0;
+    for (int i = 0; i < today.length; i++) {
+      s += today[i].totalxp().toInt() ?? 0; // Ensure totalxp() returns double
+    }
+    return s;
+  }
+
+  int XP = 0;
 
   void fetchTodayCustomWorkouts() async {
     Dataservices dataservices = Dataservices(uid: uid);
@@ -109,6 +131,7 @@ class _WorkoutSelectState extends State<WorkoutSelect> {
                             .push(HeroDialogRoute(builder: (context) {
                           return WorkoutStart(
                             excercises: today,
+                            XP: XP,
                           );
                         }));
                       },
@@ -154,7 +177,7 @@ class _WorkoutSelectState extends State<WorkoutSelect> {
                                         child: Center(
                                           child: Padding(
                                             padding: const EdgeInsets.all(8.0),
-                                            child: Text('20 min'),
+                                            child: Text('${time}'),
                                           ),
                                         )),
                                     Spacer(),
@@ -167,7 +190,7 @@ class _WorkoutSelectState extends State<WorkoutSelect> {
                                             color: Colors.yellow[900],
                                           ),
                                           Text(
-                                            '35 XP',
+                                            '${XP}',
                                             style: TextStyle(
                                                 // color: Colors.white,
                                                 ),

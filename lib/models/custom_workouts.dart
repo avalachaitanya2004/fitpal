@@ -14,11 +14,35 @@ class CustomPlaylist {
 }
 
 class CustomPlaylistCard extends StatelessWidget {
-  const CustomPlaylistCard({super.key, required this.custom});
+  CustomPlaylistCard({super.key, required this.custom});
   final CustomPlaylist custom;
+
+  int time = 0;
+
+  int findtime() {
+    int time = 0;
+    for (int i = 0; i < custom.set.length; i++) {
+      time +=
+          custom.set[i].returntime() ?? 0; // Ensure totalxp() returns double
+    }
+    return time;
+  }
+
+  int findxp() {
+    int s = 0;
+    for (int i = 0; i < custom.set.length; i++) {
+      s += custom.set[i].totalxp().toInt() ??
+          0; // Ensure totalxp() returns double
+    }
+    return s;
+  }
+
+  int XP = 0;
 
   @override
   Widget build(BuildContext context) {
+    XP = findxp();
+    time = findtime();
     return Hero(
       tag: custom.name,
       child: Material(
@@ -70,7 +94,7 @@ class CustomPlaylistCard extends StatelessWidget {
                           child: Center(
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
-                              child: Text('20 min'),
+                              child: Text('${time}'),
                             ),
                           )),
                       Spacer(),
@@ -83,7 +107,7 @@ class CustomPlaylistCard extends StatelessWidget {
                               color: Colors.yellow[900],
                             ),
                             Text(
-                              '35 XP',
+                              '${XP}',
                               style: TextStyle(
                                   // color: Colors.white,
                                   ),

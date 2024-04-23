@@ -6,8 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class WorkoutStart extends StatefulWidget {
-  const WorkoutStart({super.key, required this.excercises});
+  const WorkoutStart({super.key, required this.excercises, required this.XP});
   final List<Excersise> excercises;
+  final int XP;
 
   @override
   State<WorkoutStart> createState() => _WorkoutStartState();
@@ -181,8 +182,8 @@ class _WorkoutStartState extends State<WorkoutStart> {
                             children: [
                               buildStatsCard("Time", '18', CupertinoIcons.clock,
                                   Colors.brown),
-                              buildStatsCard("XP", '125', CupertinoIcons.bolt,
-                                  Colors.yellow.shade900),
+                              buildStatsCard("XP", '${widget.XP}',
+                                  CupertinoIcons.bolt, Colors.yellow.shade900),
                               buildStatsCard("Cal", cal.toStringAsFixed(2),
                                   CupertinoIcons.flame, Colors.red),
                             ],

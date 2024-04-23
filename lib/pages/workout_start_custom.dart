@@ -19,6 +19,29 @@ class _WorkoutStartCustomState extends State<WorkoutStartCustom> {
     super.initState();
     custom = widget.custom;
     cal = totalCal();
+    time = findtime();
+    XP = findxp();
+  }
+
+  int findxp() {
+    int s = 0;
+    for (int i = 0; i < custom.set.length; i++) {
+      s += custom.set[i].totalxp().toInt() ??
+          0; // Ensure totalxp() returns double
+    }
+    return s;
+  }
+
+  int XP = 0;
+  int time = 0;
+
+  int findtime() {
+    int time = 0;
+    for (int i = 0; i < custom.set.length; i++) {
+      time +=
+          custom.set[i].returntime() ?? 0; // Ensure totalxp() returns double
+    }
+    return time;
   }
 
   double totalCal() {
@@ -183,11 +206,11 @@ class _WorkoutStartCustomState extends State<WorkoutStartCustom> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              buildStatsCard("Time", '18', CupertinoIcons.clock,
-                                  Colors.brown),
-                              buildStatsCard("XP", '125', CupertinoIcons.bolt,
+                              buildStatsCard("Time", '${time}',
+                                  CupertinoIcons.clock, Colors.brown),
+                              buildStatsCard("XP", '${XP}', CupertinoIcons.bolt,
                                   Colors.yellow.shade900),
-                              buildStatsCard("Cal", cal.toStringAsFixed(2),
+                              buildStatsCard("Cal", cal.toStringAsFixed(0),
                                   CupertinoIcons.flame, Colors.red),
                             ],
                           ),

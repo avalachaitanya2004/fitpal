@@ -145,8 +145,12 @@ class _TakePhotoState extends State<TakePhoto> {
         Reference referenceroot = FirebaseStorage.instance.ref();
         Reference referenceDirImages = referenceroot.child('images');
         Reference referenceimagetoupload = referenceDirImages.child(filename);
+
         try {
-          await referenceimagetoupload.putFile(File(image.path));
+          await referenceimagetoupload.putFile(
+            File(image.path),
+            SettableMetadata(contentType: 'image/jpeg'),
+          );
           imageurl = await referenceimagetoupload.getDownloadURL();
           print(imageurl);
         } catch (e) {}
