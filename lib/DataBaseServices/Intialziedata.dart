@@ -62,6 +62,25 @@ class Dataservices {
     }
   }
 
+  Future<void> addXPToSpecificDate(String userId, int xpToAdd) async {
+    final firestoreInstance = FirebaseFirestore.instance;
+    // Get the current XP value for the specified date
+    String date = DateTime.now().toIso8601String().substring(0, 10);
+    DocumentSnapshot<Map<String, dynamic>> documentSnapshot =
+        await firestoreInstance.collection('XP').doc(userId).get();
+    Map<String, dynamic> xpData = documentSnapshot.data() ?? {};
+
+    // Get the current XP value for the specified date
+    int currentXP = xpData[date] ?? 0;
+
+    // Calculate the new XP value by adding the XP to be added
+    int newXP = currentXP + xpToAdd;
+
+    // Update Firestore with the new XP value for the specified date
+    xpData[date] = newXP;
+    await firestoreInstance.collection('XP').doc(userId).set(xpData);
+  }
+
   Future<void> initializeUserXPForConsecutiveDays() async {
     // Get today's date
     DateTime startDate = DateTime.now();
@@ -79,6 +98,63 @@ class Dataservices {
           .doc(uid)
           .set({dateString: 0}, SetOptions(merge: true));
     }
+  }
+
+  Future<void> initializeStreaks() async {
+    // Get today's date
+    DateTime startDate = DateTime.now();
+    final firestoreInstance = FirebaseFirestore.instance;
+
+    // Iterate over 60 days
+    for (int i = 0; i < 60; i++) {
+      // Calculate date for each day
+      DateTime currentDate = startDate.add(Duration(days: i));
+      String dateString = currentDate.toIso8601String().substring(0, 10);
+
+      // Set XP for the user for the specified date
+      await firestoreInstance
+          .collection('Streak')
+          .doc(uid)
+          .set({dateString: false}, SetOptions(merge: true));
+    }
+  }
+
+  Future<int> findStreakUntilToday() async {
+    final firestoreInstance = FirebaseFirestore.instance;
+    int streak = 0;
+    DateTime currentDate = DateTime.now();
+    DateTime day = currentDate.subtract(Duration(days: 1));
+    DocumentSnapshot<Map<String, dynamic>> documentSnapshot =
+        await firestoreInstance.collection('Streak').doc(uid).get();
+    Map<String, dynamic> data = documentSnapshot.data()!;
+    while (data.containsKey(currentDate.toIso8601String().substring(0, 10))) {
+      if (data[day]) {
+        streak++;
+      } else {
+        break;
+      }
+      day = day.subtract(Duration(days: 1));
+    }
+
+    return streak;
+  }
+
+  Future<bool> StreakToday(DateTime date) async {
+    final firestoreInstance = FirebaseFirestore.instance;
+    int streak = 0;
+    DateTime currentDate = DateTime.now();
+    DocumentSnapshot<Map<String, dynamic>> documentSnapshot =
+        await firestoreInstance.collection('Streak').doc(uid).get();
+    Map<String, dynamic> data = documentSnapshot.data()!;
+    bool t = false;
+
+    data.forEach((key, value) {
+      // Check if the date is within the current week's range
+      if (date.toIso8601String().substring(0, 10) == key) {
+        t = data[key];
+      }
+    });
+    return t;
   }
 
   Future<void> updateQuantity(int newQuantity) async {

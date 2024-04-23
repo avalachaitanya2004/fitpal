@@ -33,12 +33,64 @@ class _HomeState extends State<Home> {
   int target = 0;
   int completed = 0;
 
+  int weekXP = 0;
+  int todayXP = 0;
+
+  Future<int> getCurrentWeekXP(String userId) async {
+    // Get the start and end dates for the current week
+    final firestoreInstance = FirebaseFirestore.instance;
+    DateTime now = DateTime.now();
+    DateTime startDate = DateTime(now.year, now.month,
+        now.day - now.weekday + 1); // Start date of the current week (Monday)
+    DateTime endDate = startDate
+        .add(Duration(days: 6)); // End date of the current week (Sunday)
+
+    // Query Firestore for XP within the current week's range
+    DocumentSnapshot<Map<String, dynamic>> documentSnapshot =
+        await firestoreInstance.collection('XP').doc(userId).get();
+
+    // Initialize a map to store XP for each date in the current week
+    Map<String, int> currentWeekXP = {};
+
+    // Extract data from the document snapshot
+    Map<String, dynamic> data = documentSnapshot.data()!;
+
+    // Iterate over the data
+    data.forEach((key, value) {
+      DateTime date = DateTime.parse(key);
+      // Check if the date is within the current week's range
+      if (date.isAfter(startDate.subtract(Duration(days: 1))) &&
+          date.isBefore(endDate.add(Duration(days: 1)))) {
+        currentWeekXP[key] = value;
+      }
+    });
+    int s = 0;
+
+    DateTime date2 = DateTime.now();
+    String dateString = date2.toIso8601String().substring(0, 10);
+    currentWeekXP.forEach((date, xp) {
+      if (dateString == date) {
+        print("yes");
+        setState(() {
+          todayXP = xp;
+        });
+      }
+      s += xp;
+    });
+    setState(() {
+      weekXP = s;
+    });
+
+    return s;
+  }
+
   @override
   void initState() {
     super.initState();
     retrieveUID();
     fetchTodayWorkouts();
     fetchUserData();
+    getCurrentWeekXP(uid);
   }
 
   void retrieveUID() {
@@ -506,7 +558,7 @@ class _HomeState extends State<Home> {
                                                       MainAxisAlignment.center,
                                                   children: [
                                                     Text(
-                                                      '125',
+                                                      '${todayXP}',
                                                       style: TextStyle(
                                                         fontFamily: 'Roboto',
                                                         // color: Colors.blue,
@@ -600,7 +652,7 @@ class _HomeState extends State<Home> {
                                                 MainAxisAlignment.center,
                                             children: [
                                               Text(
-                                                '500',
+                                                '${weekXP}',
                                                 style: TextStyle(
                                                   fontFamily: 'Roboto',
                                                   // color: Colors.blue,

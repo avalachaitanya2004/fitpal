@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fit_pal/Controllers/initializationController.dart';
@@ -196,6 +197,7 @@ class _RegisterPageState extends State<RegisterPage> {
         dataservices.initializeWater(target: 12, quantity: 250);
         dataservices.StreakandWater();
         dataservices.initializeUserXPForConsecutiveDays();
+        dataservices.initializeStreaks();
       }
     }
     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
