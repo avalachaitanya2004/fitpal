@@ -1,4 +1,5 @@
 import 'package:fit_pal/DataBaseServices/Intialziedata.dart';
+import 'package:fit_pal/DataWorkout/assignworkout.dart';
 import 'package:fit_pal/models/excercises.dart';
 import 'package:fit_pal/models/exerciseData.dart';
 import 'package:fit_pal/models/exerciseselect_card.dart';
@@ -321,12 +322,10 @@ class _CreatePlaylistState extends State<CreatePlaylist> {
                 onPressed: () {
                   final currentUser = FirebaseAuth.instance.currentUser;
                   final uid = currentUser?.uid;
-                  Dataservices dataservices = Dataservices(uid: uid.toString());
-                  for (var exercise in selectedExercises) {
-                    // Call the CustomWorkout function for each exercise
-                    dataservices.CustomWorkout(nameController.text.trim(),
-                        exercise.name, exercise.reps);
-                  }
+                  InitializeWorkout initializeWorkout =
+                      InitializeWorkout(uid: uid.toString());
+                  initializeWorkout.playlist(
+                      [nameController.text.trim()], selectedExercises);
                 },
                 child: const Icon(
                   Icons.check,

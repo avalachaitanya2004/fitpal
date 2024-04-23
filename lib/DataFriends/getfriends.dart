@@ -50,13 +50,13 @@ class UserData {
         List<dynamic> usersList = currentUserDoc.data()!['users'];
 
         // Iterate over each user in the 'users' list
-        usersList.forEach((userData) {
+        for (var userData in usersList) {
           // Check if the statusMap contains the status 'U' and it's true
           if (userData['statusMap'] != null &&
               userData['statusMap']['status'] == 'F') {
             userIds.add(userData['uid']);
           }
-        });
+        }
       }
 
       return userIds;
@@ -81,9 +81,8 @@ class UserData {
           // If the UID is not the current user's UID
           Map<String, dynamic> userData = {
             'uid': otherUID,
-            'statusMap': {
-              'status': 'U'
-            } // Initialize status to 'U' for all users
+            'statusMap': {'status': 'U'}
+            // Initialize status to 'U' for all users
           };
           userList.add(userData);
         }

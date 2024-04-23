@@ -19,10 +19,8 @@ class AssignChallenge {
       final CollectionReference challengesCollection =
           FirebaseFirestore.instance.collection('AssignedChallenges');
 
-      // Get reference to the document with user's UID as the document ID
       DocumentReference userDocRef = challengesCollection.doc(uid);
 
-      // Get the challenge document from the Challenges collection
       DocumentSnapshot challengeSnapshot = await FirebaseFirestore.instance
           .collection('Challenges')
           .doc(challengeId)

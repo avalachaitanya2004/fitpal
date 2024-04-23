@@ -1,3 +1,4 @@
+import 'package:fit_pal/models/custom_workouts.dart';
 import 'package:fit_pal/models/excercises.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -39,30 +40,96 @@ class InitializeWorkout {
     }
   }
 
-  Future<void> addWorkout(String name, int reps) async {
+  Future<void> playlist(
+      List<String> playlistNames, List<Excersise> selectedExercises) async {
     try {
-      DateTime currentDate = DateTime.now();
-      String date = currentDate.toIso8601String().substring(0, 10);
+      final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
-      CollectionReference dataCollection =
-          FirebaseFirestore.instance.collection('Workout');
+      // Create a map to store the exercises
+      List<Map<String, dynamic>> exercisesList =
+          selectedExercises.map((exercise) {
+        return {
+          'name': exercise.name,
+          'reps': exercise.reps,
+          'bool':
+              false // You may need to adjust this value based on your requirements
+        };
+      }).toList();
 
-      // Add a new workout entry to the workouts subcollection
-      await dataCollection
+      // Create a map to store playlist names and their respective exercises
+      Map<String, dynamic> playlistsMap = {};
+      for (var playlistName in playlistNames) {
+        playlistsMap[playlistName] = {
+          'exercises': FieldValue.arrayUnion(exercisesList)
+        };
+      }
+
+      // Add the map of playlists to the Firestore document
+      await firestore
+          .collection('CustomWorkout')
           .doc(uid)
-          .collection('dates')
-          .doc(date)
-          .collection('workouts')
-          .add({
-        'name': name,
-        'reps': reps,
-        'bool': false,
-      });
+          .set({'playlists': playlistsMap}, SetOptions(merge: true));
 
-      print('Workout added successfully for $date.');
-    } catch (e) {
-      print('Failed to add workout: $e');
+      print('Playlists added successfully!');
+    } catch (error) {
+      print('Error adding playlists: $error');
     }
+  }
+
+  Future<Map<String, List<Map<String, dynamic>>>>
+      getPlaylistsAndExercises() async {
+    try {
+      final FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+      // Get the document containing the playlists from Firestore
+      DocumentSnapshot<Map<String, dynamic>> docSnapshot =
+          await firestore.collection('CustomWorkout').doc(uid).get();
+
+      // Check if the document exists
+      if (docSnapshot.exists) {
+        // Get the data from the document
+        Map<String, dynamic> data = docSnapshot.data()!;
+        // Get the playlists map from the data
+        Map<String, dynamic> playlistsMap = data['playlists'] ?? {};
+
+        // Initialize the result map
+        Map<String, List<Map<String, dynamic>>> result = {};
+
+        // Iterate over each playlist in the playlists map
+        playlistsMap.forEach((playlistName, playlistData) {
+          // Get the exercises list for the current playlist
+          List<Map<String, dynamic>> exercises =
+              List<Map<String, dynamic>>.from(playlistData['exercises'] ?? []);
+          // Add the playlist and its exercises to the result map
+          result[playlistName] = exercises;
+        });
+
+        return result;
+      } else {
+        print('Document not found for user ID: $uid');
+        return {};
+      }
+    } catch (error) {
+      print('Error fetching playlists and exercises: $error');
+      return {};
+    }
+  }
+
+  List<CustomPlaylist> convertMapToCustomPlaylist(
+      Map<String, List<Map<String, dynamic>>> playlistsAndExercises) {
+    List<CustomPlaylist> customPlaylists = [];
+    playlistsAndExercises.forEach((playlistName, exercisesList) {
+      List<Excersise> exercises = [];
+
+      for (var exerciseData in exercisesList) {
+        String name = exerciseData['name'];
+        int reps = exerciseData['reps'];
+
+        exercises.add(Excersise(name: name, reps: reps));
+      }
+      customPlaylists.add(CustomPlaylist(name: playlistName, set: exercises));
+    });
+    return customPlaylists;
   }
 
   Future<void> triggerBool(String inputName) async {

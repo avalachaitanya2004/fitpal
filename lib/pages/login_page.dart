@@ -210,6 +210,12 @@ class _LoginPageState extends State<LoginPage> {
         //     Dataservices(uid: _userCredential!.user!.uid);
         // List<Map<String, dynamic>> customWorkouts =
         //     await dataservices.fetchCustomWorkouts();
+        InitializeWorkout initializeWorkout =
+            InitializeWorkout(uid: _userCredential!.user!.uid);
+        Map<String, List<Map<String, dynamic>>> Hii =
+            await initializeWorkout.getPlaylistsAndExercises();
+
+        print(Hii);
       }
     }
   }

@@ -21,8 +21,7 @@ class WorkoutSelect extends StatefulWidget {
 class _WorkoutSelectState extends State<WorkoutSelect> {
   late String uid;
   late List<Excersise> today = [];
-  late Future<Map<String, List<Map<String, dynamic>>>> playlistFuture;
-  List<CustomPlaylist> custom = [];
+  late List<CustomPlaylist> custom = [];
 
   @override
   void initState() {
@@ -95,41 +94,20 @@ class _WorkoutSelectState extends State<WorkoutSelect> {
   // int XP = 0;
 
   void fetchTodayCustomWorkouts() async {
-    Dataservices dataservices = Dataservices(uid: uid);
-    Map<String, List<Map<String, dynamic>>> playlistsAndExercises = {};
-    // await dataservices.getAllPlaylistsAndExercises();
-    User? user = FirebaseAuth.instance.currentUser;
-    String userId = user!.uid;
-    CollectionReference userDocRef = FirebaseFirestore.instance
-        .collection('CustomWorkout')
-        .doc(userId)
-        .collection('anurag');
-    QuerySnapshot documentSnapshot = await userDocRef.get();
-    print('${uid} document snap ${documentSnapshot.docs}');
-    List<CustomPlaylist> customPlay = [];
-    print("started fetch");
-    playlistsAndExercises.forEach((playlist, exercises) {
-      print('rushikesh');
-      List<Excersise> exerciseList = exercises.map((exercise) {
-        return Excersise(
-          name: exercise['exerciseName'],
-          reps: exercise['reps'],
-        );
-      }).toList();
-      customPlay.addAll([
-        CustomPlaylist(name: playlist, set: exerciseList),
-      ]);
-    });
+    InitializeWorkout initializeWorkout = InitializeWorkout(uid: uid);
+    Map<String, List<Map<String, dynamic>>> Hii =
+        await initializeWorkout.getPlaylistsAndExercises();
 
+    List<CustomPlaylist> holaa =
+        await initializeWorkout.convertMapToCustomPlaylist(Hii);
     setState(() {
-      print("hello1");
-      custom = customPlay;
-      print(custom);
+      custom = holaa;
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    print(custom.length);
     return Container(
       color: Colors.white,
       height: double.infinity,
