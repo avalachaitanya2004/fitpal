@@ -36,7 +36,7 @@ class _AddFoodState extends State<AddFood> {
     double? fat = foodData[s]!['cholesterolpergram']?.toDouble();
     fat = (fat! * size1)!;
 
-    var food = Food(title, calorie, protein, carbs, fat, size1, name);
+    var food = Food(title, calorie, protein, carbs, fat, size1, name, '');
     return food;
 
     // later store in backend

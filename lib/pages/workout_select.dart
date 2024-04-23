@@ -1,4 +1,5 @@
 import 'package:fit_pal/Controllers/hero_dialog_route.dart';
+import 'package:fit_pal/DataBaseServices/Intialziedata.dart';
 import 'package:fit_pal/models/custom_workouts.dart';
 import 'package:fit_pal/models/excercises.dart';
 import 'package:fit_pal/pages/create_playlist.dart';
@@ -19,12 +20,16 @@ class WorkoutSelect extends StatefulWidget {
 class _WorkoutSelectState extends State<WorkoutSelect> {
   late String uid;
   late List<Excersise> today = [];
+  late Future<Map<String, List<Map<String, dynamic>>>> playlistFuture;
+  List<CustomPlaylist> custom = [];
 
   @override
   void initState() {
+    print("started");
     super.initState();
     retrieveUID();
     fetchTodayWorkouts();
+    fetchTodayCustomWorkouts();
   }
 
   void retrieveUID() {
@@ -50,28 +55,32 @@ class _WorkoutSelectState extends State<WorkoutSelect> {
     print('kojja');
   }
 
-  final List<CustomPlaylist> custom = [
-    CustomPlaylist(name: 'Playlist-1', set: [
-      Excersise(name: "prisoners squat", reps: 20),
-      Excersise(name: "running burpees", reps: 20),
-      Excersise(name: "twisted mountain climber", reps: 20)
-    ]),
-    CustomPlaylist(name: 'Playlist-2', set: [
-      Excersise(name: "shoulder tap", reps: 20),
-      Excersise(name: "kneeled narrow pushup", reps: 20),
-      Excersise(name: "twisted mountain climber", reps: 20)
-    ]),
-    CustomPlaylist(name: 'Playlist-3', set: [
-      Excersise(name: "shoulder tap", reps: 20),
-      Excersise(name: "kneeled narrow pushup", reps: 20),
-      Excersise(name: "twisted mountain climber", reps: 20)
-    ]),
-    CustomPlaylist(name: 'Playlist-4', set: [
-      Excersise(name: "shoulder tap", reps: 20),
-      Excersise(name: "kneeled narrow pushup", reps: 20),
-      Excersise(name: "twisted mountain climber", reps: 20)
-    ]),
-  ];
+  void fetchTodayCustomWorkouts() async {
+    Dataservices dataservices = Dataservices(uid: uid);
+    Map<String, List<Map<String, dynamic>>> playlistsAndExercises =
+        await dataservices.getAllPlaylistsAndExercises();
+
+    List<CustomPlaylist> customPlay = [];
+    print("started fetch");
+    playlistsAndExercises.forEach((playlist, exercises) {
+      print('rushikesh');
+      List<Excersise> exerciseList = exercises.map((exercise) {
+        return Excersise(
+          name: exercise['exerciseName'],
+          reps: exercise['reps'],
+        );
+      }).toList();
+      customPlay.addAll([
+        CustomPlaylist(name: playlist, set: exerciseList),
+      ]);
+    });
+
+    setState(() {
+      print("hello1");
+      custom = customPlay;
+      print(custom);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {

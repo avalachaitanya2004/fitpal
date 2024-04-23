@@ -113,10 +113,10 @@ class _HomeState extends State<Home> {
   }
 
   List<Food> todays = [
-    Food('BreakFast', 1000, 10, 22, 33, 100, 'Apple'),
-    Food('Lunch', 3090, 33, 22, 53, 1000, 'Apple'),
-    Food('Dinner', 8003, 99, 82, 33, 99, 'Apple'),
-    Food('Supper', 1500, 18, 92, 33, 700, 'Apple')
+    Food('BreakFast', 1000, 10, 22, 33, 100, 'Apple', ''),
+    Food('Lunch', 3090, 33, 22, 53, 1000, 'Apple', ''),
+    Food('Dinner', 8003, 99, 82, 33, 99, 'Apple', ''),
+    Food('Supper', 1500, 18, 92, 33, 700, 'Apple', '')
   ];
   final PageController _pages1 = PageController();
   final TextStyle _slider = TextStyle(

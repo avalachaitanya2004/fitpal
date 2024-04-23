@@ -275,4 +275,58 @@ class Dataservices {
       print('Error adding exercise to custom workout: $e');
     }
   }
+
+  Future<Map<String, List<Map<String, dynamic>>>>
+      getAllPlaylistsAndExercises() async {
+    try {
+      final FirebaseFirestore firestore = FirebaseFirestore.instance;
+      final CollectionReference CollectionRef =
+          FirebaseFirestore.instance.collection('CustomWorkout');
+      print("Start print");
+      QuerySnapshot querySnapshot = await CollectionRef.get();
+      querySnapshot.docs.forEach((DocumentSnapshot doc) {
+        print(doc);
+      });
+      print("end print");
+
+      // Get the document snapshot for the user's custom workout data
+      // DocumentSnapshot<dynamic> userDocSnapshot =
+      //     await customWorkoutCollection.doc(uid).get();
+
+      // // Initialize map to store playlists and exercises
+      Map<String, List<Map<String, dynamic>>> playlistsAndExercises = {};
+
+      // // Check if the document exists
+      // if (userDocSnapshot.exists) {
+      //   // Iterate through the documents in the CustomWorkout collection
+      //   String playlistName = userDocSnapshot.id;
+
+      //   // Reference to the playlist sub-collection inside the CustomWorkout collection
+      //   CollectionReference<Map<String, dynamic>> playlistCollection =
+      //       customWorkoutCollection.doc(uid).collection('Exercises');
+
+      //   // Get all documents in the playlist collection
+      //   QuerySnapshot<Map<String, dynamic>> playlistDocsSnapshot =
+      //       await playlistCollection.get();
+
+      //   // List to store exercises for the current playlist
+      //   List<Map<String, dynamic>> exercises = [];
+
+      //   // Iterate through the documents in the playlist to get exercises
+      //   playlistDocsSnapshot.docs.forEach((exerciseDoc) {
+      //     exercises.add(exerciseDoc.data());
+      //   });
+
+      //   // Add the playlist and its exercises to the map
+      //   playlistsAndExercises[playlistName] = exercises;
+      // } else {
+      //   print('User document not found for UID: $uid');
+      // }
+
+      return playlistsAndExercises;
+    } catch (e) {
+      print('Error fetching playlists and exercises: $e');
+      return {};
+    }
+  }
 }

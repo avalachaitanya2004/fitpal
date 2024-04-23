@@ -1,22 +1,57 @@
-import 'package:fit_pal/Controllers/custom_rect_tween.dart';
 import 'package:fit_pal/Controllers/hero_dialog_route.dart';
+import 'package:fit_pal/DataFood/food.dart';
 import 'package:fit_pal/models/food.dart';
+import 'package:fit_pal/models/food_data.dart';
 import 'package:fit_pal/models/food_dis.dart';
 import 'package:fit_pal/models/food_popup.dart';
 import 'package:fit_pal/pages/add_food_page.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-class MealsPage extends StatelessWidget {
-  MealsPage({super.key});
-  final List<Food> today = [
-    Food('BreakFast', 1000, 10, 22, 33, 100, 'Apple'),
-    Food('Lunch', 3090, 33, 22, 53, 1000, 'Apple'),
-    Food('Dinner', 8003, 99, 82, 33, 99, 'Apple'),
-    Food('Supper', 1500, 18, 92, 33, 700, 'Apple')
-  ];
+class MealsPage extends StatefulWidget {
+  MealsPage({Key? key}) : super(key: key);
+
+  @override
+  _MealsPageState createState() => _MealsPageState();
+}
+
+class _MealsPageState extends State<MealsPage> {
+  late String uid = '';
+  late Future<List<FoodLite>> foodForToday;
+
+  @override
+  void initState() {
+    super.initState();
+    retrieveUID();
+    InitializeFoods initializeFoods = InitializeFoods(uid: uid);
+    foodForToday = initializeFoods.getFoodForCurrentDay();
+  }
+
+  void retrieveUID() {
+    final FirebaseAuth auth = FirebaseAuth.instance;
+    final User? user = auth.currentUser;
+    if (user != null) {
+      setState(() {
+        uid = user.uid;
+      });
+    }
+  }
+
+  final List<Food> today = [];
 
   @override
   Widget build(BuildContext context) {
+    today.clear();
+    foodForToday.then((foodList) {
+      for (var foodLite in foodList) {
+        today.add(
+          Food(foodLite.timeOfDay, 56, 56, 67, 67, foodLite.weight,
+              foodLite.name, foodLite.url),
+        );
+      }
+      setState(() {});
+    });
+
     return SafeArea(
       child: Container(
         height: double.infinity,

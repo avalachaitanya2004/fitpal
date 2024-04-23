@@ -206,6 +206,10 @@ class _LoginPageState extends State<LoginPage> {
         // await dataservices.updateWaterIntakebyOne();
         // await dataservices.updateWaterIntakebyOne();
         // await dataservices.updateWaterIntakebySubOne();
+        // Dataservices dataservices =
+        //     Dataservices(uid: _userCredential!.user!.uid);
+        // List<Map<String, dynamic>> customWorkouts =
+        //     await dataservices.fetchCustomWorkouts();
       }
     }
   }

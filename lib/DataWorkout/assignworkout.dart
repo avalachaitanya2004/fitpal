@@ -92,7 +92,6 @@ class InitializeWorkout {
 
   Future<List<Workout>> getWorkoutsForCurrentDay() async {
     List<Workout> workouts = [];
-
     try {
       DateTime currentDate = DateTime.now();
       String date = currentDate.toIso8601String().substring(0, 10);
