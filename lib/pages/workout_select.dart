@@ -26,9 +26,6 @@ class _WorkoutSelectState extends State<WorkoutSelect> {
 
   @override
   void initState() {
-    print("started");
-    XP = findxp();
-    time = findtime();
     super.initState();
     retrieveUID();
     fetchTodayWorkouts();
@@ -55,7 +52,6 @@ class _WorkoutSelectState extends State<WorkoutSelect> {
       today = convertedWorkouts;
     });
     print(today);
-    print('kojja');
   }
 
   int time = 0;
@@ -77,6 +73,26 @@ class _WorkoutSelectState extends State<WorkoutSelect> {
   }
 
   int XP = 0;
+
+  // int time = 0;
+
+  // int findtime() {
+  //   int time = 0;
+  //   for (int i = 0; i < today.length; i++) {
+  //     time += today[i].returntime() ?? 0; // Ensure totalxp() returns double
+  //   }
+  //   return time;
+  // }
+
+  // int findxp() {
+  //   int s = 0;
+  //   for (int i = 0; i < today.length; i++) {
+  //     s += today[i].totalxp().toInt() ?? 0; // Ensure totalxp() returns double
+  //   }
+  //   return s;
+  // }
+
+  // int XP = 0;
 
   void fetchTodayCustomWorkouts() async {
     Dataservices dataservices = Dataservices(uid: uid);
