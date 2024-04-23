@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fit_pal/Controllers/hero_dialog_route.dart';
 import 'package:fit_pal/DataBaseServices/Intialziedata.dart';
 import 'package:fit_pal/models/custom_workouts.dart';
@@ -79,9 +80,16 @@ class _WorkoutSelectState extends State<WorkoutSelect> {
 
   void fetchTodayCustomWorkouts() async {
     Dataservices dataservices = Dataservices(uid: uid);
-    Map<String, List<Map<String, dynamic>>> playlistsAndExercises =
-        await dataservices.getAllPlaylistsAndExercises();
-
+    Map<String, List<Map<String, dynamic>>> playlistsAndExercises = {};
+    // await dataservices.getAllPlaylistsAndExercises();
+    User? user = FirebaseAuth.instance.currentUser;
+    String userId = user!.uid;
+    CollectionReference userDocRef = FirebaseFirestore.instance
+        .collection('CustomWorkout')
+        .doc(userId)
+        .collection('anurag');
+    QuerySnapshot documentSnapshot = await userDocRef.get();
+    print('${uid} document snap ${documentSnapshot.docs}');
     List<CustomPlaylist> customPlay = [];
     print("started fetch");
     playlistsAndExercises.forEach((playlist, exercises) {

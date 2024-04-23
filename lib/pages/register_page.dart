@@ -195,6 +195,7 @@ class _RegisterPageState extends State<RegisterPage> {
             goal: 0);
         dataservices.initializeWater(target: 12, quantity: 250);
         dataservices.StreakandWater();
+        dataservices.initializeUserXPForConsecutiveDays();
       }
     }
     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {

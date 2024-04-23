@@ -62,6 +62,25 @@ class Dataservices {
     }
   }
 
+  Future<void> initializeUserXPForConsecutiveDays() async {
+    // Get today's date
+    DateTime startDate = DateTime.now();
+    final firestoreInstance = FirebaseFirestore.instance;
+
+    // Iterate over 60 days
+    for (int i = 0; i < 60; i++) {
+      // Calculate date for each day
+      DateTime currentDate = startDate.add(Duration(days: i));
+      String dateString = currentDate.toIso8601String().substring(0, 10);
+
+      // Set XP for the user for the specified date
+      await firestoreInstance
+          .collection('XP')
+          .doc(uid)
+          .set({dateString: 0}, SetOptions(merge: true));
+    }
+  }
+
   Future<void> updateQuantity(int newQuantity) async {
     try {
       CollectionReference dataCollection =
