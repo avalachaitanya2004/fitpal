@@ -66,12 +66,12 @@ dependencies:
   video_player: ^2.8.6
   video_player_avfoundation: ^2.5.7
   shimmer: ^3.0.0
-  awesome_notifications: ^0.9.3+1
+  # awesome_notifications: ^0.9.3+1
   flutter_launcher_icons: "^0.13.1"
   firebase_messaging: ^14.8.2
   firebase_core: ^2.30.0
   firebase_storage: ^11.7.2
-  # health: ^10.2.0
+  health: ^10.2.0
   flutter_local_notifications: ^17.1.0
 flutter_launcher_icons:
   android: "launcher_icon"

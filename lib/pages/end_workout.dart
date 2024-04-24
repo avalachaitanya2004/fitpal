@@ -1,9 +1,38 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fit_pal/DataBaseServices/Intialziedata.dart';
 import 'package:fit_pal/models/excercises.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class EndWorkout extends StatelessWidget {
-  const EndWorkout({super.key});
+  const EndWorkout({super.key, required this.XP});
+  final int XP;
+
+  Future<void> addXPToSpecificDate() async {
+    FirebaseAuth auth = FirebaseAuth.instance;
+    User? user = auth.currentUser;
+
+    String userId = user!.uid;
+    final firestoreInstance = FirebaseFirestore.instance;
+    // Get the current XP value for the specified date
+    String date = DateTime.now().toIso8601String().substring(0, 10);
+    DocumentSnapshot<Map<String, dynamic>> documentSnapshot =
+        await firestoreInstance.collection('XP').doc(userId).get();
+    Map<String, dynamic> xpData = documentSnapshot.data() ?? {};
+
+    // Get the current XP value for the specified date
+    int currentXP = xpData[date] ?? 0;
+
+    // Calculate the new XP value by adding the XP to be added
+    int newXP = currentXP + XP;
+
+    // Update Firestore with the new XP value for the specified date
+    xpData[date] = newXP;
+    await firestoreInstance.collection('XP').doc(userId).set(xpData);
+  }
+
+//   Dataservices data = Dataservices(uid: uid)
 
   @override
   Widget build(BuildContext context) {
@@ -59,6 +88,7 @@ class EndWorkout extends StatelessWidget {
             ),
             GestureDetector(
               onTap: () {
+                addXPToSpecificDate();
                 Navigator.pop(context);
                 Navigator.pop(context);
               },

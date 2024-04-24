@@ -1,4 +1,3 @@
-import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:fit_pal/Controllers/initializationController.dart';
 import 'package:fit_pal/pages/home_page.dart';
 import 'package:fit_pal/pages/pre_login.dart';

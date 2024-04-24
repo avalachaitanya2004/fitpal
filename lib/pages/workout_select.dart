@@ -62,9 +62,9 @@ class _WorkoutSelectState extends State<WorkoutSelect> {
       String Exercise = a[0];
       int reps;
       if (returnBool(Exercise) != false) {
-        reps = (a[1] * 60).round();
+        reps = (a[1] * 60).round().toInt();
       } else {
-        reps = a[1];
+        reps = a[1].toInt();
       }
       InitializeWorkout initializeWorkout =
           InitializeWorkout(uid: FirebaseAuth.instance.currentUser!.uid);
@@ -141,7 +141,7 @@ class _WorkoutSelectState extends State<WorkoutSelect> {
   int findtime() {
     int time = 0;
     for (int i = 0; i < today.length; i++) {
-      time += today[i].returntime() ?? 0; // Ensure totalxp() returns double
+      time += today[i].returntime(); // Ensure totalxp() returns double
     }
     return time;
   }
@@ -149,7 +149,7 @@ class _WorkoutSelectState extends State<WorkoutSelect> {
   int findxp() {
     int s = 0;
     for (int i = 0; i < today.length; i++) {
-      s += today[i].totalxp().toInt() ?? 0; // Ensure totalxp() returns double
+      s += today[i].totalxp().toInt(); // Ensure totalxp() returns double
     }
     return s;
   }

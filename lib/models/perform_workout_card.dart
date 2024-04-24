@@ -16,11 +16,13 @@ class PerformWorkoutCard extends StatefulWidget {
       required this.excersise,
       required this.nextpage,
       required this.pagenumber,
-      required this.lastpage});
+      required this.lastpage,
+      required this.XP});
   final Excersise excersise;
   final VoidCallback nextpage;
   final int pagenumber;
   final int lastpage;
+  final int XP;
 
   @override
   State<PerformWorkoutCard> createState() => _PerformWorkoutCardState();
@@ -69,7 +71,9 @@ class _PerformWorkoutCardState extends State<PerformWorkoutCard> {
             print("page equal");
             Navigator.pushReplacement(context,
                 MaterialPageRoute(builder: (context) {
-              return EndWorkout();
+              return EndWorkout(
+                XP: widget.XP,
+              );
             }));
           } else {
             Navigator.push(context, MaterialPageRoute(builder: (context) {
@@ -289,7 +293,9 @@ class _PerformWorkoutCardState extends State<PerformWorkoutCard> {
                                     print("page equal");
                                     Navigator.pushReplacement(context,
                                         MaterialPageRoute(builder: (context) {
-                                      return EndWorkout();
+                                      return EndWorkout(
+                                        XP: widget.XP,
+                                      );
                                     }));
                                   } else {
                                     Navigator.push(context,
@@ -423,7 +429,9 @@ class _PerformWorkoutCardState extends State<PerformWorkoutCard> {
                                     print("page equal");
                                     Navigator.pushReplacement(context,
                                         MaterialPageRoute(builder: (context) {
-                                      return EndWorkout();
+                                      return EndWorkout(
+                                        XP: widget.XP,
+                                      );
                                     }));
                                   } else {
                                     Navigator.push(context,
@@ -456,7 +464,9 @@ class _PerformWorkoutCardState extends State<PerformWorkoutCard> {
                                     print("page equal");
                                     Navigator.pushReplacement(context,
                                         MaterialPageRoute(builder: (context) {
-                                      return EndWorkout();
+                                      return EndWorkout(
+                                        XP: widget.XP,
+                                      );
                                     }));
                                   } else {
                                     Navigator.push(context,

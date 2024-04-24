@@ -31,6 +31,8 @@ class _ChallengesCardState extends State<ChallengesCard>
     super.initState();
   }
 
+  int st = 0;
+
   @override
   void dispose() {
     _con.dispose();
@@ -159,56 +161,74 @@ class _ChallengesCardState extends State<ChallengesCard>
                     duration: Duration(milliseconds: 500),
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Color.fromARGB(245, 175, 173, 241),
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        // padding: EdgeInsets.all(0),
-                        width: double.infinity,
+                      child: (st == 1)
+                          ? Container(
+                              decoration: BoxDecoration(
+                                color: Color.fromARGB(245, 175, 173, 241),
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                              // padding: EdgeInsets.all(0),
+                              width: double.infinity,
 
-                        child: Padding(
-                          padding: const EdgeInsets.only(
-                              left: 10.0, top: 10, right: 10, bottom: 10),
-                          child: Column(
-                            // mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Your progress',
-                                style: TextStyle(fontSize: 16
-                                    // backgroundColor: Colors.white,
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 10.0, top: 10, right: 10, bottom: 10),
+                                child: Column(
+                                  // mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Your progress',
+                                      style: TextStyle(fontSize: 16
+                                          // backgroundColor: Colors.white,
+                                          ),
+                                      // textAlign: TextAlign.left,
                                     ),
-                                // textAlign: TextAlign.left,
+                                    Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.end,
+                                      children: [
+                                        Text(
+                                          '24 Days ',
+                                          style: TextStyle(
+                                              fontSize: 40, height: 1),
+                                        ),
+                                        Text(
+                                          'Left',
+                                          style: TextStyle(fontSize: 16),
+                                        ),
+                                      ],
+                                    ),
+                                    //progress bar
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    DotProgress(TotDays: 15, DaysCompleted: 5),
+                                    Row(
+                                      children: [
+                                        Spacer(),
+                                        Text('32% done'),
+                                      ],
+                                    )
+                                  ],
+                                ),
                               ),
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  Text(
-                                    '24 Days ',
-                                    style: TextStyle(fontSize: 40, height: 1),
+                            )
+                          : GestureDetector(
+                              onTap: () {},
+                              child: Container(
+                                  width: double.infinity,
+                                  height: 120,
+                                  decoration: BoxDecoration(
+                                    color: Colors.lightBlue,
+                                    borderRadius: BorderRadius.circular(15),
                                   ),
-                                  Text(
-                                    'Left',
-                                    style: TextStyle(fontSize: 16),
-                                  ),
-                                ],
-                              ),
-                              //progress bar
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              DotProgress(TotDays: 15, DaysCompleted: 5),
-                              Row(
-                                children: [
-                                  Spacer(),
-                                  Text('32% done'),
-                                ],
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
+                                  child: Center(
+                                      child: Text(
+                                    'Start Challenge',
+                                    style: TextStyle(fontSize: 26),
+                                  ))),
+                            ),
                     ),
                   ),
                 Padding(

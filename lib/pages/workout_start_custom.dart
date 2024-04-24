@@ -248,7 +248,10 @@ class _WorkoutStartCustomState extends State<WorkoutStartCustom> {
                         onTap: () {
                           Navigator.push(context,
                               MaterialPageRoute(builder: (context) {
-                            return PerformWorkout(excercises: custom.set);
+                            return PerformWorkout(
+                              excercises: custom.set,
+                              XP: XP,
+                            );
                           }));
                         },
                         child: Container(

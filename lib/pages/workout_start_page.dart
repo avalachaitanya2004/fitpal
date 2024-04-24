@@ -222,7 +222,10 @@ class _WorkoutStartState extends State<WorkoutStart> {
                       onTap: () {
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) {
-                          return PerformWorkout(excercises: excercises);
+                          return PerformWorkout(
+                            excercises: excercises,
+                            XP: widget.XP,
+                          );
                         }));
                       },
                       child: Container(

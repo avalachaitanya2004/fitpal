@@ -107,8 +107,11 @@ class _SelectExerciseState extends State<SelectExercise> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text("Number of reps: ",
-                                style: TextStyle(color: Colors.black)),
+                            widget.excersise.ismin
+                                ? Text("Number of seconds: ",
+                                    style: TextStyle(color: Colors.black))
+                                : Text("Number of reps: ",
+                                    style: TextStyle(color: Colors.black)),
                             Row(
                               children: [
                                 IconButton(

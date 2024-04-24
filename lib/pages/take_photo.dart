@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:camera/camera.dart';
@@ -158,6 +159,46 @@ class _TakePhotoState extends State<TakePhoto> {
           imageurl = await referenceimagetoupload.getDownloadURL();
           print(imageurl);
         } catch (e) {}
+        List<String> segments = [];
+        int segmentLength = 90;
+        print("object");
+        for (int i = 0; i < imageurl.length; i += segmentLength) {
+          int end = (i + segmentLength < imageurl.length)
+              ? i + segmentLength
+              : imageurl.length;
+          segments.add(imageurl.substring(i, end));
+        }
+        print("object");
+        String baseUrl, url = '';
+        baseUrl = 'http://10.81.16.240:5000/api?'; //physical device
+        // if (Platform.isAndroid) {
+        //   baseUrl = 'http://10.0.2.2:5000/api?';
+        // } else {
+        //   baseUrl = 'http://localhost:5000/api?';
+        // }
+        String query = '';
+        for (int i = 0; i < segments.length; i++) {
+          if (i > 0) {
+            query += '&';
+          }
+          query += 'v${i + 1}=' + Uri.encodeComponent(segments[i]);
+        }
+        setState(() {
+          url = baseUrl + query;
+        });
+        print(url);
+        var data = await fetchdata(url);
+        print("hii");
+        String Predicted = '';
+        String Category = '';
+        var decoded;
+        decoded = jsonDecode(data);
+        Predicted = decoded['Predicted'];
+        Category = decoded['Category'];
+        print(Predicted);
+        print(Category);
+        print(url);
+        url = imageurl;
 
         Navigator.push(
           context,
@@ -165,6 +206,8 @@ class _TakePhotoState extends State<TakePhoto> {
             builder: (context) => PreviewFood(
               image: image,
               imagepath: imageurl,
+              Predicted: Predicted,
+              Category: Category,
             ),
           ),
         );

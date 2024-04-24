@@ -14,9 +14,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class PreviewFood extends StatefulWidget {
-  const PreviewFood({super.key, required this.image, required this.imagepath});
+  const PreviewFood(
+      {super.key,
+      required this.image,
+      required this.imagepath,
+      required this.Category,
+      required this.Predicted});
   final XFile image;
   final String imagepath;
+  final String Category;
+  final String Predicted;
   @override
   State<PreviewFood> createState() => _PreviewFoodState();
 }
@@ -32,18 +39,19 @@ class _PreviewFoodState extends State<PreviewFood>
   late AnimationController _con;
   late Animation<double> ani;
   bool isloading = true;
-  String Predicted = '';
+
   String url = '';
   double weight = 100;
-  String Category = '';
+
   var decoded;
-  @override
+
   Future<void> getData() async {
     //enter data
 
     isloading = false;
   }
 
+  @override
   void initState() {
     isloading = true;
     getData();
@@ -56,62 +64,70 @@ class _PreviewFoodState extends State<PreviewFood>
     image = widget.image;
     imagepath = widget.imagepath;
     print(imagepath);
-    feedToModel();
+    protein = getProtein(widget.Predicted);
+    carbs = getCarbs(widget.Predicted);
+    fat = getfat(widget.Predicted);
+    proteinper = protein / (protein + carbs + fat);
+    carbsper = carbs / (protein + carbs + fat);
+    fatper = fat / (protein + carbs + fat);
+    cal = getCalories(widget.Predicted) as double;
+
+    // feedToModel();
   }
 
   late Food food;
 
-  Future<void> feedToModel() async {
-    List<String> segments = [];
-    int segmentLength = 90;
-    print("object");
-    for (int i = 0; i < imagepath.length; i += segmentLength) {
-      int end = (i + segmentLength < imagepath.length)
-          ? i + segmentLength
-          : imagepath.length;
-      segments.add(imagepath.substring(i, end));
-    }
-    print("object");
-    String baseUrl, url = '';
-    baseUrl = 'http://10.81.16.240:5000/api?'; //physical device
-    // if (Platform.isAndroid) {
-    //   baseUrl = 'http://10.0.2.2:5000/api?';
-    // } else {
-    //   baseUrl = 'http://localhost:5000/api?';
-    // }
-    String query = '';
-    for (int i = 0; i < segments.length; i++) {
-      if (i > 0) {
-        query += '&';
-      }
-      query += 'v${i + 1}=' + Uri.encodeComponent(segments[i]);
-    }
-    setState(() {
-      url = baseUrl + query;
-    });
-    print(url);
-    var data = await fetchdata(url);
-    print("hii");
-    decoded = jsonDecode(data);
-    Predicted = decoded['Predicted'];
-    Category = decoded['Category'];
-    print(Predicted);
-    print(Category);
-    print(url);
-    url = imagepath;
-    String name = Predicted;
-    double size = weight;
-    // String title = a.timeOfDay;
-    double calorie = getCalories(name).toDouble() * size;
-    double protein = getProtein(name).toDouble() * size;
-    double carb = getCarbs(name).toDouble() * size;
-    double fat = getfat(name).toDouble() * size;
-    // double tot = carb + fat + protein;
-    // carb = (carb * 100) / tot;
-    // fat = (fat * 100) / tot;
-    // protein = (protein * 100) / tot;
-    food = (Food("title", calorie, protein, carb, fat, size, name, ''));
-  }
+  // Future<void> feedToModel() async {
+  //   List<String> segments = [];
+  //   int segmentLength = 90;
+  //   print("object");
+  //   for (int i = 0; i < imagepath.length; i += segmentLength) {
+  //     int end = (i + segmentLength < imagepath.length)
+  //         ? i + segmentLength
+  //         : imagepath.length;
+  //     segments.add(imagepath.substring(i, end));
+  //   }
+  //   print("object");
+  //   String baseUrl, url = '';
+  //   baseUrl = 'http://10.81.16.240:5000/api?'; //physical device
+  //   // if (Platform.isAndroid) {
+  //   //   baseUrl = 'http://10.0.2.2:5000/api?';
+  //   // } else {
+  //   //   baseUrl = 'http://localhost:5000/api?';
+  //   // }
+  //   String query = '';
+  //   for (int i = 0; i < segments.length; i++) {
+  //     if (i > 0) {
+  //       query += '&';
+  //     }
+  //     query += 'v${i + 1}=' + Uri.encodeComponent(segments[i]);
+  //   }
+  //   setState(() {
+  //     url = baseUrl + query;
+  //   });
+  //   print(url);
+  //   var data = await fetchdata(url);
+  //   print("hii");
+  //   decoded = jsonDecode(data);
+  //   Predicted = decoded['Predicted'];
+  //   Category = decoded['Category'];
+  //   print(Predicted);
+  //   print(Category);
+  //   print(url);
+  //   url = imagepath;
+  //   String name = Predicted;
+  //   double size = weight;
+  //   // String title = a.timeOfDay;
+  //   double calorie = getCalories(name).toDouble() * size;
+  //   double protein = getProtein(name).toDouble() * size;
+  //   double carb = getCarbs(name).toDouble() * size;
+  //   double fat = getfat(name).toDouble() * size;
+  //   // double tot = carb + fat + protein;
+  //   // carb = (carb * 100) / tot;
+  //   // fat = (fat * 100) / tot;
+  //   // protein = (protein * 100) / tot;
+  //   food = (Food("title", calorie, protein, carb, fat, size, name, ''));
+  // }
 
   @override
   void dispose() {
@@ -171,10 +187,19 @@ class _PreviewFoodState extends State<PreviewFood>
     }
   }
 
+  late double proteinper;
+  late double fatper;
+  late double carbsper;
+  late int protein;
+  late int fat;
+  late int carbs;
+  double cal = 0;
+
   late XFile image;
   late String imagepath;
   @override
   Widget build(BuildContext context) {
+    cal = cal * weight;
     return Scaffold(
       backgroundColor: Colors.blue,
       extendBodyBehindAppBar: true,
@@ -249,7 +274,7 @@ class _PreviewFoodState extends State<PreviewFood>
                                               uid: FirebaseAuth
                                                   .instance.currentUser!.uid);
                                       initializeFoods.addFood(
-                                          Predicted, weight, url, '');
+                                          widget.Predicted, weight, url, '');
                                     },
                                     child: Icon(Icons.add),
                                   ),
@@ -272,7 +297,7 @@ class _PreviewFoodState extends State<PreviewFood>
                                     child: Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: Text(
-                                        '${food.title}',
+                                        'Breakfast',
                                         style: TextStyle(
                                             color: Colors.black,
                                             fontWeight: FontWeight.w500),
@@ -293,7 +318,7 @@ class _PreviewFoodState extends State<PreviewFood>
                                 children: [
                                   Flexible(
                                     child: Text(
-                                      Predicted,
+                                      "${widget.Predicted}",
                                       // overflow: TextOverflow.ellipsis,
                                       softWrap: true,
                                       style: TextStyle(
@@ -304,7 +329,7 @@ class _PreviewFoodState extends State<PreviewFood>
                                   ),
                                   // Spacer(),
                                   Text(
-                                    '${food.size}g',
+                                    '${weight}g',
                                     style: TextStyle(
                                       fontSize: 28,
                                       color: Colors.black,
@@ -330,7 +355,7 @@ class _PreviewFoodState extends State<PreviewFood>
                                     ),
                                   ),
                                   Spacer(),
-                                  Text('${food.calorie}kcal',
+                                  Text('${cal}kcal',
                                       style: TextStyle(
                                         fontSize: 16,
                                         color: Colors.black.withOpacity(0.7),
@@ -393,8 +418,7 @@ class _PreviewFoodState extends State<PreviewFood>
                                           GestureDetector(
                                               onTap: () {
                                                 setState(() {
-                                                  food.size -= 10;
-                                                  weight = food.size;
+                                                  weight -= 10;
                                                 });
                                               },
                                               child: Icon(Icons.remove)),
@@ -402,7 +426,7 @@ class _PreviewFoodState extends State<PreviewFood>
                                             width: 8,
                                           ),
                                           Text(
-                                            '${food.size}g',
+                                            '${weight}g',
                                             style: TextStyle(
                                               fontSize: 20,
                                             ),
@@ -413,8 +437,7 @@ class _PreviewFoodState extends State<PreviewFood>
                                           GestureDetector(
                                               onTap: () {
                                                 setState(() {
-                                                  food.size += 10;
-                                                  weight = food.size;
+                                                  weight += 10;
                                                 });
                                               },
                                               child: Icon(Icons.add)),
@@ -439,7 +462,7 @@ class _PreviewFoodState extends State<PreviewFood>
                                             BoxConstraints constraints) {
                                           double innerContainerHeight =
                                               constraints.maxHeight *
-                                                  returnfraction(food.protein);
+                                                  returnfraction(proteinper);
                                           return Container(
                                             decoration: BoxDecoration(
                                               color: Color.fromARGB(
@@ -482,7 +505,7 @@ class _PreviewFoodState extends State<PreviewFood>
                                                                 .only(
                                                                 bottom: 8.0),
                                                         child: Text(
-                                                            '${food.protein}%'),
+                                                            '${protein * weight}%'),
                                                       )),
                                                   // color: Colors.yellow,
                                                 ),
@@ -498,7 +521,7 @@ class _PreviewFoodState extends State<PreviewFood>
                                             BoxConstraints constraints) {
                                           double innerContainerHeight =
                                               constraints.maxHeight *
-                                                  returnfraction(food.carbs);
+                                                  returnfraction(carbsper);
                                           return Container(
                                             decoration: BoxDecoration(
                                               color: Color.fromARGB(
@@ -541,7 +564,7 @@ class _PreviewFoodState extends State<PreviewFood>
                                                                 .only(
                                                                 bottom: 8.0),
                                                         child: Text(
-                                                            '${food.carbs}%'),
+                                                            '${carbs * weight}%'),
                                                       )),
                                                   // color: Colors.yellow,
                                                 ),
@@ -557,7 +580,7 @@ class _PreviewFoodState extends State<PreviewFood>
                                             BoxConstraints constraints) {
                                           double innerContainerHeight =
                                               constraints.maxHeight *
-                                                  returnfraction(food.fat);
+                                                  returnfraction(fatper);
                                           return Container(
                                             decoration: BoxDecoration(
                                               color: Color.fromARGB(
@@ -600,7 +623,7 @@ class _PreviewFoodState extends State<PreviewFood>
                                                                 .only(
                                                                 bottom: 8.0),
                                                         child: Text(
-                                                            '${food.fat}%'),
+                                                            '${fat * weight}%'),
                                                       )),
                                                   // color: Colors.yellow,
                                                 ),

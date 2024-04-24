@@ -22,8 +22,7 @@ class CustomPlaylistCard extends StatelessWidget {
   int findtime() {
     int time = 0;
     for (int i = 0; i < custom.set.length; i++) {
-      time +=
-          custom.set[i].returntime() ?? 0; // Ensure totalxp() returns double
+      time += custom.set[i].returntime(); // Ensure totalxp() returns double
     }
     return time;
   }
@@ -31,8 +30,9 @@ class CustomPlaylistCard extends StatelessWidget {
   int findxp() {
     int s = 0;
     for (int i = 0; i < custom.set.length; i++) {
-      s += custom.set[i].totalxp().toInt() ??
-          0; // Ensure totalxp() returns double
+      double xp = custom.set[i].totalxp();
+
+      s += xp.toInt();
     }
     return s;
   }

@@ -332,6 +332,7 @@ class _CreatePlaylistState extends State<CreatePlaylist> {
                     InitializeWorkout(uid: uid.toString());
                 initializeWorkout
                     .playlist([nameController.text.trim()], selectedExercises);
+                Navigator.pop(context);
               },
               child: const Icon(
                 Icons.check,

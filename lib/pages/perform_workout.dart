@@ -11,8 +11,9 @@ import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class PerformWorkout extends StatefulWidget {
-  PerformWorkout({super.key, required this.excercises});
+  PerformWorkout({super.key, required this.excercises, required this.XP});
   final List<Excersise> excercises;
+  final int XP;
 
   @override
   State<PerformWorkout> createState() => _PerformWorkoutState();
@@ -124,6 +125,7 @@ class _PerformWorkoutState extends State<PerformWorkout> {
                         nextpage: nextpage,
                         pagenumber: index,
                         lastpage: widget.excercises.length,
+                        XP: widget.XP,
                       )),
             ))),
           ],
