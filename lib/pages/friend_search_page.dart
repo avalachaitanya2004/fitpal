@@ -93,15 +93,19 @@ class _FriendSearchState extends State<FriendSearch> {
     String uid = user!.uid;
     UserData userData = UserData(uid: uid, statusMap: {});
     names = await userData.getUserIdsWithStatusU();
+    print(names.length);
+    print('gandu');
     for (int i = 0; i < names.length; i++) {
+      print(uid);
       String uid1 = names[i];
       Dataservices dataservices = Dataservices(uid: uid1);
       Map<String, dynamic> userinfo1 = await dataservices.getUserInfo();
-      int XP1 = await getTotalXP(uid1);
+      // int XP1 = await getTotalXP(uid1);
+      print(userinfo1['name']);
       notusersfriends.add(CustomUser(
           name: userinfo1['name'],
           email: userinfo1['email'],
-          XP: XP1,
+          XP: 0,
           streak: 5));
     }
     foundFriends = await userData.getUserIdsWithStatusF();
@@ -109,11 +113,11 @@ class _FriendSearchState extends State<FriendSearch> {
       String uid1 = foundFriends[i];
       Dataservices dataservices = Dataservices(uid: uid1);
       Map<String, dynamic> userinfo1 = await dataservices.getUserInfo();
-      int XP1 = await getTotalXP(uid1);
+      // int XP1 = await getTotalXP(uid1);
       usersfriends.add(CustomUser(
           name: userinfo1['name'],
           email: userinfo1['email'],
-          XP: XP1,
+          XP: 10,
           streak: 5));
     }
     setState(() {});
@@ -126,6 +130,8 @@ class _FriendSearchState extends State<FriendSearch> {
   }
 
   Widget buildTab(int index, String title, IconData icon) {
+    print(notusersfriends.length);
+    print(usersfriends.length);
     bool isSelected = selectedTab == index;
     return SizedBox(
       height: 100,
@@ -198,7 +204,10 @@ class _FriendSearchState extends State<FriendSearch> {
                   itemBuilder: (context, index) {
                     return selectedTab == 0
                         ? ProfileCard(user: usersfriends[index])
-                        : ProfileCardAdd(user: notusersfriends[index]);
+                        : ProfileCardAdd(
+                            user: notusersfriends[index],
+                            uid: names[index],
+                          );
                   },
                 ),
               ),
@@ -232,8 +241,10 @@ class ProfileCard extends StatelessWidget {
 }
 
 class ProfileCardAdd extends StatelessWidget {
-  const ProfileCardAdd({Key? key, required this.user}) : super(key: key);
+  const ProfileCardAdd({Key? key, required this.user, required this.uid})
+      : super(key: key);
   final CustomUser user;
+  final String uid;
 
   @override
   Widget build(BuildContext context) {
@@ -248,8 +259,16 @@ class ProfileCardAdd extends StatelessWidget {
         );
       },
       trailing: IconButton(
-        icon: const Icon(Icons.person_add),
-        onPressed: () {},
+        icon: Icon(Icons.person_add),
+        onPressed: () {
+          print('Lnajhagha');
+          UserData userData = UserData(
+              uid: FirebaseAuth.instance.currentUser!.uid, statusMap: {});
+          userData.updateFriendStatus(
+              FirebaseAuth.instance.currentUser!.uid, uid);
+          print(uid);
+          print('gandhi');
+        },
       ),
     );
   }

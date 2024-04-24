@@ -195,10 +195,10 @@ class _LoginPageState extends State<LoginPage> {
         //     AssignChallenge(uid: _userCredential!.user!.uid);
         // assignChallenge.assign('85nJuvpNP79aiMtHPN9C');
         // assignChallenge.assign('grNIf8NbMQhG3iw5ENY6');
-        // InitializeWorkout initializeWorkout =
-        //     InitializeWorkout(uid: _userCredential!.user!.uid);
-        // initializeWorkout.addWorkout('yoga', 60);
-        // initializeWorkout.addWorkout('sleep', 40);
+        InitializeWorkout initializeWorkout =
+            InitializeWorkout(uid: _userCredential!.user!.uid);
+        initializeWorkout.addWorkout('yoga', 60);
+        initializeWorkout.addWorkout('sleep', 40);
         // Dataservices dataservices =
         //     Dataservices(uid: _userCredential!.user!.uid);
         // dataservices.StreakandWater();

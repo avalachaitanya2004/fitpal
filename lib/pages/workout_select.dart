@@ -46,6 +46,14 @@ class _WorkoutSelectState extends State<WorkoutSelect> {
     var exToDo = decoded['exToDo'];
     print(calToBurnt);
     print(exToDo);
+    for (var a in exToDo) {
+      String Exercise = a[0];
+
+      int reps = a[1];
+      InitializeWorkout initializeWorkout =
+          InitializeWorkout(uid: FirebaseAuth.instance.currentUser!.uid);
+      // initializeWorkout.add
+    }
   }
 
   // Future<void> feedToModel() async {

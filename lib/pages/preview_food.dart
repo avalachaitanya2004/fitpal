@@ -1,6 +1,9 @@
 import 'dart:convert';
+import 'dart:ffi';
 import 'dart:io';
 import 'dart:ui';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fit_pal/DataFood/food.dart';
 import 'package:http/http.dart' as http;
 import 'package:camera/camera.dart';
 import 'package:fit_pal/models/food.dart';
@@ -28,6 +31,10 @@ class _PreviewFoodState extends State<PreviewFood>
   late AnimationController _con;
   late Animation<double> ani;
   bool isloading = true;
+  String Predicted = '';
+  String url = '';
+  double weight = 0;
+  String Category = '';
   var decoded;
   @override
   Future<void> getData() async {
@@ -84,11 +91,12 @@ class _PreviewFoodState extends State<PreviewFood>
     var data = await fetchdata(url);
     print("hii");
     decoded = jsonDecode(data);
-    var Predicted = decoded['Predicted'];
-    var Category = decoded['Category'];
+    Predicted = decoded['Predicted'];
+    Category = decoded['Category'];
     print(Predicted);
     print(Category);
     print(url);
+    url = imagepath;
   }
 
   @override
@@ -223,7 +231,12 @@ class _PreviewFoodState extends State<PreviewFood>
                                     elevation: 30,
                                     backgroundColor: Colors.white,
                                     onPressed: () {
-                                      // do smthing here
+                                      InitializeFoods initializeFoods =
+                                          InitializeFoods(
+                                              uid: FirebaseAuth
+                                                  .instance.currentUser!.uid);
+                                      initializeFoods.addFood(
+                                          Predicted, weight, url, '');
                                     },
                                     child: Icon(Icons.add),
                                   ),
@@ -368,6 +381,7 @@ class _PreviewFoodState extends State<PreviewFood>
                                               onTap: () {
                                                 setState(() {
                                                   food.size -= 10;
+                                                  weight = food.size;
                                                 });
                                               },
                                               child: Icon(Icons.remove)),
@@ -387,6 +401,7 @@ class _PreviewFoodState extends State<PreviewFood>
                                               onTap: () {
                                                 setState(() {
                                                   food.size += 10;
+                                                  weight = food.size;
                                                 });
                                               },
                                               child: Icon(Icons.add)),

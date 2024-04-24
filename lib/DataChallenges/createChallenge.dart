@@ -49,53 +49,38 @@ class Createchallenge {
       return [];
     }
   }
-}
 
-class AssignChallenge {
-  final String uid;
-  AssignChallenge({required this.uid});
-
-  Future<void> assign(String challengeId) async {
+  Future<void> assignChallenge(String uid, String challengeId) async {
     try {
-      final CollectionReference challengesCollection =
-          FirebaseFirestore.instance.collection('AssignedChallenges');
+      // Get a reference to the Firestore collection "Challenges"
+      CollectionReference challengesCollection =
+          FirebaseFirestore.instance.collection('Challenges');
 
-      DocumentReference userDocRef = challengesCollection.doc(uid);
+      // Query Firestore to find the document with the specified challengeId
+      DocumentSnapshot challengeSnapshot =
+          await challengesCollection.doc(challengeId).get();
 
-      DocumentSnapshot challengeSnapshot = await FirebaseFirestore.instance
-          .collection('Challenges')
-          .doc(challengeId)
-          .get();
-
+      // Check if the document exists
       if (challengeSnapshot.exists) {
-        // Get the challenge data and explicitly cast it to Map<String, dynamic>
-        Map<String, dynamic> challengeData =
-            challengeSnapshot.data() as Map<String, dynamic>;
+        // Extract the challenge data from the snapshot
+        var challengeData = challengeSnapshot.data()!;
 
-        // Update the document to add the assigned challenge with its details
-        await userDocRef.set(
-          {
-            'challenges': FieldValue.arrayUnion([
-              {
-                'id': challengeId,
-                'name': challengeData['name'],
-                'type': challengeData['type'],
-                'days': challengeData['days'],
-                'xp': challengeData['xp'],
-                // Add more challenge details as needed
-              }
-            ]),
-          },
-          SetOptions(
-              merge: true), // Use merge option to not overwrite existing data
-        );
+        // Get a reference to the Firestore collection "assignedChallenges"
+        CollectionReference assignedChallengesCollection =
+            FirebaseFirestore.instance.collection('assignedChallenges');
+
+        // Add a document with the user's UID as the document ID
+        await assignedChallengesCollection.doc(uid).set({
+          'challengeData': challengeData, // Store the challenge data
+          // You can store additional details of the assigned challenge here if needed
+        });
 
         print('Challenge assigned successfully.');
       } else {
-        print('Challenge with ID $challengeId does not exist.');
+        print('Challenge with ID $challengeId not found.');
       }
-    } catch (error) {
-      print('Error assigning challenge: $error');
+    } catch (e) {
+      print('Error assigning challenge: $e');
     }
   }
 }
