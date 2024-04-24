@@ -590,3 +590,39 @@ var foodData = {
     'iron': 0
   }
 };
+
+int getCalories(String foodName) {
+  if (foodData.containsKey(foodName)) {
+    return foodData[foodName]?['caloriespergram'] ?? 0;
+  } else {
+    print('Food not found in database');
+    return 0; // or throw an exception, depending on your use case
+  }
+}
+
+int getProtein(String foodName) {
+  if (foodData.containsKey(foodName)) {
+    return foodData[foodName]?['proteinpergram'] ?? 0;
+  } else {
+    print('Food not found in database');
+    return 0; // or throw an exception, depending on your use case
+  }
+}
+
+int getCarbs(String foodName) {
+  if (foodData.containsKey(foodName)) {
+    return foodData[foodName]?['carbohydratespergram'] ?? 0;
+  } else {
+    print('Food not found in database');
+    return 0; // or throw an exception, depending on your use case
+  }
+}
+
+int getfat(String foodName) {
+  if (foodData.containsKey(foodName)) {
+    return foodData[foodName]?['cholesterolpergram'] ?? 0;
+  } else {
+    print('Food not found in database');
+    return 0; // or throw an exception, depending on your use case
+  }
+}

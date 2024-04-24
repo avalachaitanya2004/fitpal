@@ -7,6 +7,7 @@ import 'package:fit_pal/models/food_popup.dart';
 import 'package:fit_pal/pages/add_food_page.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fit_pal/models/food_data.dart';
 
 class MealsPage extends StatefulWidget {
   MealsPage({Key? key}) : super(key: key);
@@ -42,7 +43,14 @@ class _MealsPageState extends State<MealsPage> {
         InitializeFoods(uid: FirebaseAuth.instance.currentUser!.uid);
     hii = await initializeFoods.getFoodForCurrentDay();
     for (var a in hii) {
-      today.add(Food(a.timeOfDay, 90, 90, 90, 40, a.weight, a.name, ''));
+      String name = a.name;
+      double size = a.weight;
+      String title = a.timeOfDay;
+      double calorie = getCalories(name).toDouble() * size;
+      double protein = getProtein(name).toDouble() * size;
+      double carb = getCarbs(name).toDouble() * size;
+      double fat = getfat(name).toDouble() * size;
+      today.add(Food(title, calorie, protein, carb, fat, size, name, ''));
     }
     setState(() {});
     print(hii.length);

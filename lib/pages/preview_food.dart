@@ -4,6 +4,7 @@ import 'dart:io';
 import 'dart:ui';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fit_pal/DataFood/food.dart';
+import 'package:fit_pal/models/food_data.dart';
 import 'package:http/http.dart' as http;
 import 'package:camera/camera.dart';
 import 'package:fit_pal/models/food.dart';
@@ -33,7 +34,7 @@ class _PreviewFoodState extends State<PreviewFood>
   bool isloading = true;
   String Predicted = '';
   String url = '';
-  double weight = 0;
+  double weight = 100;
   String Category = '';
   var decoded;
   @override
@@ -46,7 +47,6 @@ class _PreviewFoodState extends State<PreviewFood>
   void initState() {
     isloading = true;
     getData();
-
     super.initState();
     _con =
         AnimationController(vsync: this, duration: Duration(milliseconds: 500));
@@ -58,6 +58,8 @@ class _PreviewFoodState extends State<PreviewFood>
     print(imagepath);
     feedToModel();
   }
+
+  late Food food;
 
   Future<void> feedToModel() async {
     List<String> segments = [];
@@ -97,6 +99,18 @@ class _PreviewFoodState extends State<PreviewFood>
     print(Category);
     print(url);
     url = imagepath;
+    String name = Predicted;
+    double size = weight;
+    // String title = a.timeOfDay;
+    double calorie = getCalories(name).toDouble() * size;
+    double protein = getProtein(name).toDouble() * size;
+    double carb = getCarbs(name).toDouble() * size;
+    double fat = getfat(name).toDouble() * size;
+    // double tot = carb + fat + protein;
+    // carb = (carb * 100) / tot;
+    // fat = (fat * 100) / tot;
+    // protein = (protein * 100) / tot;
+    food = (Food("title", calorie, protein, carb, fat, size, name, ''));
   }
 
   @override
@@ -145,7 +159,6 @@ class _PreviewFoodState extends State<PreviewFood>
   //   _con.forward(from: 1); // Start the animation from the beginning
   // }
 
-  Food food = Food('breakfast', 40.0, 30.0, 20.0, 40.0, 100.0, 'Apple', '');
   double returnfraction(double per) {
     if (per >= 12 && per <= 80) {
       return per / 100;
@@ -280,7 +293,7 @@ class _PreviewFoodState extends State<PreviewFood>
                                 children: [
                                   Flexible(
                                     child: Text(
-                                      'Apples',
+                                      Predicted,
                                       // overflow: TextOverflow.ellipsis,
                                       softWrap: true,
                                       style: TextStyle(

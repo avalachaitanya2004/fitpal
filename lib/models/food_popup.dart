@@ -21,6 +21,7 @@ class FoodPopup extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(food.calorie);
     return Hero(
       // createRectTween: (begin, end) {
       //   return CustomRectTween(begin: begin!, end: end!);
@@ -128,7 +129,7 @@ class FoodPopup extends StatelessWidget {
                             children: [
                               Flexible(
                                 child: Text(
-                                  'Apples',
+                                  food.name,
                                   // overflow: TextOverflow.ellipsis,
                                   softWrap: true,
                                   style: TextStyle(

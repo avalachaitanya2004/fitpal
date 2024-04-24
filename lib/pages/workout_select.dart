@@ -23,14 +23,22 @@ class WorkoutSelect extends StatefulWidget {
 }
 
 class _WorkoutSelectState extends State<WorkoutSelect> {
+  bool? returnBool(String name) {
+    if (exerciseDictionary.containsKey(name)) {
+      return exerciseDictionary[name]?['perMinute'] as bool? ?? false;
+    } else {
+      return true;
+    }
+  }
+
   Future<void> feedToModel() async {
     String baseUrl, url = '', query = '';
-    // String baseUrl = 'http://10.81.16.240:5000/api1?';
-    if (Platform.isAndroid) {
-      baseUrl = 'http://10.0.2.2:5000/api1?';
-    } else {
-      baseUrl = 'http://localhost:5000/api?';
-    }
+    baseUrl = 'http://10.81.16.240:5000/api1?';
+    // if (Platform.isAndroid) {
+    //   baseUrl = 'http://10.0.2.2:5000/api1?';
+    // } else {
+    //   baseUrl = 'http://localhost:5000/api?';
+    // }
     var args1 = ['gender', 'weight', 'height', 'age', 'activity_level'];
     List<dynamic> seg1 = ['male', 50.5, 170.5, 18, 1];
     for (int i = 0; i < seg1.length; i++) {
@@ -46,24 +54,31 @@ class _WorkoutSelectState extends State<WorkoutSelect> {
     var exToDo = decoded['exToDo'];
     print(calToBurnt);
     print(exToDo);
+    // exToDo = [
+    //   ['prisoners squat', 1.93],
+    //   ['dynamic rollouts', 5]
+    // ];
     for (var a in exToDo) {
       String Exercise = a[0];
-
-      int reps = a[1];
+      int reps;
+      if (returnBool(Exercise) != false) {
+        reps = (a[1] * 60).round();
+      } else {
+        reps = a[1];
+      }
       InitializeWorkout initializeWorkout =
           InitializeWorkout(uid: FirebaseAuth.instance.currentUser!.uid);
-      // initializeWorkout.add
+      initializeWorkout.addWorkout(Exercise, reps);
     }
   }
-
   // Future<void> feedToModel() async {
   //   String baseUrl, url = '',query = '';
-  //   // String baseUrl = 'http://10.81.16.240:5000/api2?';
-  //   if (Platform.isAndroid) {
-  //     baseUrl = 'http://10.0.2.2:5000/api2?';
-  //   } else {
-  //     baseUrl = 'http://localhost:5000/api2?';
-  //   }
+  //   baseUrl = 'http://10.81.16.240:5000/api2?';
+  //   // if (Platform.isAndroid) {
+  //   //   baseUrl = 'http://10.0.2.2:5000/api2?';
+  //   // } else {
+  //   //   baseUrl = 'http://localhost:5000/api2?';
+  //   // }
   //   var args2 = ['gender','age','height','weight','duration','heart_rate','body_temp'];
   //   List<dynamic> seg2 = [0, 18, 170.5, 60, 24, 100.5, 38.3];
   //   for (int i = 0; i < seg2.length; i++) {
@@ -82,14 +97,20 @@ class _WorkoutSelectState extends State<WorkoutSelect> {
   late String uid;
   late List<Excersise> today = [];
   late List<CustomPlaylist> custom = [];
+  // DateTime currentDate = DateTime.now();
+  // String date = currentDate.toIso8601String().substring(0, 10);
 
   @override
   void initState() {
     super.initState();
     retrieveUID();
+    FunctionCall();
     fetchTodayWorkouts();
     fetchTodayCustomWorkouts();
-    feedToModel();
+  }
+
+  Future<void> FunctionCall() async {
+    await feedToModel();
   }
 
   void retrieveUID() {
@@ -111,7 +132,8 @@ class _WorkoutSelectState extends State<WorkoutSelect> {
     setState(() {
       today = convertedWorkouts;
     });
-    print(today);
+    print(today.length);
+    print('hii gandu');
   }
 
   int time = 0;

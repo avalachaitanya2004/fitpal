@@ -40,28 +40,26 @@ class InitializeWorkout {
     }
   }
 
-  Future<void> addWorkout(String name, double reps) async {
+  Future<void> addWorkout(String name, int reps) async {
     try {
       // Get the current date
       DateTime currentDate = DateTime.now();
-
-      // Format the date as yyyy-MM-dd
-      String documentId = currentDate.toIso8601String().substring(0, 10);
+      String date = currentDate.toIso8601String().substring(0, 10);
 
       // Get a reference to the Firestore collection "Workout"
       CollectionReference dataCollection =
           FirebaseFirestore.instance.collection('Workout');
 
       // Update the "workouts" subcollection inside the specified document
-      await dataCollection.doc(uid).collection('dates').doc(documentId).update({
-        // Add a new workout object to the "workouts" array
-        'workouts': FieldValue.arrayUnion([
-          {
-            'name': name,
-            'reps': reps,
-            'completed': true, // Set the boolean value to true
-          }
-        ])
+      await dataCollection
+          .doc(uid)
+          .collection('dates')
+          .doc(date)
+          .collection('workouts')
+          .add({
+        'name': name,
+        'reps': reps,
+        'bool': false,
       });
 
       print('Workout added successfully.');
