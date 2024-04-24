@@ -8,6 +8,47 @@ class Createchallenge {
     return challengesCollection
         .add({'type': Type, 'name': name, 'days': 30, 'xp': xp, 'uid': uid});
   }
+
+  Future<List<Map<String, dynamic>>> processChallengeDocuments() async {
+    try {
+      // Get a reference to the Firestore collection
+      CollectionReference<Map<String, dynamic>> challengesCollection =
+          FirebaseFirestore.instance.collection('Challenges');
+
+      // Retrieve all documents from the collection
+      QuerySnapshot<Map<String, dynamic>> snapshot =
+          await challengesCollection.get();
+
+      List<Map<String, dynamic>> challengeDataList = [];
+
+      // Process each document
+      snapshot.docs.forEach((doc) {
+        String type = doc.data()['type'] as String;
+        String name = doc.data()['name'] as String;
+        int days = doc.data()['days'] as int;
+        int xp = doc.data()['xp'] as int;
+        String uid = doc.data()['uid'] as String;
+
+        // Create a map to store document data
+        Map<String, dynamic> challengeData = {
+          'type': type,
+          'name': name,
+          'days': days,
+          'xp': xp,
+          'uid': uid,
+        };
+
+        // Add the document data to the list
+        challengeDataList.add(challengeData);
+      });
+
+      print('All challenge documents processed successfully.');
+      return challengeDataList;
+    } catch (error) {
+      print('Error processing challenge documents: $error');
+      return [];
+    }
+  }
 }
 
 class AssignChallenge {

@@ -1,3 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fit_pal/DataFood/food.dart';
 import 'package:fit_pal/models/food.dart';
 import 'package:fit_pal/models/food_data.dart';
 import 'package:flutter/cupertino.dart';
@@ -221,6 +223,12 @@ class _AddFoodState extends State<AddFood> {
                             if (check()) {
                               Food food = create_obj();
                               Navigator.pop(context);
+                              int trueIndex =
+                                  type.indexWhere((element) => element == true);
+                              InitializeFoods initializeFoods = InitializeFoods(
+                                  uid: FirebaseAuth.instance.currentUser!.uid);
+                              initializeFoods.addFood(
+                                  food.name, food.size, '', types[trueIndex]);
                             }
                           },
                           child: Container(

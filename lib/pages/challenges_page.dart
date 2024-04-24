@@ -1,3 +1,4 @@
+import 'package:fit_pal/DataChallenges/createChallenge.dart';
 import 'package:fit_pal/models/challenges.dart';
 import 'package:fit_pal/models/challenges_card.dart';
 import 'package:flutter/cupertino.dart';
@@ -13,12 +14,37 @@ class ChallengesPage extends StatefulWidget {
 }
 
 class _ChallengesPageState extends State<ChallengesPage> {
+  List<Map<String, dynamic>> hee = [];
+  @override
+  void initState() {
+    super.initState();
+    fetch();
+    Setthis();
+  }
+
+  void fetch() async {
+    Createchallenge createchallenge = Createchallenge();
+    List<Map<String, dynamic>> hii =
+        await createchallenge.processChallengeDocuments();
+    setState(() {
+      hee = hii;
+      Setthis(); // Call the method to update challenges list
+    });
+  }
+
   List<bool> fields = [true, false, false, false, false];
   List<Challenges> challenges = [
-    Challenges('Apricot Month', 10, 'Food', 0, 0),
-    Challenges('Yoga Morning', 20, 'Workout', 1, 10),
-    Challenges('Yoga Morning', 20, 'Workout', 1, 10),
+    // Challenges('Apricot Month', 10, 'Food', 0, 0),
+    // Challenges('Yoga Morning', 20, 'Workout', 1, 10),
+    // Challenges('Yoga Morning', 20, 'Workout', 1, 10),
   ];
+  void Setthis() {
+    for (var hehee in hee) {
+      challenges
+          .add(Challenges(hehee['name'], hehee['days'], hehee['type'], 1, 0));
+    }
+  }
+
   String findField(int e) {
     if (e == 0) {
       return 'All';

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fit_pal/DataBaseServices/Intialziedata.dart';
+import 'package:fit_pal/DataFood/food.dart';
 import 'package:fit_pal/models/excercises.dart';
 import 'package:fit_pal/models/food.dart';
 import 'package:fit_pal/models/food_card.dart';
@@ -33,6 +34,12 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   late String uid;
   late List<Excersise> excercises = [];
+  List<Food> todays = [
+    // Food('BreakFast', 1000, 10, 22, 33, 100, 'Apple', ''),
+    // Food('Lunch', 3090, 33, 22, 53, 1000, 'Apple', ''),
+    // Food('Dinner', 8003, 99, 82, 33, 99, 'Apple', ''),
+    // Food('Supper', 1500, 18, 92, 33, 700, 'Apple', '')
+  ];
 
   int target = 0;
   int completed = 0;
@@ -156,9 +163,7 @@ class _HomeState extends State<Home> {
     // }
     fetchUserData();
     getCurrentWeekXP(uid);
-    // if (Platform.isIOS) {
-    //   fetchStepData();
-    // }
+    callme();
   }
 
   void retrieveUID() {
@@ -232,12 +237,19 @@ class _HomeState extends State<Home> {
     }
   }
 
-  List<Food> todays = [
-    Food('BreakFast', 1000, 10, 22, 33, 100, 'Apple', ''),
-    Food('Lunch', 3090, 33, 22, 53, 1000, 'Apple', ''),
-    Food('Dinner', 8003, 99, 82, 33, 99, 'Apple', ''),
-    Food('Supper', 1500, 18, 92, 33, 700, 'Apple', '')
-  ];
+  void callme() async {
+    List<FoodLite> hii = [];
+    InitializeFoods initializeFoods =
+        InitializeFoods(uid: FirebaseAuth.instance.currentUser!.uid);
+    hii = await initializeFoods.getFoodForCurrentDay();
+    for (var a in hii) {
+      todays.add(Food(a.timeOfDay, 90, 90, 90, 40, a.weight, a.name, ''));
+    }
+    print(hii.length);
+    print(todays.length);
+    print('++');
+  }
+
   final PageController _pages1 = PageController();
   final TextStyle _slider = TextStyle(
       fontFamily: 'Roboto', fontSize: 15, fontWeight: FontWeight.w500);

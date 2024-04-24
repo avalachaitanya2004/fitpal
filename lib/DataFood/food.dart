@@ -30,7 +30,8 @@ class InitializeFoods {
     }
   }
 
-  Future<void> addFood(String name, double weight, String url) async {
+  Future<void> addFood(
+      String name, double weight, String url, String hii) async {
     try {
       DateTime currentDate = DateTime.now();
       String date = currentDate.toIso8601String().substring(0, 10);
@@ -54,7 +55,7 @@ class InitializeFoods {
         'weight': weight,
         'url': url,
         //'time': time,
-        'timeOfDay': timeOfDay,
+        'timeOfDay': ((hii == '') ? timeOfDay : hii),
       });
 
       print('Food added successfully for $date at $time.');
@@ -82,37 +83,45 @@ class InitializeFoods {
   }
 
   Future<List<FoodLite>> getFoodForCurrentDay() async {
-    List<FoodLite> Foods = [];
+    List<FoodLite> foods = [];
 
     try {
       DateTime currentDate = DateTime.now();
       String date = currentDate.toIso8601String().substring(0, 10);
 
-      CollectionReference dataCollection =
+      CollectionReference<Map<String, dynamic>> dataCollection =
           FirebaseFirestore.instance.collection('Food');
 
-      // Retrieve all workouts for the current day
-      QuerySnapshot querySnapshot = await dataCollection
+      // Retrieve all food items for the current day
+      QuerySnapshot<Map<String, dynamic>> querySnapshot = await dataCollection
           .doc(uid)
           .collection('dates')
           .doc(date)
           .collection('foods')
           .get();
 
-      // Iterate over each document and create Workout objects
+      // Iterate over each document and create FoodLite objects
       querySnapshot.docs.forEach((doc) {
-        String name = (doc.data() as Map<String, dynamic>)['name'] as String;
-        int weight = (doc.data() as Map<String, dynamic>)['weight'] as int;
-        String url = (doc.data() as Map<String, dynamic>)['url'] as String;
-        String Timenow =
-            (doc.data() as Map<String, dynamic>)['timeOfDay'] as String;
+        // Extract food data
+        String name = doc.data()['name'] as String;
+        double weight = doc.data()['weight'] as double;
+        String url = doc.data()['url'] as String;
+        String timeNow = doc.data()['timeOfDay'] as String;
+
+        // Create a FoodLite object
+        FoodLite food =
+            FoodLite(name: name, weight: weight, url: url, timeOfDay: timeNow);
+
+        // Add the FoodLite object to the list of foods
+        foods.add(food);
       });
 
-      print('Retrieved ${Foods.length} workouts for $date.');
+      print('Retrieved ${foods.length} foods for $date.');
     } catch (e) {
-      print('Failed to retrieve workouts: $e');
+      print('Failed to retrieve foods: $e');
     }
-    return Foods;
+
+    return foods; // Return the list of FoodLite objects
   }
 }
 

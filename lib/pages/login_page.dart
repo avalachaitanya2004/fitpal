@@ -8,6 +8,7 @@ import 'package:fit_pal/Controllers/initializationController.dart';
 import 'package:fit_pal/DataBaseServices/Intialziedata.dart';
 import 'package:fit_pal/DataBaseServices/useruid.dart';
 import 'package:fit_pal/DataChallenges/createChallenge.dart';
+import 'package:fit_pal/DataFood/food.dart';
 import 'package:fit_pal/DataFriends/getfriends.dart';
 import 'package:fit_pal/loadingPages/loadingpage1.dart';
 import 'package:flutter/cupertino.dart';
@@ -210,12 +211,14 @@ class _LoginPageState extends State<LoginPage> {
         //     Dataservices(uid: _userCredential!.user!.uid);
         // List<Map<String, dynamic>> customWorkouts =
         //     await dataservices.fetchCustomWorkouts();
-        InitializeWorkout initializeWorkout =
-            InitializeWorkout(uid: _userCredential!.user!.uid);
-        Map<String, List<Map<String, dynamic>>> Hii =
-            await initializeWorkout.getPlaylistsAndExercises();
-
-        print(Hii);
+        // InitializeWorkout initializeWorkout =
+        //     InitializeWorkout(uid: _userCredential!.user!.uid);
+        // Map<String, List<Map<String, dynamic>>> Hii =
+        //     await initializeWorkout.getPlaylistsAndExercises();
+        // print(Hii);
+        InitializeFoods initializeFoods =
+            InitializeFoods(uid: FirebaseAuth.instance.currentUser!.uid);
+        initializeFoods.getFoodForCurrentDay();
       }
     }
   }

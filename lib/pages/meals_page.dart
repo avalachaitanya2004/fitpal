@@ -17,14 +17,13 @@ class MealsPage extends StatefulWidget {
 
 class _MealsPageState extends State<MealsPage> {
   late String uid = '';
-  late Future<List<FoodLite>> foodForToday;
 
+  List<Food> today = [];
   @override
   void initState() {
     super.initState();
     retrieveUID();
-    InitializeFoods initializeFoods = InitializeFoods(uid: uid);
-    foodForToday = initializeFoods.getFoodForCurrentDay();
+    callme();
   }
 
   void retrieveUID() {
@@ -37,21 +36,23 @@ class _MealsPageState extends State<MealsPage> {
     }
   }
 
-  final List<Food> today = [];
+  void callme() async {
+    List<FoodLite> hii = [];
+    InitializeFoods initializeFoods =
+        InitializeFoods(uid: FirebaseAuth.instance.currentUser!.uid);
+    hii = await initializeFoods.getFoodForCurrentDay();
+    for (var a in hii) {
+      today.add(Food(a.timeOfDay, 90, 90, 90, 40, a.weight, a.name, ''));
+    }
+    setState(() {});
+    print(hii.length);
+    print(today.length);
+    print('lanjaodaka');
+    print('++');
+  }
 
   @override
   Widget build(BuildContext context) {
-    today.clear();
-    foodForToday.then((foodList) {
-      for (var foodLite in foodList) {
-        today.add(
-          Food(foodLite.timeOfDay, 56, 56, 67, 67, foodLite.weight,
-              foodLite.name, foodLite.url),
-        );
-      }
-      setState(() {});
-    });
-
     return SafeArea(
       child: Container(
         height: double.infinity,
