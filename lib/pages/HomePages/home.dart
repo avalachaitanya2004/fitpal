@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fit_pal/DataBaseServices/Intialziedata.dart';
@@ -13,13 +15,13 @@ import 'package:custom_sliding_segmented_control/custom_sliding_segmented_contro
 import 'package:fit_pal/utility/date_picker_widget.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:health/health.dart';
+// import 'package:health/health.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:liquid_progress_indicator_v2/liquid_progress_indicator.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:fit_pal/DataWorkout/assignworkout.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:health/health.dart';
+// import 'package:health/health.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -37,61 +39,61 @@ class _HomeState extends State<Home> {
   int _getsteps = 0;
   int bpm = 0;
 
-  Future fetchStepData() async {
-    Health().configure(useHealthConnectIfAvailable: true);
-    int? steps;
-    var types = [
-      HealthDataType.STEPS,
-    ];
-    final now = DateTime.now();
-    final midnight = DateTime(now.year, now.month, now.day);
-    var permissions = [
-      HealthDataAccess.READ,
-    ];
-    bool request =
-        await Health().requestAuthorization(types, permissions: permissions);
-    if (request) {
-      try {
-        steps = await Health().getTotalStepsInInterval(midnight, now);
-      } catch (error) {
-        print(error);
-      }
-      print("total steps $steps");
-      setState(() {
-        _getsteps = (steps == null) ? 0 : steps;
-      });
-    } else {
-      print("not authorized");
-    }
-  }
+  // Future fetchStepData() async {
+  //   Health().configure(useHealthConnectIfAvailable: true);
+  //   int? steps;
+  //   var types = [
+  //     HealthDataType.STEPS,
+  //   ];
+  //   final now = DateTime.now();
+  //   final midnight = DateTime(now.year, now.month, now.day);
+  //   var permissions = [
+  //     HealthDataAccess.READ,
+  //   ];
+  //   bool request =
+  //       await Health().requestAuthorization(types, permissions: permissions);
+  //   if (request) {
+  //     try {
+  //       steps = await Health().getTotalStepsInInterval(midnight, now);
+  //     } catch (error) {
+  //       print(error);
+  //     }
+  //     print("total steps $steps");
+  //     setState(() {
+  //       _getsteps = (steps == null) ? 0 : steps;
+  //     });
+  //   } else {
+  //     print("not authorized");
+  //   }
+  // }
 
-  Future fetchBPMData() async {
-    Health().configure(useHealthConnectIfAvailable: true);
-    int? steps;
-    var types = [
-      HealthDataType.HEART_RATE,
-    ];
-    final now = DateTime.now();
-    final midnight = DateTime(now.year, now.month, now.day);
-    var permissions = [
-      HealthDataAccess.READ,
-    ];
-    bool request =
-        await Health().requestAuthorization(types, permissions: permissions);
-    if (request) {
-      try {
-        steps = await Health().getTotalStepsInInterval(midnight, now);
-      } catch (error) {
-        print(error);
-      }
-      print("total steps $steps");
-      setState(() {
-        bpm = (steps == null) ? 0 : steps;
-      });
-    } else {
-      print("not authorized");
-    }
-  }
+  // Future fetchBPMData() async {
+  //   Health().configure(useHealthConnectIfAvailable: true);
+  //   int? steps;
+  //   var types = [
+  //     HealthDataType.HEART_RATE,
+  //   ];
+  //   final now = DateTime.now();
+  //   final midnight = DateTime(now.year, now.month, now.day);
+  //   var permissions = [
+  //     HealthDataAccess.READ,
+  //   ];
+  //   bool request =
+  //       await Health().requestAuthorization(types, permissions: permissions);
+  //   if (request) {
+  //     try {
+  //       steps = await Health().getTotalStepsInInterval(midnight, now);
+  //     } catch (error) {
+  //       print(error);
+  //     }
+  //     print("total steps $steps");
+  //     setState(() {
+  //       bpm = (steps == null) ? 0 : steps;
+  //     });
+  //   } else {
+  //     print("not authorized");
+  //   }
+  // }
 
   int weekXP = 0;
   int todayXP = 0;
@@ -149,10 +151,14 @@ class _HomeState extends State<Home> {
     super.initState();
     retrieveUID();
     fetchTodayWorkouts();
-    fetchBPMData();
+    // if (Platform.isIOS) {
+    //   fetchBPMData();
+    // }
     fetchUserData();
     getCurrentWeekXP(uid);
-    fetchStepData();
+    // if (Platform.isIOS) {
+    //   fetchStepData();
+    // }
   }
 
   void retrieveUID() {
@@ -176,7 +182,7 @@ class _HomeState extends State<Home> {
     });
   }
 
-  bool streak = true;
+  bool streak = false;
   Future<void> fetchUserData() async {
     try {
       CollectionReference<Map<String, dynamic>> waterCollection =
@@ -369,98 +375,81 @@ class _HomeState extends State<Home> {
                               ),
                               Expanded(
                                 child: GlassMorphism(
-                                    blur: 50,
-                                    // margin: EdgeInsets.all(10),
-                                    // color: Colors.red,
-                                    // height: 80,
-                                    // width: 90,
-                                    child: streak
-                                        ? Center(
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: [
-                                                Icon(
-                                                  CupertinoIcons.flame,
-                                                  color: Colors.red,
-                                                ),
-                                                const SizedBox(
-                                                  width: 10,
-                                                ),
-                                                Column(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  children: [
-                                                    Text(
-                                                      '176',
-                                                      style: TextStyle(
-                                                        fontFamily: 'Roboto',
-                                                        // color: Colors.blue,
-                                                        fontSize: 16,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                      ),
+                                  blur: 50,
+                                  // margin: EdgeInsets.all(10),
+                                  // color: Colors.red,
+                                  // height: 80,
+                                  // width: 90,
+                                  child: streak
+                                      ? Center(
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Icon(
+                                                CupertinoIcons.flame,
+                                                color: Colors.red,
+                                              ),
+                                              SizedBox(width: 10),
+                                              Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  Text(
+                                                    '176',
+                                                    style: TextStyle(
+                                                      fontFamily: 'Roboto',
+                                                      fontSize: 16,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Colors
+                                                          .blue, // Ensure color is set as needed
                                                     ),
-                                                    const SizedBox(
-                                                      height: 1,
+                                                  ),
+                                                  SizedBox(height: 1),
+                                                  Text(
+                                                    'Streak',
+                                                    style: TextStyle(
+                                                      fontSize: 14,
+                                                      color: Colors.black
+                                                          .withOpacity(0.7),
                                                     ),
-                                                    Text(
-                                                      'Streak',
-                                                      style: TextStyle(
-                                                        fontSize: 14,
-                                                        color: Colors.black
-                                                            .withOpacity(0.7),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ],
-                                            ),
-                                          )
-                                        : Center(
-                                            child: Stack(
-                                              alignment: Alignment.center,
-                                              children: [
-                                                Icon(
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                        )
+                                      : Center(
+                                          child: Stack(
+                                            alignment: Alignment
+                                                .topCenter, // Aligns children to the top center of the stack
+                                            children: [
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.all(15.0),
+                                                child: Icon(
                                                   CupertinoIcons.flame,
                                                   color: Colors.red,
                                                   size: 30,
                                                 ),
-                                                Align(
-                                                  alignment:
-                                                      Alignment(0.5, 0.5),
-                                                  child: Positioned(
-                                                    child: Icon(
-                                                      Icons
-                                                          .warning_amber_rounded,
-                                                      color: Colors.red,
-                                                    ),
-                                                  ),
+                                              ),
+                                              Positioned(
+                                                bottom:
+                                                    10, // Adjusts the bottom position to align as a subscript
+                                                right:
+                                                    5, // Adjusts the right position to make it visually a subscript
+                                                child: Icon(
+                                                  Icons.warning_amber_rounded,
+                                                  color: Colors.red,
+                                                  size:
+                                                      16, // Smaller size for subscript styling
                                                 ),
-                                              ],
-                                            ),
-                                            //if steak is false
-                                            // child: Row(
-                                            //   mainAxisAlignment:
-                                            //       MainAxisAlignment.center,
-                                            //   children: [
-                                            //     Icon(
-                                            //       CupertinoIcons.flame,
-                                            //       color: Colors.red,
-                                            //       size: 30,
-                                            //     ),
-                                            //     Column(
-                                            //       children: [
-                                            //         Spacer(),
-                                            //         Icon(
-                                            //           Icons.warning,
-                                            //           color: Colors.red,
-                                            //         ),
-                                            //       ],
-                                            //     ),
-                                            //   ],
-                                            // ),
-                                          )),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                ),
                               ),
                               Expanded(
                                 child: GlassMorphism(
@@ -597,98 +586,84 @@ class _HomeState extends State<Home> {
                               ),
                               Expanded(
                                 child: GlassMorphism(
-                                    blur: 50,
-                                    // margin: EdgeInsets.all(10),
-                                    // color: Colors.red,
-                                    // height: 80,
-                                    // width: 90,
-                                    child: streak
-                                        ? Center(
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: [
-                                                Icon(
-                                                  CupertinoIcons.bolt,
-                                                  color: Colors.yellow[900],
-                                                ),
-                                                const SizedBox(
-                                                  width: 10,
-                                                ),
-                                                Column(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  children: [
-                                                    Text(
-                                                      '${todayXP}',
-                                                      style: TextStyle(
-                                                        fontFamily: 'Roboto',
-                                                        // color: Colors.blue,
-                                                        fontSize: 16,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                      ),
+                                  blur: 50,
+                                  // margin: EdgeInsets.all(10),
+                                  // color: Colors.red,
+                                  // height: 80,
+                                  // width: 90,
+                                  child: streak
+                                      ? Center(
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Icon(
+                                                CupertinoIcons.bolt,
+                                                color: Colors.yellow[900],
+                                              ),
+                                              const SizedBox(
+                                                width: 10,
+                                              ),
+                                              Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  Text(
+                                                    '${todayXP}',
+                                                    style: TextStyle(
+                                                      fontFamily: 'Roboto',
+                                                      // color: Colors.blue,
+                                                      fontSize: 16,
+                                                      fontWeight:
+                                                          FontWeight.bold,
                                                     ),
-                                                    const SizedBox(
-                                                      height: 1,
+                                                  ),
+                                                  const SizedBox(
+                                                    height: 1,
+                                                  ),
+                                                  Text(
+                                                    'Today',
+                                                    style: TextStyle(
+                                                      fontSize: 14,
+                                                      color: Colors.black
+                                                          .withOpacity(0.7),
                                                     ),
-                                                    Text(
-                                                      'Today',
-                                                      style: TextStyle(
-                                                        fontSize: 14,
-                                                        color: Colors.black
-                                                            .withOpacity(0.7),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ],
-                                            ),
-                                          )
-                                        : Center(
-                                            child: Stack(
-                                              alignment: Alignment.center,
-                                              children: [
-                                                Icon(
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                        )
+                                      : Center(
+                                          child: Stack(
+                                            alignment: Alignment
+                                                .topCenter, // Aligns children to the top center of the stack
+                                            children: [
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.all(15.0),
+                                                child: Icon(
                                                   CupertinoIcons.flame,
                                                   color: Colors.red,
                                                   size: 30,
                                                 ),
-                                                Align(
-                                                  alignment:
-                                                      Alignment(0.5, 0.5),
-                                                  child: Positioned(
-                                                    child: Icon(
-                                                      Icons
-                                                          .warning_amber_rounded,
-                                                      color: Colors.red,
-                                                    ),
-                                                  ),
+                                              ),
+                                              Positioned(
+                                                bottom:
+                                                    10, // Adjusts the bottom position to align as a subscript
+                                                right:
+                                                    5, // Adjusts the right position to make it visually a subscript
+                                                child: Icon(
+                                                  Icons.warning_amber_rounded,
+                                                  color: Colors.red,
+                                                  size:
+                                                      16, // Smaller size for subscript styling
                                                 ),
-                                              ],
-                                            ),
-                                            //if steak is false
-                                            // child: Row(
-                                            //   mainAxisAlignment:
-                                            //       MainAxisAlignment.center,
-                                            //   children: [
-                                            //     Icon(
-                                            //       CupertinoIcons.flame,
-                                            //       color: Colors.red,
-                                            //       size: 30,
-                                            //     ),
-                                            //     Column(
-                                            //       children: [
-                                            //         Spacer(),
-                                            //         Icon(
-                                            //           Icons.warning,
-                                            //           color: Colors.red,
-                                            //         ),
-                                            //       ],
-                                            //     ),
-                                            //   ],
-                                            // ),
-                                          )),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                ),
                               ),
                               Expanded(
                                 child: GlassMorphism(

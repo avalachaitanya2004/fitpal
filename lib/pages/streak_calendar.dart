@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print, prefer_const_constructors
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -31,9 +33,9 @@ class _StreakCalendarState extends State<StreakCalendar> {
     DateTime.utc(2024, 4, 10),
     DateTime.utc(2024, 4, 18),
     DateTime.utc(2024, 4, 17),
-    DateTime.utc(2024, 4, 13),
-    DateTime.utc(2024, 4, 1),
-    DateTime.utc(2024, 4, 2),
+    DateTime.utc(2024, 4, 20),
+    DateTime.utc(2024, 4, 21),
+    DateTime.utc(2024, 4, 22),
   ];
   bool _isInAnyRange(DateTime day) => dates.contains(day);
 
@@ -41,40 +43,35 @@ class _StreakCalendarState extends State<StreakCalendar> {
   @override
   void initState() {
     super.initState();
-    int streak = calculateLongestStreak();
+    int streak = calculateCurrentStreak();
   }
 
-  int calculateLongestStreak() {
+  int calculateCurrentStreak() {
     List<DateTime> normalizedDates =
         dates.map((date) => DateTime(date.year, date.month, date.day)).toList();
-    DateTime today = DateTime.now();
-    today = DateTime(today.year, today.month, today.day);
-    if (!normalizedDates.contains(today)) {
-      normalizedDates.add(today);
-    }
     normalizedDates.sort((a, b) => b.compareTo(a));
-    int longestStreak = 0;
-    int currentStreak = 1;
-    for (int i = 0; i < normalizedDates.length - 1; i++) {
-      if (normalizedDates[i].difference(normalizedDates[i + 1]).inDays == 1) {
+    DateTime today = DateTime.now();
+    DateTime normalizedToday = DateTime(today.year, today.month, today.day);
+    int currentStreak = 0;
+    DateTime previousDate = normalizedToday.subtract(const Duration(days: 1));
+    for (int i = 0; i < normalizedDates.length; i++) {
+      if (normalizedDates.contains(previousDate)) {
         currentStreak++;
+        previousDate = previousDate.subtract(const Duration(days: 1));
       } else {
-        longestStreak =
-            currentStreak > longestStreak ? currentStreak : longestStreak;
-        currentStreak = 1;
+        break;
       }
     }
-    longestStreak =
-        currentStreak > longestStreak ? currentStreak : longestStreak;
-
-    return isCompleted ? longestStreak : longestStreak - 1;
+    return normalizedDates.contains(normalizedToday)
+        ? currentStreak + 1
+        : currentStreak;
   }
 
   int streak = 0;
 
   @override
   Widget build(BuildContext context) {
-    streak = calculateLongestStreak();
+    streak = calculateCurrentStreak();
     if (isCompleted) {
       DateTime today = DateTime(
           DateTime.now().year, DateTime.now().month, DateTime.now().day);

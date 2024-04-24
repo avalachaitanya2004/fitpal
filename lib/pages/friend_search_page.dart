@@ -1,11 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fit_pal/DataBaseServices/Intialziedata.dart';
+import 'dart:convert';
+import 'package:fit_pal/pages/view_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:fit_pal/DataBaseServices/useruid.dart';
 import 'package:fit_pal/DataFriends/getfriends.dart';
 import 'package:bounce_tap/bounce_tap.dart';
+import 'package:http/http.dart' as http;
 
 class CustomUser {
   final String name;
@@ -189,10 +192,13 @@ class _FriendSearchState extends State<FriendSearch> {
               const SizedBox(height: 20),
               Expanded(
                 child: ListView.builder(
+                  itemCount: selectedTab == 0
+                      ? usersfriends.length
+                      : notusersfriends.length,
                   itemBuilder: (context, index) {
                     return selectedTab == 0
-                        ? ProfileCard(name: foundFriends[index])
-                        : ProfileCardAdd(name: names[index]);
+                        ? ProfileCard(user: usersfriends[index])
+                        : ProfileCardAdd(user: notusersfriends[index]);
                   },
                 ),
               ),
@@ -205,31 +211,42 @@ class _FriendSearchState extends State<FriendSearch> {
 }
 
 class ProfileCard extends StatelessWidget {
-  const ProfileCard({Key? key, required this.name}) : super(key: key);
-  final String name;
-
-  @override
-  Widget build(BuildContext context) {
-    return BounceTap(
-      onTap: () {},
-      child: ListTile(
-        leading: CircleAvatar(backgroundColor: Colors.grey[300]),
-        title: Text(name),
-        trailing: const Text('lv 100'),
-      ),
-    );
-  }
-}
-
-class ProfileCardAdd extends StatelessWidget {
-  const ProfileCardAdd({Key? key, required this.name}) : super(key: key);
-  final String name;
+  const ProfileCard({Key? key, required this.user}) : super(key: key);
+  final CustomUser user;
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
       leading: CircleAvatar(backgroundColor: Colors.grey[300]),
-      title: Text(name),
+      title: Text(user.name),
+      onTap: () {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => ViewProfile(user: user),
+          ),
+        );
+      },
+      trailing: Text(user.XP.toString()),
+    );
+  }
+}
+
+class ProfileCardAdd extends StatelessWidget {
+  const ProfileCardAdd({Key? key, required this.user}) : super(key: key);
+  final CustomUser user;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      leading: CircleAvatar(backgroundColor: Colors.grey[300]),
+      title: Text(user.name),
+      onTap: () {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => ViewProfile(user: user),
+          ),
+        );
+      },
       trailing: IconButton(
         icon: const Icon(Icons.person_add),
         onPressed: () {},

@@ -40,6 +40,7 @@ class _PerformWorkoutCardState extends State<PerformWorkoutCard> {
   void startTimer1() {
     Future.delayed(Duration.zero, () {
       showDialog(
+        barrierDismissible: false,
         context: context,
         builder: (BuildContext context) {
           return CustomDialog(); // Display custom stateful dialog box
@@ -550,58 +551,77 @@ class _ExitcardState extends State<Exitcard> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text("Are you sure you want to exit?"),
+      title: Text(
+        "Are you sure you want to exit?",
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: 20,
+        ),
+      ),
+      contentPadding: EdgeInsets.fromLTRB(24.0, 20.0, 24.0, 24.0),
       icon: Icon(
         Icons.warning,
         color: Colors.red,
         size: 36,
       ),
       content: Container(
-        height: 150,
+        height: 160,
         child: Column(
           children: [
-            Text("Any unsaved progress will be lost"),
-            const SizedBox(
-              height: 20,
+            Text(
+              "Any unsaved progress will be lost",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 16,
+              ),
             ),
+            SizedBox(height: 20),
             GestureDetector(
               onTap: () {
+                // Exit the app or pop back stack
                 Navigator.pop(context);
                 Navigator.pop(context);
                 Navigator.pop(context);
               },
               child: Container(
-                  decoration: BoxDecoration(
-                      color: Colors.blue,
-                      borderRadius: BorderRadius.circular(30)),
-                  height: 35,
-                  width: 130,
-                  child: Center(
-                      child: Text(
+                height: 35,
+                width: 130,
+                decoration: BoxDecoration(
+                  color: Colors.blue,
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                child: Center(
+                  child: Text(
                     'Exit',
-                    style: TextStyle(fontSize: 20, color: Colors.white),
-                  ))),
+                    style: TextStyle(fontSize: 18, color: Colors.white),
+                  ),
+                ),
+              ),
             ),
-            const SizedBox(
-              height: 10,
-            ),
+            SizedBox(height: 10),
             GestureDetector(
               onTap: () {
-                widget.start();
+                // Close the dialog and resume
                 Navigator.pop(context);
               },
               child: Container(
-                  height: 35,
-                  width: 130,
-                  decoration: BoxDecoration(
-                      // color: Colors.blue,
-                      borderRadius: BorderRadius.circular(30)),
-                  child: Center(
-                      child: Text(
-                    'resume',
-                    style: TextStyle(fontSize: 20, color: Colors.grey[700]),
-                  ))),
-            )
+                height: 35,
+                width: 130,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(30),
+                  border: Border.all(color: Colors.grey.shade300),
+                ),
+                child: Center(
+                  child: Text(
+                    'Resume',
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.grey[700],
+                    ),
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
       ),
@@ -620,57 +640,77 @@ class _Exitcard1State extends State<Exitcard1> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text("Are you sure you want to exit?"),
+      title: Text(
+        "Are you sure you want to exit?",
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: 20,
+        ),
+      ),
+      contentPadding: EdgeInsets.fromLTRB(24.0, 20.0, 24.0, 24.0),
       icon: Icon(
         Icons.warning,
         color: Colors.red,
         size: 36,
       ),
       content: Container(
-        height: 150,
+        height: 160,
         child: Column(
           children: [
-            Text("Any unsaved progress will be lost"),
-            const SizedBox(
-              height: 20,
+            Text(
+              "Any unsaved progress will be lost",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 16,
+              ),
             ),
+            SizedBox(height: 20),
             GestureDetector(
               onTap: () {
+                // Exit the app or pop back stack
                 Navigator.pop(context);
                 Navigator.pop(context);
                 Navigator.pop(context);
               },
               child: Container(
-                  decoration: BoxDecoration(
-                      color: Colors.blue,
-                      borderRadius: BorderRadius.circular(30)),
-                  height: 35,
-                  width: 130,
-                  child: Center(
-                      child: Text(
+                height: 35,
+                width: 130,
+                decoration: BoxDecoration(
+                  color: Colors.blue,
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                child: Center(
+                  child: Text(
                     'Exit',
-                    style: TextStyle(fontSize: 20, color: Colors.white),
-                  ))),
+                    style: TextStyle(fontSize: 18, color: Colors.white),
+                  ),
+                ),
+              ),
             ),
-            const SizedBox(
-              height: 10,
-            ),
+            SizedBox(height: 10),
             GestureDetector(
               onTap: () {
+                // Close the dialog and resume
                 Navigator.pop(context);
               },
               child: Container(
-                  height: 35,
-                  width: 130,
-                  decoration: BoxDecoration(
-                      // color: Colors.blue,
-                      borderRadius: BorderRadius.circular(30)),
-                  child: Center(
-                      child: Text(
-                    'resume',
-                    style: TextStyle(fontSize: 20, color: Colors.grey[700]),
-                  ))),
-            )
+                height: 35,
+                width: 130,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(30),
+                  border: Border.all(color: Colors.grey.shade300),
+                ),
+                child: Center(
+                  child: Text(
+                    'Resume',
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.grey[700],
+                    ),
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
       ),

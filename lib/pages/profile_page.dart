@@ -4,6 +4,7 @@ import 'package:fit_pal/DataBaseServices/Intialziedata.dart';
 import 'package:fit_pal/DataBaseServices/useruid.dart';
 import 'package:fit_pal/pages/edit_profile.dart';
 import 'package:fit_pal/pages/friend_search_page.dart';
+import 'package:fit_pal/pages/pre_login.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -152,6 +153,22 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  Future<void> _signOut() async {
+    try {
+      await _auth.signOut();
+      // Navigate to login or home screen after successful logout
+      // Example:
+      // Navigator.of(context).pushReplacementNamed('/login');
+      Navigator.push(context, MaterialPageRoute(builder: (context) {
+        return PreLogin();
+      }));
+    } catch (e) {
+      // Handle logout errors
+      print('Error logging out: $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -159,8 +176,8 @@ class _ProfilePageState extends State<ProfilePage> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         actions: [
-          IconButton(onPressed: () {}, icon: Icon(Icons.share)),
-          IconButton(onPressed: () {}, icon: Icon(Icons.logout)),
+          // IconButton(onPressed: () {}, icon: Icon(Icons.share)),
+          IconButton(onPressed: _signOut, icon: Icon(Icons.logout)),
         ],
         title: Text('Profile', style: TextStyle(color: Colors.black)),
         backgroundColor: Colors.white,

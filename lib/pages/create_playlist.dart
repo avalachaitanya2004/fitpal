@@ -15,6 +15,7 @@ class CreatePlaylist extends StatefulWidget {
 
 class _CreatePlaylistState extends State<CreatePlaylist> {
   TextEditingController nameController = TextEditingController();
+  TextEditingController searchController = TextEditingController();
   FocusNode focusNode = FocusNode();
   List<ExerciseCard> exercises = [
     ExerciseCard(
@@ -176,10 +177,10 @@ class _CreatePlaylistState extends State<CreatePlaylist> {
     setState(() {
       foundExercises = value.isEmpty
           ? exercises
-          : exercises
-              .where((card) =>
-                  card.name.toLowerCase().contains(value.toLowerCase()))
-              .toList();
+          : exercises.where((card) {
+              return !card.isSelected &
+                  card.name.toLowerCase().contains(value.toLowerCase());
+            }).toList();
     });
   }
 
@@ -214,23 +215,24 @@ class _CreatePlaylistState extends State<CreatePlaylist> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        title: const Text("Create Playlist"),
-        backgroundColor: Colors.white,
-        surfaceTintColor: Colors.white,
-        leading: GestureDetector(
-          onTap: () => Navigator.pop(context),
-          child: CircleAvatar(
-            backgroundColor: Colors.white.withOpacity(0.4),
-            child: const Icon(Icons.arrow_back, color: Colors.black),
+    filter(searchController.text);
+    return Stack(
+      children: [
+        Scaffold(
+          backgroundColor: Colors.white,
+          appBar: AppBar(
+            title: const Text("Create Playlist"),
+            backgroundColor: Colors.white,
+            surfaceTintColor: Colors.white,
+            leading: GestureDetector(
+              onTap: () => Navigator.pop(context),
+              child: CircleAvatar(
+                backgroundColor: Colors.white.withOpacity(0.4),
+                child: const Icon(Icons.arrow_back, color: Colors.black),
+              ),
+            ),
           ),
-        ),
-      ),
-      body: Stack(
-        children: [
-          SingleChildScrollView(
+          body: SingleChildScrollView(
             child: Column(
               children: [
                 Padding(
@@ -259,6 +261,7 @@ class _CreatePlaylistState extends State<CreatePlaylist> {
                   padding: const EdgeInsets.symmetric(horizontal: 20.0),
                   child: TextField(
                     onChanged: filter,
+                    controller: searchController,
                     decoration: const InputDecoration(
                       labelText: "Search",
                       suffixIcon: Icon(Icons.search),
@@ -302,49 +305,41 @@ class _CreatePlaylistState extends State<CreatePlaylist> {
                     )),
                 ...foundExercises
                     .where((exercise) => !(exercise.isSelected))
-                    .map((exercise) => ExcerciseSelectCard(
-                          excersise: exercise,
-                          onUpdateExercise: updateExercise,
-                        )),
+                    .map(
+                      (exercise) => ExcerciseSelectCard(
+                        excersise: exercise,
+                        onUpdateExercise: updateExercise,
+                      ),
+                    ),
+                SizedBox(
+                  height: 20,
+                ),
               ],
             ),
           ),
-          if (selected())
-            Positioned(
-              bottom: 20,
-              right: 20,
-              // child: Container(
-              // width: 75,
-              child: FloatingActionButton(
-                shape: const CircleBorder(),
-                // mini: true,
-                backgroundColor: Colors.white,
-                onPressed: () {
-                  final currentUser = FirebaseAuth.instance.currentUser;
-                  final uid = currentUser?.uid;
-                  InitializeWorkout initializeWorkout =
-                      InitializeWorkout(uid: uid.toString());
-                  initializeWorkout.playlist(
-                      [nameController.text.trim()], selectedExercises);
-                },
-                child: const Icon(
-                  Icons.check,
-                  size: 30,
-                ),
-                // child: Text(
-                //   "Create",
-                //   style: TextStyle(
-                //     fontFamily: 'Roboto',
-                //     fontSize: 15,
-                //     color: Colors.black,
-                //     fontWeight: FontWeight.w500,
-                //   ),
-                // ),
+        ),
+        if (selected())
+          Positioned(
+            bottom: 20,
+            right: 20,
+            child: FloatingActionButton(
+              shape: const CircleBorder(),
+              backgroundColor: Colors.white,
+              onPressed: () {
+                final currentUser = FirebaseAuth.instance.currentUser;
+                final uid = currentUser?.uid;
+                InitializeWorkout initializeWorkout =
+                    InitializeWorkout(uid: uid.toString());
+                initializeWorkout
+                    .playlist([nameController.text.trim()], selectedExercises);
+              },
+              child: const Icon(
+                Icons.check,
+                size: 30,
               ),
-              // ),
             ),
-        ],
-      ),
+          ),
+      ],
     );
   }
 }

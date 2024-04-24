@@ -1,3 +1,4 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:fit_pal/Controllers/initializationController.dart';
 import 'package:fit_pal/pages/home_page.dart';
 import 'package:fit_pal/pages/pre_login.dart';
@@ -21,9 +22,21 @@ class _LoginControllerState extends State<LoginController> {
     super.initState();
   }
 
+  // triggerNotification() {
+  //   AwesomeNotifications().createNotification(
+  //     content: NotificationContent(
+  //       id: 1,
+  //       channelKey: 'basic_channel',
+  //       title: "Hello! ${user!.displayName} ",
+  //       body: "Login Successful",
+  //     ),
+  //   );
+  // }
+
   @override
   Widget build(BuildContext context) {
     if (user != null) {
+      // triggerNotification();
       return InitializationController();
     } else {
       return PreLogin();

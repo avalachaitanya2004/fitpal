@@ -72,9 +72,14 @@ class _ExcerciseSelectCardState extends State<ExcerciseSelectCard> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  widget.excersise.name,
-                  style: TextStyle(color: Colors.black, fontSize: 18),
+                Container(
+                  width: 150, // Set a maximum width based on your layout needs
+                  child: Text(
+                    widget.excersise.name.capitalize(),
+                    softWrap: true,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(color: Colors.black, fontSize: 18),
+                  ),
                 ),
                 SizedBox(
                   height: 10,
@@ -99,8 +104,12 @@ class _ExcerciseSelectCardState extends State<ExcerciseSelectCard> {
                 child: FloatingActionButton(
                   elevation: 0,
                   onPressed: () {
+                    FocusScopeNode currentFocus = FocusScope.of(context);
+                    if (!currentFocus.hasPrimaryFocus) {
+                      currentFocus.unfocus();
+                    }
                     showModalBottomSheet(
-                        // enableDrag: true,
+                        backgroundColor: Colors.white,
                         isScrollControlled: true,
                         context: context,
                         builder: (context) {
@@ -149,5 +158,12 @@ class _ExcerciseSelectCardState extends State<ExcerciseSelectCard> {
         ),
       ),
     );
+  }
+}
+
+extension StringExtension on String {
+  String capitalize() {
+    if (this.isEmpty) return "";
+    return this[0].toUpperCase() + this.substring(1).toLowerCase();
   }
 }

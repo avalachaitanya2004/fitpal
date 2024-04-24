@@ -58,12 +58,16 @@ class _TakePhotoState extends State<TakePhoto> {
   }
 
   Widget buildCameraPreview() {
+    var cameraAspectRatio = _controller?.value.aspectRatio;
+    var scale = cameraAspectRatio! * 0.7;
     return Stack(
       children: <Widget>[
-        Positioned.fill(
-          child: AspectRatio(
-            aspectRatio: _controller!.value.aspectRatio,
-            child: CameraPreview(_controller!),
+        ClipRect(
+          child: Transform.scale(
+            scale: scale,
+            child: Center(
+              child: CameraPreview(_controller!),
+            ),
           ),
         ),
         Positioned(

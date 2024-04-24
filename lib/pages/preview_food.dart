@@ -1,6 +1,7 @@
+import 'dart:convert';
 import 'dart:io';
 import 'dart:ui';
-
+import 'package:http/http.dart' as http;
 import 'package:camera/camera.dart';
 import 'package:fit_pal/models/food.dart';
 import 'package:flutter/animation.dart';
@@ -16,11 +17,18 @@ class PreviewFood extends StatefulWidget {
   State<PreviewFood> createState() => _PreviewFoodState();
 }
 
+fetchdata(String url) async {
+  http.Response response = await http.get(Uri.parse(url));
+  print("object");
+  return response.body;
+}
+
 class _PreviewFoodState extends State<PreviewFood>
     with TickerProviderStateMixin {
   late AnimationController _con;
   late Animation<double> ani;
   bool isloading = true;
+  var decoded;
   @override
   Future<void> getData() async {
     //enter data
@@ -29,7 +37,6 @@ class _PreviewFoodState extends State<PreviewFood>
   }
 
   void initState() {
-    // TODO: implement initState
     isloading = true;
     getData();
 
@@ -40,14 +47,90 @@ class _PreviewFoodState extends State<PreviewFood>
         .animate(CurvedAnimation(parent: _con, curve: Curves.easeOut));
     _con.forward();
     image = widget.image;
+    imagepath = widget.imagepath;
+    print(imagepath);
+    feedToModel();
+  }
+
+  Future<void> feedToModel() async {
+    List<String> segments = [];
+    int segmentLength = 90;
+    print("object");
+    for (int i = 0; i < imagepath.length; i += segmentLength) {
+      int end = (i + segmentLength < imagepath.length)
+          ? i + segmentLength
+          : imagepath.length;
+      segments.add(imagepath.substring(i, end));
+    }
+    print("object");
+    String baseUrl, url = '';
+    baseUrl = 'http://10.81.16.240:5000/api?'; //physical device
+    // if (Platform.isAndroid) {
+    //   baseUrl = 'http://10.0.2.2:5000/api?';
+    // } else {
+    //   baseUrl = 'http://localhost:5000/api?';
+    // }
+    String query = '';
+    for (int i = 0; i < segments.length; i++) {
+      if (i > 0) {
+        query += '&';
+      }
+      query += 'v${i + 1}=' + Uri.encodeComponent(segments[i]);
+    }
+    setState(() {
+      url = baseUrl + query;
+    });
+    print(url);
+    var data = await fetchdata(url);
+    print("hii");
+    decoded = jsonDecode(data);
+    var Predicted = decoded['Predicted'];
+    var Category = decoded['Category'];
+    print(Predicted);
+    print(Category);
+    print(url);
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
     _con.dispose();
     super.dispose();
   }
+
+// class _PreviewFoodState extends State<PreviewFood> with TickerProviderStateMixin {
+//   late AnimationController _con;
+//   late Animation<double> ani;
+//   late XFile image;
+//   String decodedData = '';
+
+//   @override
+//   void initState() {
+//     super.initState();
+//     _con = AnimationController(vsync: this, duration: Duration(milliseconds: 500));
+//     ani = Tween(begin: 0.0, end: 1.0).animate(CurvedAnimation(parent: _con, curve: Curves.easeOut));
+//     _con.forward();
+
+//     image = widget.image;
+//     feedToModel();
+//   }
+
+  // Future<void> feedToModel() async {
+  //   // Assuming you need to send the file content to a server:
+  //   String baseUrl = Platform.isAndroid ? 'http://10.0.2.2:5000/api' : 'http://localhost:5000/api';
+  //   var request = http.MultipartRequest('POST', Uri.parse(baseUrl))
+  //     ..files.add(await http.MultipartFile.fromPath('file', image.path));
+
+  //   var response = await request.send();
+  //   if (response.statusCode == 200) {
+  //     String responseData = await response.stream.bytesToString();
+  //     var decoded = jsonDecode(responseData);
+  //     setState(() {
+  //       decodedData = decoded.toString(); // Assuming you want to display this data
+  //     });
+  //     print(decodedData);
+  //   }
+  // }
+
   // @override
   // void didUpdateWidget(PreviewFood oldWidget) {
   //   super.didUpdateWidget(oldWidget);
@@ -68,6 +151,7 @@ class _PreviewFoodState extends State<PreviewFood>
   }
 
   late XFile image;
+  late String imagepath;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -77,7 +161,7 @@ class _PreviewFoodState extends State<PreviewFood>
       //   // title: Text('Nutrition'),
       //   backgroundColor: Colors.transparent,
       // ),
-      body: isloading
+      body: true
           ? Container(
               // color: Colors.blue,
               height: double.infinity,

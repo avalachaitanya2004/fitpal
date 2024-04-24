@@ -115,159 +115,30 @@ class _HomePageState extends State<HomePage>
 
   // List<bool> buttons = [true, false, false, false];
   PageController _Page = PageController(initialPage: 0);
+  var drawerSel = false;
   @override
   Widget build(BuildContext context) {
     // _con.forward();
     return Stack(
       children: [
         Scaffold(
-          // appBar: AppBar(),
-          drawer: Drawer(
-            child: SafeArea(
-              child: Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Column(
-                  children: [
-                    ListTile(
-                      onTap: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) {
-                          return ProfilePage();
-                        }));
-                      },
-                      leading: Icon(
-                        Icons.person_outline_outlined,
-                        size: 30,
-                      ),
-                      title: Text(
-                        'Profile',
-                        style: TextStyle(fontSize: 18),
-                      ),
-                    ),
-                    ListTile(
-                      onTap: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) {
-                          return LeaderBoard();
-                        }));
-                      },
-                      leading: Icon(
-                        Icons.place,
-                        size: 30,
-                      ),
-                      title: Text(
-                        'Leaderboard',
-                        style: TextStyle(fontSize: 18),
-                      ),
-                    ),
-                    ListTile(
-                      onTap: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) {
-                          return StreakCalendar();
-                        }));
-                      },
-                      leading: Icon(
-                        CupertinoIcons.flame,
-                        size: 30,
-                        color: Colors.red,
-                      ),
-                      title: Text(
-                        'Streak',
-                        style: TextStyle(fontSize: 18),
-                      ),
-                    ),
-                    ListTile(
-                      onTap: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) {
-                          return WaterPage();
-                        }));
-                      },
-                      leading: Icon(
-                        Icons.water_drop,
-                        color: Colors.blue,
-                        size: 30,
-                      ),
-                      title: Text(
-                        'Water',
-                        style: TextStyle(fontSize: 18),
-                      ),
-                    ),
-                    Spacer(),
-                    ListTile(
-                      onTap: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) {
-                          return FAQPage();
-                        }));
-                      },
-                      leading: Icon(
-                        Icons.group,
-                        color: Colors.blue,
-                        size: 30,
-                      ),
-                      title: Text(
-                        "FAQ's",
-                        style: TextStyle(fontSize: 18),
-                      ),
-                    ),
-                    ListTile(
-                      onTap: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) {
-                          return FeedbackPage();
-                        }));
-                      },
-                      leading: Icon(
-                        Icons.group,
-                        color: Colors.blue,
-                        size: 30,
-                      ),
-                      title: Text(
-                        'Feedback',
-                        style: TextStyle(fontSize: 18),
-                      ),
-                    ),
-                    ListTile(
-                      onTap: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) {
-                          return AboutUsPage();
-                        }));
-                      },
-                      leading: Icon(
-                        Icons.group,
-                        color: Colors.blue,
-                        size: 30,
-                      ),
-                      title: Text(
-                        'About Us',
-                        style: TextStyle(fontSize: 18),
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: _signOut,
-                      child: Padding(
-                        padding: const EdgeInsets.only(bottom: 50.0),
-                        child: Icon(
-                          Icons.logout,
-                          color: Colors.red,
-                          size: 34,
-                        ),
-                      ),
-                    )
-                  ],
-                ),
+          appBar: AppBar(
+            leading: GestureDetector(
+              onTap: () {
+                setState(() {
+                  drawerSel = !drawerSel;
+                });
+              },
+              child: const CircleAvatar(
+                backgroundColor: Colors.transparent,
+                child: Icon(Icons.menu, color: Colors.black),
               ),
             ),
-          ),
-          // backgroundColor: Color(0xFF17203A),
-          backgroundColor: Colors.white,
-          extendBodyBehindAppBar: true,
-          appBar: AppBar(
+            automaticallyImplyLeading: false,
             backgroundColor: Colors.transparent,
           ),
+          backgroundColor: Colors.white,
+          extendBodyBehindAppBar: true,
           body: PageView(
             controller: _Page,
             onPageChanged: (int) {
@@ -287,211 +158,7 @@ class _HomePageState extends State<HomePage>
               MealsPage(),
               WorkoutSelect(),
             ],
-            // physics:NeverScrollableScrollPhysics(),
           ),
-          // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-          // floatingActionButton: Padding(
-          //   padding: const EdgeInsets.all(6.0),
-          //   child: Container(
-          //     height: 85,
-          //     width: 85,
-          //     child: FloatingActionButton(
-          //       onPressed: () {
-          //         // Navigator.pushNamed(context, '/takePhoto');
-          //         Navigator.push(
-          //           context,
-          //           MaterialPageRoute(
-          //             builder: (context) => TakePhoto(),
-          //           ),
-          //         );
-          //       },
-          //       child: Icon(
-          //         Icons.add,
-          //         size: 35,
-          //       ),
-          //       shape: CircleBorder(),
-          //       backgroundColor: Colors.black,
-          //       foregroundColor: Colors.white,
-          //     ),
-          //   ),
-          // ),
-          // bottomNavigationBar: BottomAppBar(
-          //   // notchMargin: 5.0,
-          //   elevation: 25,
-          //   shadowColor: Colors.grey,
-          //   padding: EdgeInsets.all(5),
-          //   // shape: CircularNotchedRectangle(),
-          //   color: Colors.white,
-          //   surfaceTintColor: Colors.white,
-          //   child: Row(
-          //     mainAxisAlignment: MainAxisAlignment.spaceAround,
-          //     mainAxisSize: MainAxisSize.max,
-          //     children: [
-          //       Padding(
-          //           padding: EdgeInsets.only(left: 0.0),
-          //           child: CircleAvatar(
-          //             backgroundColor: Colors.white,
-
-          //             // buttons[0] ? Colors.purple[100] : Colors.white,
-
-          //             radius: 30,
-          //             child: IconButton(
-          //               enableFeedback: true,
-          //               // highlightColor: Colors.purple[100],
-          //               onPressed: () {
-          //                 setState(() {
-          //                   buttons = [true, false, false, false];
-          //                   _Page.jumpToPage(0);
-          //                 });
-          //               },
-          //               icon: Icon(
-          //                 Icons.home_rounded,
-          //                 color: buttons[0] ? Colors.black : Colors.grey[800],
-          //               ),
-          //               iconSize: buttons[0] ? 35 : 30,
-          //               padding:
-          //                   buttons[0] ? EdgeInsets.all(10) : EdgeInsets.all(15),
-          //             ),
-          //           )),
-          //       Padding(
-          //         padding: EdgeInsets.only(left: 10.0, right: 45.0),
-          //         child: Column(
-          //           mainAxisSize: MainAxisSize.min,
-          //           children: [
-          //             CircleAvatar(
-          //               backgroundColor: Colors.white,
-          //               // buttons[1] ? Colors.purple[100] : Colors.white,
-          //               radius: 30,
-          //               child: IconButton(
-          //                 enableFeedback: true,
-          //                 // highlightColor: Colors.purple[100],
-          //                 onPressed: () {
-          //                   setState(() {
-          //                     buttons = [false, true, false, false];
-          //                     _Page.jumpToPage(1);
-          //                   });
-          //                 },
-          //                 icon: Icon(
-          //                   Icons.pie_chart_rounded,
-          //                   color: buttons[1] ? Colors.black : Colors.grey[800],
-          //                 ),
-          //                 iconSize: buttons[1] ? 35 : 30,
-          //                 padding:
-          //                     buttons[1] ? EdgeInsets.all(10) : EdgeInsets.all(15),
-          //               ),
-          //             )
-          //           ],
-          //         ),
-          //       ),
-          //       Padding(
-          //           padding: EdgeInsets.only(left: 45.0),
-          //           child: CircleAvatar(
-          //             backgroundColor: Colors.white,
-          //             // buttons[2] ? Colors.purple[100] : Colors.white,
-          //             radius: 30,
-          //             child: IconButton(
-          //               enableFeedback: true,
-          //               // highlightColor: Colors.purple[100],
-          //               onPressed: () {
-          //                 setState(() {
-          //                   buttons = [false, false, true, false];
-          //                   _Page.jumpToPage(2);
-          //                 });
-          //               },
-          //               icon: Icon(
-          //                 Icons.document_scanner_outlined,
-          //                 color: buttons[2] ? Colors.black : Colors.grey[800],
-          //               ),
-          //               iconSize: buttons[2] ? 35 : 30,
-          //               padding:
-          //                   buttons[2] ? EdgeInsets.all(10) : EdgeInsets.all(15),
-          //             ),
-          //           )),
-          //       Padding(
-          //         padding: EdgeInsets.only(left: 10.0),
-          //         child: Column(
-          //           mainAxisSize: MainAxisSize.min,
-          //           children: [
-          //             CircleAvatar(
-          //               backgroundColor: Colors.white,
-          //               // buttons[3] ? Colors.purple[100] : Colors.white,
-          //               radius: 30,
-          //               child: IconButton(
-          //                 enableFeedback: true,
-          //                 // highlightColor: Colors.purple[100],
-          //                 onPressed: () {
-          //                   setState(() {
-          //                     buttons = [false, false, false, true];
-          //                     _Page.jumpToPage(3);
-          //                   });
-          //                 },
-          //                 icon: Icon(
-          //                   Icons.person_2_rounded,
-          //                   color: buttons[3] ? Colors.black : Colors.grey[800],
-          //                 ),
-          //                 iconSize: buttons[3] ? 35 : 30,
-          //                 padding:
-          //                     buttons[3] ? EdgeInsets.all(10) : EdgeInsets.all(15),
-          //               ),
-          //             )
-          //           ],
-          //         ),
-          //       ),
-          //     ],
-          //   ),
-          // ),
-          // body: Column(
-          //   mainAxisAlignment: MainAxisAlignment.center,
-          //   children: <Widget>[
-          //     DatePicker(
-          //       DateTime.now(),
-          //       initialSelectedDate: DateTime.now(),
-          //       selectionColor: Colors.black,
-          //       selectedTextColor: Colors.white,
-          //       onDateChange: (date) {
-          //         // New date selected
-          //         setState(() {
-          //           // _selectedValue = date;
-          //         });
-          //       },
-          //     ),
-          //   ],
-          // ),
-          // body: AnimatedContainer(
-          //   duration: Duration(seconds: 1),
-          //   height: double.maxFinite,
-          //   width: double.maxFinite,
-          //   decoration: BoxDecoration(
-          //       gradient: RadialGradient(
-          //     radius: 1.5,
-          //     // center: Alignment(0, _pos.value),
-          //     center: Alignment(0, -1),
-          //     // radius:0.5,
-          //     colors: [Color.fromARGB(255, 69, 75, 232), Colors.white],
-          //     stops: [0.0, 1.0],
-          //   )),
-          //   // color: Colors.blue,
-          //   child: Column(
-          //     mainAxisAlignment: MainAxisAlignment.start,
-          //     children: <Widget>[
-          //       Padding(
-          //         padding: const EdgeInsets.only(top: 120, left: 20, right: 20),
-          //         child: DatePicker(
-          //           DateTime.now(),
-          //           initialSelectedDate: DateTime.now(),
-          //           selectionColor: Colors.black,
-          //           selectedTextColor: Colors.white,
-          //           onDateChange: (date) {
-          //             // New date selected
-          //             setState(() {
-          //               // _selectedValue = date;
-          //             });
-          //           },
-          //         ),
-          //       ),
-          //     ],
-          //   ),
-          // )
         ),
         Positioned(
           bottom: 20,
@@ -523,12 +190,13 @@ class _HomePageState extends State<HomePage>
                       Menu navBar = bottomNavItems[index];
                       if (index == 2)
                         return Container(
-                          // height: 20,
-                          // width: 20,
+                          height: 40,
+                          width: 40,
+                          padding: EdgeInsets.all(0),
                           decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(100),
-                              color: Colors.white.withOpacity(0.35)),
-                          child: BtmNavItem(
+                              borderRadius: BorderRadius.circular(10),
+                              color: Colors.white.withOpacity(0.20)),
+                          child: BtmNavItem2(
                             navBar: navBar,
                             press: () {
                               RiveUtils.chnageSMIBoolState(navBar.rive.status!);
@@ -566,6 +234,131 @@ class _HomePageState extends State<HomePage>
             ),
           ),
         ),
+        drawerSel
+            ? Material(
+                child: Stack(
+                  children: [
+                    Container(
+                      color: Colors.white,
+                      padding: EdgeInsets.fromLTRB(15, 65, 0, 20),
+                      width: MediaQuery.of(context).size.width / 1.6,
+                      child: Column(
+                        children: [
+                          ListTile(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => ProfilePage()));
+                            },
+                            leading:
+                                Icon(Icons.person_outline_outlined, size: 30),
+                            title:
+                                Text('Profile', style: TextStyle(fontSize: 18)),
+                          ),
+                          ListTile(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => LeaderBoard()));
+                            },
+                            leading: Icon(Icons.place, size: 30),
+                            title: Text('Leaderboard',
+                                style: TextStyle(fontSize: 18)),
+                          ),
+                          ListTile(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => StreakCalendar()));
+                            },
+                            leading: Icon(CupertinoIcons.flame,
+                                size: 30, color: Colors.red),
+                            title:
+                                Text('Streak', style: TextStyle(fontSize: 18)),
+                          ),
+                          ListTile(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => WaterPage()));
+                            },
+                            leading: Icon(Icons.water_drop,
+                                color: Colors.blue, size: 30),
+                            title:
+                                Text('Water', style: TextStyle(fontSize: 18)),
+                          ),
+                          Spacer(),
+                          ListTile(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => FAQPage()));
+                            },
+                            leading: Icon(Icons.help_outline,
+                                color: Colors.blue, size: 30),
+                            title:
+                                Text("FAQ's", style: TextStyle(fontSize: 18)),
+                          ),
+                          ListTile(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => FeedbackPage()));
+                            },
+                            leading: Icon(Icons.feedback,
+                                color: Colors.blue, size: 30),
+                            title: Text('Feedback',
+                                style: TextStyle(fontSize: 18)),
+                          ),
+                          ListTile(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => AboutUsPage()));
+                            },
+                            leading: Icon(Icons.info_outline,
+                                color: Colors.blue, size: 30),
+                            title: Text('About Us',
+                                style: TextStyle(fontSize: 18)),
+                          ),
+                          GestureDetector(
+                            onTap: _signOut,
+                            child: Padding(
+                              padding: const EdgeInsets.only(bottom: 50.0),
+                              child: Icon(Icons.logout,
+                                  color: Colors.red, size: 34),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    Positioned(
+                      left: 20,
+                      top: 40,
+                      child: GestureDetector(
+                        onTap: () => setState(() {
+                          drawerSel = false;
+                        }),
+                        child: const CircleAvatar(
+                          backgroundColor: Colors.transparent,
+                          child: Icon(Icons.arrow_back, color: Colors.black),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              )
+            : SizedBox(
+                height: 0,
+                width: 0,
+              ),
       ],
     );
   }

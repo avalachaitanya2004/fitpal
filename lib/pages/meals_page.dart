@@ -61,34 +61,40 @@ class _MealsPageState extends State<MealsPage> {
           slivers: <Widget>[
             SliverAppBar(
               actions: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 40.0),
-                  child: SizedBox(
-                    height: 50,
-                    width: 50,
-                    child: Hero(
-                      tag: "Add-Food",
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(100),
-                        child: GestureDetector(
-                          onTap: () {
-                            Navigator.push(context,
-                                MaterialPageRoute(builder: (context) {
-                              return AddFood();
-                            }));
-                          },
-                          child: Container(
-                            color: Colors.blue,
-                            child: Icon(
-                              Icons.add,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                      ),
+                IconButton(
+                  onPressed: () async {
+                    var today = DateTime.now();
+                    var datePicked = await showDatePicker(
+                      context: context,
+                      lastDate: DateTime(today.year + 1),
+                      firstDate: DateTime(2019),
+                      initialDate: DateTime.now(),
+                    );
+                    print(datePicked);
+                  },
+                  icon: Icon(
+                    Icons.calendar_month_rounded,
+                    size: 30,
+                  ),
+                ),
+                Hero(
+                  tag: "Add-Food",
+                  child: IconButton(
+                    onPressed: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                        return AddFood();
+                      }));
+                    },
+                    icon: Icon(
+                      Icons.add,
+                      size: 35,
                     ),
                   ),
-                )
+                ),
+                SizedBox(
+                  width: 20,
+                ),
               ],
               automaticallyImplyLeading: false,
               // pinned: true,

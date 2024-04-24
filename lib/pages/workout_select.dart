@@ -1,9 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'dart:convert';
+import 'dart:io';
 import 'package:fit_pal/Controllers/hero_dialog_route.dart';
 import 'package:fit_pal/DataBaseServices/Intialziedata.dart';
 import 'package:fit_pal/models/custom_workouts.dart';
 import 'package:fit_pal/models/excercises.dart';
 import 'package:fit_pal/pages/create_playlist.dart';
+import 'package:fit_pal/pages/preview_food.dart';
 import 'package:fit_pal/pages/workout_start_page.dart';
 import 'package:fit_pal/DataWorkout/assignworkout.dart';
 import 'package:flutter/cupertino.dart';
@@ -19,6 +22,54 @@ class WorkoutSelect extends StatefulWidget {
 }
 
 class _WorkoutSelectState extends State<WorkoutSelect> {
+  Future<void> feedToModel() async {
+    String baseUrl, url = '', query = '';
+    // String baseUrl = 'http://10.81.16.240:5000/api1?';
+    if (Platform.isAndroid) {
+      baseUrl = 'http://10.0.2.2:5000/api1?';
+    } else {
+      baseUrl = 'http://localhost:5000/api?';
+    }
+    var args1 = ['gender', 'weight', 'height', 'age', 'activity_level'];
+    List<dynamic> seg1 = ['male', 50.5, 170.5, 18, 1];
+    for (int i = 0; i < seg1.length; i++) {
+      if (i > 0) query += '&';
+      query += '${args1[i]}=${Uri.encodeComponent(seg1[i].toString())}';
+    }
+    setState(() {
+      url = baseUrl + query;
+    });
+    var data = await fetchdata(url);
+    var decoded = jsonDecode(data);
+    var calToBurnt = decoded['calToBurnt'];
+    var exToDo = decoded['exToDo'];
+    print(calToBurnt);
+    print(exToDo);
+  }
+
+  // Future<void> feedToModel() async {
+  //   String baseUrl, url = '',query = '';
+  //   // String baseUrl = 'http://10.81.16.240:5000/api2?';
+  //   if (Platform.isAndroid) {
+  //     baseUrl = 'http://10.0.2.2:5000/api2?';
+  //   } else {
+  //     baseUrl = 'http://localhost:5000/api2?';
+  //   }
+  //   var args2 = ['gender','age','height','weight','duration','heart_rate','body_temp'];
+  //   List<dynamic> seg2 = [0, 18, 170.5, 60, 24, 100.5, 38.3];
+  //   for (int i = 0; i < seg2.length; i++) {
+  //     if (i > 0)query += '&;
+  //     query += '${args2[i]}=${Uri.encodeComponent(seg2[i].toString())}';
+  //   }
+  //   setState(() {
+  //     url = baseUrl + query;
+  //   });
+  //   var data = await fetchdata(url);
+  //   var decoded = jsonDecode(data);
+  //   var caloriesBurnt = decoded['calories_burned'];
+  //   print(caloriesBurnt);
+  // }
+
   late String uid;
   late List<Excersise> today = [];
   late List<CustomPlaylist> custom = [];
@@ -29,6 +80,7 @@ class _WorkoutSelectState extends State<WorkoutSelect> {
     retrieveUID();
     fetchTodayWorkouts();
     fetchTodayCustomWorkouts();
+    feedToModel();
   }
 
   void retrieveUID() {

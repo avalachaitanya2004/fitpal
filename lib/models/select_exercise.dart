@@ -158,34 +158,36 @@ class _SelectExerciseState extends State<SelectExercise> {
                           ],
                         ),
                       ),
-                      Align(
-                        alignment: AlignmentDirectional.centerEnd,
-                        child: Container(
-                          width: 70,
-                          child: FloatingActionButton(
-                            elevation: 0,
-                            mini: true,
-                            onPressed: () {
-                              int updatedReps =
-                                  int.tryParse(_controller.text) ??
-                                      widget.excersise.defaultreps;
-                              widget.onUpdateExercise(ExerciseCard(
-                                  name: widget.excersise.name.capitalize(),
-                                  defaultreps: widget.excersise.defaultreps,
-                                  repsWanted: updatedReps,
-                                  isSelected: true,
-                                  ismin: widget.excersise.ismin));
-                              Navigator.pop(context);
-                            },
-                            child: Text("ADD", style: _textStyle(1)),
-                            // shape: CircleBorder(),
-                            backgroundColor: Colors.grey[200],
-                            foregroundColor: Colors.black54,
+                      Padding(
+                        padding: const EdgeInsets.all(20.0),
+                        child: Align(
+                          alignment: AlignmentDirectional.centerEnd,
+                          child: Container(
+                            width: 70,
+                            child: FloatingActionButton(
+                              elevation: 0,
+                              mini: true,
+                              onPressed: () {
+                                int updatedReps =
+                                    int.tryParse(_controller.text) ??
+                                        widget.excersise.defaultreps;
+                                widget.onUpdateExercise(
+                                  ExerciseCard(
+                                    name: widget.excersise.name,
+                                    defaultreps: widget.excersise.defaultreps,
+                                    repsWanted: updatedReps,
+                                    isSelected: true,
+                                    ismin: widget.excersise.ismin,
+                                  ),
+                                );
+                                Navigator.pop(context);
+                              },
+                              child: Text("ADD", style: _textStyle(1)),
+                              backgroundColor: Colors.grey[200],
+                              foregroundColor: Colors.black54,
+                            ),
                           ),
                         ),
-                      ),
-                      SizedBox(
-                        height: 20,
                       ),
                     ],
                   ),
