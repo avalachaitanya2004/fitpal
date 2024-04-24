@@ -13,11 +13,13 @@ import 'package:custom_sliding_segmented_control/custom_sliding_segmented_contro
 import 'package:fit_pal/utility/date_picker_widget.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:health/health.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:liquid_progress_indicator_v2/liquid_progress_indicator.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:fit_pal/DataWorkout/assignworkout.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:health/health.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -32,6 +34,64 @@ class _HomeState extends State<Home> {
 
   int target = 0;
   int completed = 0;
+  int _getsteps = 0;
+  int bpm = 0;
+
+  Future fetchStepData() async {
+    Health().configure(useHealthConnectIfAvailable: true);
+    int? steps;
+    var types = [
+      HealthDataType.STEPS,
+    ];
+    final now = DateTime.now();
+    final midnight = DateTime(now.year, now.month, now.day);
+    var permissions = [
+      HealthDataAccess.READ,
+    ];
+    bool request =
+        await Health().requestAuthorization(types, permissions: permissions);
+    if (request) {
+      try {
+        steps = await Health().getTotalStepsInInterval(midnight, now);
+      } catch (error) {
+        print(error);
+      }
+      print("total steps $steps");
+      setState(() {
+        _getsteps = (steps == null) ? 0 : steps;
+      });
+    } else {
+      print("not authorized");
+    }
+  }
+
+  Future fetchBPMData() async {
+    Health().configure(useHealthConnectIfAvailable: true);
+    int? steps;
+    var types = [
+      HealthDataType.HEART_RATE,
+    ];
+    final now = DateTime.now();
+    final midnight = DateTime(now.year, now.month, now.day);
+    var permissions = [
+      HealthDataAccess.READ,
+    ];
+    bool request =
+        await Health().requestAuthorization(types, permissions: permissions);
+    if (request) {
+      try {
+        steps = await Health().getTotalStepsInInterval(midnight, now);
+      } catch (error) {
+        print(error);
+      }
+      print("total steps $steps");
+      setState(() {
+        bpm = (steps == null) ? 0 : steps;
+      });
+    } else {
+      print("not authorized");
+    }
+  }
 
   int weekXP = 0;
   int todayXP = 0;
@@ -89,8 +149,10 @@ class _HomeState extends State<Home> {
     super.initState();
     retrieveUID();
     fetchTodayWorkouts();
+    fetchBPMData();
     fetchUserData();
     getCurrentWeekXP(uid);
+    fetchStepData();
   }
 
   void retrieveUID() {
@@ -280,7 +342,7 @@ class _HomeState extends State<Home> {
                                                 MainAxisAlignment.center,
                                             children: [
                                               Text(
-                                                '1455',
+                                                '${_getsteps}',
                                                 style: TextStyle(
                                                   fontFamily: 'Roboto',
                                                   // color: Colors.blue,
@@ -508,7 +570,7 @@ class _HomeState extends State<Home> {
                                                 MainAxisAlignment.center,
                                             children: [
                                               Text(
-                                                '120',
+                                                '${bpm}',
                                                 style: TextStyle(
                                                   fontFamily: 'Roboto',
                                                   // color: Colors.blue,

@@ -958,6 +958,8 @@ PODS:
     - Firebase/Firestore (= 10.24.0)
     - firebase_core
     - Flutter
+  - device_info_plus (0.0.1):
+    - Flutter
   - DKImagePickerController/Core (4.3.8):
     - DKImagePickerController/ImageDataManager
     - DKImagePickerController/Resource
@@ -1162,6 +1164,8 @@ PODS:
   - gRPC-Core/Interface (1.62.5)
   - gRPC-Core/Privacy (1.62.5)
   - GTMSessionFetcher/Core (3.4.1)
+  - health (1.0.4):
+    - Flutter
   - image_picker_ios (0.0.1):
     - Flutter
   - leveldb-library (1.22.5)
@@ -1187,12 +1191,14 @@ PODS:
 DEPENDENCIES:
   - camera_avfoundation (from `.symlinks/plugins/camera_avfoundation/ios`)
   - cloud_firestore (from `.symlinks/plugins/cloud_firestore/ios`)
+  - device_info_plus (from `.symlinks/plugins/device_info_plus/ios`)
   - file_picker (from `.symlinks/plugins/file_picker/ios`)
   - firebase_auth (from `.symlinks/plugins/firebase_auth/ios`)
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
   - firebase_storage (from `.symlinks/plugins/firebase_storage/ios`)
   - Flutter (from `Flutter`)
   - flutter_email_sender (from `.symlinks/plugins/flutter_email_sender/ios`)
+  - health (from `.symlinks/plugins/health/ios`)
   - image_picker_ios (from `.symlinks/plugins/image_picker_ios/ios`)
   - rive_common (from `.symlinks/plugins/rive_common/ios`)
   - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
@@ -1231,6 +1237,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/camera_avfoundation/ios"
   cloud_firestore:
     :path: ".symlinks/plugins/cloud_firestore/ios"
+  device_info_plus:
+    :path: ".symlinks/plugins/device_info_plus/ios"
   file_picker:
     :path: ".symlinks/plugins/file_picker/ios"
   firebase_auth:
@@ -1243,6 +1251,8 @@ EXTERNAL SOURCES:
     :path: Flutter
   flutter_email_sender:
     :path: ".symlinks/plugins/flutter_email_sender/ios"
+  health:
+    :path: ".symlinks/plugins/health/ios"
   image_picker_ios:
     :path: ".symlinks/plugins/image_picker_ios/ios"
   rive_common:
@@ -1257,6 +1267,7 @@ SPEC CHECKSUMS:
   BoringSSL-GRPC: 1e2348957acdbcad360b80a264a90799984b2ba6
   camera_avfoundation: 759172d1a77ae7be0de08fc104cfb79738b8a59e
   cloud_firestore: ec5623634fc3b82f7b23a6e87f116c953eae714d
+  device_info_plus: 97af1d7e84681a90d0693e63169a5d50e0839a0d
   DKImagePickerController: a7836546cfdfe014171694f643a7d575bc8ace7f
   DKPhotoGallery: fdfad5125a9fdda9cc57df834d49df790dbb4179
   file_picker: ce3938a0df3cc1ef404671531facef740d03f920
@@ -1280,6 +1291,7 @@ SPEC CHECKSUMS:
   "gRPC-C++": e725ef63c4475d7cdb7e2cf16eb0fde84bd9ee51
   gRPC-Core: eee4be35df218649fe66d721a05a7f27a28f069b
   GTMSessionFetcher: 8000756fc1c19d2e5697b90311f7832d2e33f6cd
+  health: 5a380c0f6c4f619535845992993964293962e99e
   image_picker_ios: b545a5f16c0fa88e3ecbbce3ed4de45567a8ec18
   leveldb-library: e8eadf9008a61f9e1dde3978c086d2b6d9b9dc28
   nanopb: 438bc412db1928dac798aa6fd75726007be04262
@@ -1291,6 +1303,6 @@ SPEC CHECKSUMS:
   url_launcher_ios: 6116280ddcfe98ab8820085d8d76ae7449447586
   video_player_avfoundation: 2b4384f3b157206b5e150a0083cdc0c905d260d3
 
-PODFILE CHECKSUM: 7be2f5f74864d463a8ad433546ed1de7e0f29aef
+PODFILE CHECKSUM: a57f30d18f102dd3ce366b1d62a55ecbef2158e5
 
 COCOAPODS: 1.15.2

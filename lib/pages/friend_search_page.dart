@@ -102,7 +102,7 @@ class _FriendSearchState extends State<FriendSearch> {
           streak: 5));
     }
     foundFriends = await userData.getUserIdsWithStatusF();
-    for (int i = 0; i < names.length; i++) {
+    for (int i = 0; i < foundFriends.length; i++) {
       String uid1 = foundFriends[i];
       Dataservices dataservices = Dataservices(uid: uid1);
       Map<String, dynamic> userinfo1 = await dataservices.getUserInfo();
