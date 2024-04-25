@@ -592,6 +592,7 @@ var foodData = {
 };
 
 int getCalories(String foodName) {
+  foodName = foodName.toLowerCase();
   if (foodData.containsKey(foodName)) {
     return foodData[foodName]?['caloriespergram'] ?? 0;
   } else {
@@ -601,6 +602,7 @@ int getCalories(String foodName) {
 }
 
 int getProtein(String foodName) {
+  foodName = foodName.toLowerCase();
   if (foodData.containsKey(foodName)) {
     return foodData[foodName]?['proteinpergram'] ?? 0;
   } else {
@@ -610,6 +612,7 @@ int getProtein(String foodName) {
 }
 
 int getCarbs(String foodName) {
+  foodName = foodName.toLowerCase();
   if (foodData.containsKey(foodName)) {
     return foodData[foodName]?['carbohydratespergram'] ?? 0;
   } else {
@@ -619,6 +622,7 @@ int getCarbs(String foodName) {
 }
 
 int getfat(String foodName) {
+  foodName = foodName.toLowerCase();
   if (foodData.containsKey(foodName)) {
     return foodData[foodName]?['cholesterolpergram'] ?? 0;
   } else {

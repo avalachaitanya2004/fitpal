@@ -70,7 +70,8 @@ class _PreviewFoodState extends State<PreviewFood>
     proteinper = protein / (protein + carbs + fat);
     carbsper = carbs / (protein + carbs + fat);
     fatper = fat / (protein + carbs + fat);
-    cal = getCalories(widget.Predicted) as double;
+    cal = getCalories(widget.Predicted).toDouble();
+    print('$proteinper,$carbsper ,$fatper ,$cal');
 
     // feedToModel();
   }

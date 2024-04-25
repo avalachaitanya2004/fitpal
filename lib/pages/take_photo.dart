@@ -157,18 +157,15 @@ class _TakePhotoState extends State<TakePhoto> {
             SettableMetadata(contentType: 'image/jpeg'),
           );
           imageurl = await referenceimagetoupload.getDownloadURL();
-          print(imageurl);
         } catch (e) {}
         List<String> segments = [];
         int segmentLength = 90;
-        print("object");
         for (int i = 0; i < imageurl.length; i += segmentLength) {
           int end = (i + segmentLength < imageurl.length)
               ? i + segmentLength
               : imageurl.length;
           segments.add(imageurl.substring(i, end));
         }
-        print("object");
         String baseUrl, url = '';
         baseUrl = 'http://10.81.16.240:5000/api?'; //physical device
         // if (Platform.isAndroid) {
@@ -186,9 +183,7 @@ class _TakePhotoState extends State<TakePhoto> {
         setState(() {
           url = baseUrl + query;
         });
-        print(url);
         var data = await fetchdata(url);
-        print("hii");
         String Predicted = '';
         String Category = '';
         var decoded;
@@ -197,7 +192,6 @@ class _TakePhotoState extends State<TakePhoto> {
         Category = decoded['Category'];
         print(Predicted);
         print(Category);
-        print(url);
         url = imageurl;
 
         Navigator.push(
