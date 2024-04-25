@@ -213,45 +213,37 @@ class FoodPopup extends StatelessWidget {
                                 ),
                               ),
                               Spacer(),
-                              Container(
-                                // color: Colors.pink[100],
-                                decoration: BoxDecoration(
-                                  color: Color.fromARGB(255, 170, 161, 226)
-                                      .withOpacity(0.3),
-                                  borderRadius: BorderRadius.circular(20),
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(5.0),
-                                  child: Row(
-                                    children: [
-                                      GestureDetector(
-                                          onTap: () {
-                                            // setState(() {
-                                            //   food.size -= 10;
-                                            // });
-                                          },
-                                          child: Icon(Icons.remove)),
-                                      SizedBox(
-                                        width: 8,
-                                      ),
-                                      Text(
-                                        '${food.size}g',
-                                        style: TextStyle(
-                                          fontSize: 20,
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: 8,
-                                      ),
-                                      GestureDetector(
-                                          // onTap: () {
-                                          //   setState(() {
-                                          //     food.size += 10;
-                                          //   });
-                                          // },
-                                          child: Icon(Icons.add)),
-                                    ],
-                                  ),
+                              Padding(
+                                padding: const EdgeInsets.all(5.0),
+                                child: Row(
+                                  children: [
+                                    // GestureDetector(
+                                    //     onTap: () {
+                                    //       // setState(() {
+                                    //       //   food.size -= 10;
+                                    //       // });
+                                    //     },
+                                    // child: Icon(Icons.remove)),
+                                    // SizedBox(
+                                    //   width: 8,
+                                    // ),
+                                    // Text(
+                                    //   '${food.size}g',
+                                    //   style: TextStyle(
+                                    //     fontSize: 20,
+                                    //   ),
+                                    // ),
+                                    // SizedBox(
+                                    //   width: 8,
+                                    // ),
+                                    // GestureDetector(
+                                    //     // onTap: () {
+                                    //     //   setState(() {
+                                    //     //     food.size += 10;
+                                    //     //   });
+                                    //     // },
+                                    //     child: Icon(Icons.add)),
+                                  ],
                                 ),
                               ),
                             ],

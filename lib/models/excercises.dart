@@ -102,7 +102,7 @@ class Excersise {
   }
 
   double totalxp() {
-    double xp = getXP() ?? 0; // If getXP() returns null, default to 0
+    double xp = getXP() ?? 0.0; // If getXP() returns null, default to 0
     return reps * xp;
   }
 
@@ -167,7 +167,7 @@ var exerciseDictionary = {
         "Keep your elbows close to your body and your back close to the surface you're dipping on. Start with shallow dips and gradually increase your range of motion as you build strength. Focus on using your triceps to lift your body.",
     "image": "assets/images/workoutImages/Tricepdips.jpg",
     "video": "assets/videos/TricepDips.mp4",
-    "xp": 1,
+    "xp": 1.0,
   },
   "inclined pushups": {
     "info":

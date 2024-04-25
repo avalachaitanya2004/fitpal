@@ -50,7 +50,7 @@ class _MealsPageState extends State<MealsPage> {
       double protein = getProtein(name).toDouble() * size;
       double carb = getCarbs(name).toDouble() * size;
       double fat = getfat(name).toDouble() * size;
-      today.add(Food(title, calorie, protein, carb, fat, size, name, ''));
+      today.add(Food(title, calorie, protein, carb, fat, size, name, a.url));
     }
     setState(() {});
     print(hii.length);

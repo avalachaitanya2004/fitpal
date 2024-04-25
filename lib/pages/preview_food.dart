@@ -53,6 +53,8 @@ class _PreviewFoodState extends State<PreviewFood>
 
   @override
   void initState() {
+    url = widget.imagepath;
+    print("url ${url}");
     isloading = true;
     getData();
     super.initState();
@@ -277,6 +279,8 @@ class _PreviewFoodState extends State<PreviewFood>
                                                   .instance.currentUser!.uid);
                                       initializeFoods.addFood(
                                           widget.Predicted, weight, url, '');
+                                      Navigator.pop(context);
+                                      Navigator.pop(context);
                                     },
                                     child: Icon(Icons.add),
                                   ),
@@ -484,12 +488,10 @@ class _PreviewFoodState extends State<PreviewFood>
                                                   child: Text('Protein'),
                                                 ),
                                                 Spacer(),
-                                                AnimatedContainer(
-                                                  duration: Duration(
-                                                      milliseconds: 500),
+                                                Container(
                                                   width: double.infinity,
-                                                  height: innerContainerHeight *
-                                                      ani.value,
+                                                  height: innerContainerHeight,
+
                                                   decoration: BoxDecoration(
                                                     color: Color.fromARGB(
                                                             255, 170, 161, 226)
@@ -507,7 +509,7 @@ class _PreviewFoodState extends State<PreviewFood>
                                                                 .only(
                                                                 bottom: 8.0),
                                                         child: Text(
-                                                            '${protein * weight}%'),
+                                                            '${protein * weight}'),
                                                       )),
                                                   // color: Colors.yellow,
                                                 ),
@@ -543,12 +545,9 @@ class _PreviewFoodState extends State<PreviewFood>
                                                   child: Text('Carbs'),
                                                 ),
                                                 Spacer(),
-                                                AnimatedContainer(
-                                                  duration: Duration(
-                                                      milliseconds: 500),
+                                                Container(
                                                   width: double.infinity,
-                                                  height: innerContainerHeight *
-                                                      ani.value,
+                                                  height: innerContainerHeight,
                                                   decoration: BoxDecoration(
                                                     color: Color.fromARGB(
                                                             255, 170, 161, 226)
@@ -566,7 +565,7 @@ class _PreviewFoodState extends State<PreviewFood>
                                                                 .only(
                                                                 bottom: 8.0),
                                                         child: Text(
-                                                            '${carbs * weight}%'),
+                                                            '${carbs * weight}'),
                                                       )),
                                                   // color: Colors.yellow,
                                                 ),
@@ -602,12 +601,9 @@ class _PreviewFoodState extends State<PreviewFood>
                                                   child: Text('Fat'),
                                                 ),
                                                 Spacer(),
-                                                AnimatedContainer(
-                                                  duration: Duration(
-                                                      milliseconds: 500),
+                                                Container(
                                                   width: double.infinity,
-                                                  height: innerContainerHeight *
-                                                      ani.value,
+                                                  height: innerContainerHeight,
                                                   decoration: BoxDecoration(
                                                     color: Color.fromARGB(
                                                             255, 170, 161, 226)
@@ -625,7 +621,7 @@ class _PreviewFoodState extends State<PreviewFood>
                                                                 .only(
                                                                 bottom: 8.0),
                                                         child: Text(
-                                                            '${fat * weight}%'),
+                                                            '${fat * weight}'),
                                                       )),
                                                   // color: Colors.yellow,
                                                 ),

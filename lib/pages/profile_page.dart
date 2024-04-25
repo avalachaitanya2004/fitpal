@@ -177,7 +177,91 @@ class _ProfilePageState extends State<ProfilePage> {
       appBar: AppBar(
         actions: [
           // IconButton(onPressed: () {}, icon: Icon(Icons.share)),
-          IconButton(onPressed: _signOut, icon: Icon(Icons.logout)),
+          IconButton(
+              onPressed: () {
+                showDialog(
+                  barrierDismissible: false,
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: Text(
+                        "Are you sure you want to exit?",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                        ),
+                      ),
+                      contentPadding:
+                          EdgeInsets.fromLTRB(24.0, 20.0, 24.0, 24.0),
+                      icon: Icon(
+                        Icons.warning,
+                        color: Colors.red,
+                        size: 36,
+                      ),
+                      content: Container(
+                        height: 160,
+                        child: Column(
+                          children: [
+                            Text(
+                              "Sure you want to Logout",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 16,
+                              ),
+                            ),
+                            SizedBox(height: 20),
+                            GestureDetector(
+                              onTap: () {
+                                _signOut();
+                              },
+                              child: Container(
+                                height: 35,
+                                width: 130,
+                                decoration: BoxDecoration(
+                                  color: Colors.blue,
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    'Logout',
+                                    style: TextStyle(
+                                        fontSize: 18, color: Colors.white),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: 10),
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.pop(context);
+                              },
+                              child: Container(
+                                height: 35,
+                                width: 130,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(30),
+                                  border:
+                                      Border.all(color: Colors.grey.shade300),
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    'cancel',
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      color: Colors.grey[700],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                );
+              },
+              icon: Icon(Icons.logout)),
         ],
         title: Text('Profile', style: TextStyle(color: Colors.black)),
         backgroundColor: Colors.white,

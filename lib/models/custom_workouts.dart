@@ -27,17 +27,16 @@ class CustomPlaylistCard extends StatelessWidget {
     return time;
   }
 
-  int findxp() {
-    int s = 0;
+  double findxp() {
+    double s = 0;
     for (int i = 0; i < custom.set.length; i++) {
       double xp = custom.set[i].totalxp();
-
-      s += xp.toInt();
+      s += xp;
     }
     return s;
   }
 
-  int XP = 0;
+  double XP = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -94,7 +93,7 @@ class CustomPlaylistCard extends StatelessWidget {
                           child: Center(
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
-                              child: Text('${time}'),
+                              child: Text('${time}sec'),
                             ),
                           )),
                       Spacer(),

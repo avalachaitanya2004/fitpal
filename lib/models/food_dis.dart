@@ -90,6 +90,7 @@ class FoodDisplay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(food.imageurl);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20.0),
       child: Material(
@@ -99,7 +100,7 @@ class FoodDisplay extends StatelessWidget {
           width: double.maxFinite,
           decoration: BoxDecoration(
             image: DecorationImage(
-              image: AssetImage('assets/images/calorie_preview.webp'),
+              image: NetworkImage(food.imageurl),
               fit: BoxFit.cover,
             ),
             color: Colors.lightGreen,
