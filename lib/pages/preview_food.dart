@@ -70,7 +70,7 @@ class _PreviewFoodState extends State<PreviewFood>
     proteinper = protein / (protein + carbs + fat);
     carbsper = carbs / (protein + carbs + fat);
     fatper = fat / (protein + carbs + fat);
-    cal = getCalories(widget.Predicted).toDouble();
+    // cal = getCalories(widget.Predicted).toDouble();
     print('$proteinper,$carbsper ,$fatper ,$cal');
 
     // feedToModel();
@@ -200,7 +200,8 @@ class _PreviewFoodState extends State<PreviewFood>
   late String imagepath;
   @override
   Widget build(BuildContext context) {
-    cal = cal * weight;
+    // cal = cal * weight;
+    cal = getCalories(widget.Predicted).toDouble() * weight;
     return Scaffold(
       backgroundColor: Colors.blue,
       extendBodyBehindAppBar: true,
