@@ -64,8 +64,8 @@ class _SelectExerciseState extends State<SelectExercise> {
                   isStretch: true,
                   initialValue: _page,
                   children: {
-                    0: Text('Meals', style: _textStyle(0)),
-                    1: Text('Workouts', style: _textStyle(1)),
+                    0: Text('Description', style: _textStyle(0)),
+                    1: Text('Add', style: _textStyle(1)),
                   },
                   decoration: BoxDecoration(
                     color: Colors.grey[100],

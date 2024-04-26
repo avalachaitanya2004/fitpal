@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fit_pal/Controllers/LoginController.dart';
 import 'package:fit_pal/Controllers/initializationController.dart';
 import 'package:fit_pal/DataBaseServices/Intialziedata.dart';
 import 'package:fit_pal/DataBaseServices/useruid.dart';
@@ -206,7 +207,7 @@ class _RegisterPageState extends State<RegisterPage> {
       }
     }
     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
-      return InitializationController();
+      return LoginController();
     }));
   }
 
@@ -225,231 +226,236 @@ class _RegisterPageState extends State<RegisterPage> {
               backgroundColor: Colors.white,
               elevation: 0,
             ),
-            body: SafeArea(
-              child: Center(
-                child: Column(
-                  children: [
-                    // title
-                    const Text(
-                      'FitPal',
-                      style: TextStyle(
-                        fontFamily: 'Bebas_Neue',
-                        fontSize: 70,
-                      ),
-                    ),
-                    const Text(
-                      'Register here',
-                      style: TextStyle(
-                        fontFamily: 'Roboto',
-                        fontSize: 24,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-
-                    //email
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                      child: TextField(
-                        // autofocus: true,
-                        // focusNode: emailnode,
-                        controller: _email,
-                        decoration: InputDecoration(
-                            prefixIcon: const Icon(Icons.email),
-                            fillColor: Colors.grey[50],
-                            filled: true,
-                            isDense: true,
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(15),
-                              // borderSide: BorderSide(color: Colors.lightBlue, width: 4),
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(15),
-                              borderSide: (if_email_already ||
-                                      email_not_entered ||
-                                      !if_valid_email)
-                                  ? const BorderSide(color: Colors.red)
-                                  : const BorderSide(color: Colors.blue),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(15),
-                              borderSide: (if_email_already ||
-                                      email_not_entered ||
-                                      !if_valid_email)
-                                  ? const BorderSide(color: Colors.red)
-                                  : const BorderSide(color: Colors.blue),
-                            ),
-                            labelText: return_label_text_email(),
-                            labelStyle: (if_email_already ||
-                                    email_not_entered ||
-                                    !if_valid_email)
-                                ? const TextStyle(
-                                    color: Colors.red,
-                                  )
-                                : null,
-                            floatingLabelStyle: TextStyle(
-                              color: (if_email_already ||
-                                      email_not_entered ||
-                                      !if_valid_email)
-                                  ? Colors.red
-                                  : Colors.blue,
-                            )
-                            // : TextStyle(
-                            //     color: Colors.blue,
-                            //   )
-                            // : TextStyle(
-                            //     color: Colors.black,
-                            //   )
-                            // hintText: 'Please enter your email',
-                            // hintText: 'Username',
-                            ),
-                      ),
-                    ),
-                    const SizedBox(height: 15),
-                    //password
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                      child: TextField(
-                        // focusNode: passwordnode,
-                        controller: _password,
-                        obscureText: !is_visible,
-                        decoration: InputDecoration(
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(15),
-                              borderSide: const BorderSide(color: Colors.blue),
-                            ),
-                            fillColor: Colors.grey[50],
-                            filled: true,
-                            isDense: true,
-                            prefixIcon: const Icon(Icons.lock),
-                            errorText: password_not_entered
-                                ? 'Please enter password'
-                                : (weak_password
-                                    ? 'password must contain atleat 6 characters'
-                                    : null),
-                            suffixIcon: GestureDetector(
-                                onTap: changeVisibility,
-                                child: Icon(is_visible
-                                    ? Icons.visibility
-                                    : Icons.visibility_off)),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(15),
-                              borderSide:
-                                  const BorderSide(color: Colors.lightBlue),
-                            ),
-                            labelText: 'Password',
-                            // labelStyle: TextStyle(
-                            //   color: Colors.blue,
-                            // ),
-                            floatingLabelStyle: TextStyle(
-                              color: password_not_entered || weak_password
-                                  ? Colors.red
-                                  : Colors.blue,
-                            )),
-                      ),
-                    ),
-                    const SizedBox(height: 15),
-                    //confirmpassword
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                      child: TextField(
-                        controller: _passwordConfirm,
-                        obscureText: !is_visible1,
-                        decoration: InputDecoration(
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(15),
-                              borderSide: const BorderSide(color: Colors.blue),
-                            ),
-                            fillColor: Colors.grey[50],
-                            filled: true,
-                            isDense: true,
-                            prefixIcon: const Icon(Icons.lock),
-                            errorText: passwords_match
-                                ? null
-                                : 'passwords do not match',
-                            suffixIcon: GestureDetector(
-                                onTap: changeVisibility1,
-                                child: Icon(is_visible1
-                                    ? Icons.visibility
-                                    : Icons.visibility_off)),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(15),
-                              borderSide:
-                                  const BorderSide(color: Colors.lightBlue),
-                            ),
-                            labelText: 'Confirm Password',
-                            floatingLabelStyle: TextStyle(
-                              color: passwords_match ? Colors.blue : Colors.red,
-                            )
-                            // labelStyle: TextStyle(
-                            //   color: Colors.blue,
-                            // ),
-
-                            ),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 50,
-                    ),
-                    //login button
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                      child: GestureDetector(
-                        onTap: register_done,
-                        child: Container(
-                          width: double.infinity,
-                          height: 60,
-                          decoration: BoxDecoration(
-                            color: Colors.blue,
-                            borderRadius: BorderRadius.circular(16),
-                          ),
-                          child: !is_loading
-                              ? const Center(
-                                  child: Text(
-                                  'Register',
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    fontFamily: 'Roboto',
-                                    color: Colors.white,
-                                  ),
-                                ))
-                              : const Center(
-                                  child: CircularProgressIndicator(
-                                    color: Colors.white,
-                                  ),
-                                ),
+            body: SingleChildScrollView(
+              child: SafeArea(
+                child: Center(
+                  child: Column(
+                    children: [
+                      // title
+                      const Text(
+                        'FitPal',
+                        style: TextStyle(
+                          fontFamily: 'Bebas_Neue',
+                          fontSize: 70,
                         ),
                       ),
-                    ),
-                    const SizedBox(
-                      height: 25,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text("Already a member?"),
-                        SizedBox(
-                          width: 4,
+                      const Text(
+                        'Register here',
+                        style: TextStyle(
+                          fontFamily: 'Roboto',
+                          fontSize: 24,
                         ),
-                        GestureDetector(
-                          onTap: widget.showLogin,
-                          child: Text(
-                            'Sign In',
-                            style: TextStyle(
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+
+                      //email
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                        child: TextField(
+                          // autofocus: true,
+                          // focusNode: emailnode,
+                          controller: _email,
+                          decoration: InputDecoration(
+                              prefixIcon: const Icon(Icons.email),
+                              fillColor: Colors.grey[50],
+                              filled: true,
+                              isDense: true,
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(15),
+                                // borderSide: BorderSide(color: Colors.lightBlue, width: 4),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(15),
+                                borderSide: (if_email_already ||
+                                        email_not_entered ||
+                                        !if_valid_email)
+                                    ? const BorderSide(color: Colors.red)
+                                    : const BorderSide(color: Colors.blue),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(15),
+                                borderSide: (if_email_already ||
+                                        email_not_entered ||
+                                        !if_valid_email)
+                                    ? const BorderSide(color: Colors.red)
+                                    : const BorderSide(color: Colors.blue),
+                              ),
+                              labelText: return_label_text_email(),
+                              labelStyle: (if_email_already ||
+                                      email_not_entered ||
+                                      !if_valid_email)
+                                  ? const TextStyle(
+                                      color: Colors.red,
+                                    )
+                                  : null,
+                              floatingLabelStyle: TextStyle(
+                                color: (if_email_already ||
+                                        email_not_entered ||
+                                        !if_valid_email)
+                                    ? Colors.red
+                                    : Colors.blue,
+                              )
+                              // : TextStyle(
+                              //     color: Colors.blue,
+                              //   )
+                              // : TextStyle(
+                              //     color: Colors.black,
+                              //   )
+                              // hintText: 'Please enter your email',
+                              // hintText: 'Username',
+                              ),
+                        ),
+                      ),
+                      const SizedBox(height: 15),
+                      //password
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                        child: TextField(
+                          // focusNode: passwordnode,
+                          controller: _password,
+                          obscureText: !is_visible,
+                          decoration: InputDecoration(
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(15),
+                                borderSide:
+                                    const BorderSide(color: Colors.blue),
+                              ),
+                              fillColor: Colors.grey[50],
+                              filled: true,
+                              isDense: true,
+                              prefixIcon: const Icon(Icons.lock),
+                              errorText: password_not_entered
+                                  ? 'Please enter password'
+                                  : (weak_password
+                                      ? 'password must contain atleat 6 characters'
+                                      : null),
+                              suffixIcon: GestureDetector(
+                                  onTap: changeVisibility,
+                                  child: Icon(is_visible
+                                      ? Icons.visibility
+                                      : Icons.visibility_off)),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(15),
+                                borderSide:
+                                    const BorderSide(color: Colors.lightBlue),
+                              ),
+                              labelText: 'Password',
+                              // labelStyle: TextStyle(
+                              //   color: Colors.blue,
+                              // ),
+                              floatingLabelStyle: TextStyle(
+                                color: password_not_entered || weak_password
+                                    ? Colors.red
+                                    : Colors.blue,
+                              )),
+                        ),
+                      ),
+                      const SizedBox(height: 15),
+                      //confirmpassword
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                        child: TextField(
+                          controller: _passwordConfirm,
+                          obscureText: !is_visible1,
+                          decoration: InputDecoration(
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(15),
+                                borderSide:
+                                    const BorderSide(color: Colors.blue),
+                              ),
+                              fillColor: Colors.grey[50],
+                              filled: true,
+                              isDense: true,
+                              prefixIcon: const Icon(Icons.lock),
+                              errorText: passwords_match
+                                  ? null
+                                  : 'passwords do not match',
+                              suffixIcon: GestureDetector(
+                                  onTap: changeVisibility1,
+                                  child: Icon(is_visible1
+                                      ? Icons.visibility
+                                      : Icons.visibility_off)),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(15),
+                                borderSide:
+                                    const BorderSide(color: Colors.lightBlue),
+                              ),
+                              labelText: 'Confirm Password',
+                              floatingLabelStyle: TextStyle(
+                                color:
+                                    passwords_match ? Colors.blue : Colors.red,
+                              )
+                              // labelStyle: TextStyle(
+                              //   color: Colors.blue,
+                              // ),
+
+                              ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 50,
+                      ),
+                      //login button
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                        child: GestureDetector(
+                          onTap: register_done,
+                          child: Container(
+                            width: double.infinity,
+                            height: 60,
+                            decoration: BoxDecoration(
                               color: Colors.blue,
+                              borderRadius: BorderRadius.circular(16),
                             ),
+                            child: !is_loading
+                                ? const Center(
+                                    child: Text(
+                                    'Register',
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      fontFamily: 'Roboto',
+                                      color: Colors.white,
+                                    ),
+                                  ))
+                                : const Center(
+                                    child: CircularProgressIndicator(
+                                      color: Colors.white,
+                                    ),
+                                  ),
                           ),
                         ),
-                      ],
-                    )
-                  ],
+                      ),
+                      const SizedBox(
+                        height: 25,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text("Already a member?"),
+                          SizedBox(
+                            width: 4,
+                          ),
+                          GestureDetector(
+                            onTap: widget.showLogin,
+                            child: Text(
+                              'Sign In',
+                              style: TextStyle(
+                                color: Colors.blue,
+                              ),
+                            ),
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
                 ),
               ),
             ),

@@ -301,8 +301,8 @@ class FoodPopup extends StatelessWidget {
                                                     padding:
                                                         const EdgeInsets.only(
                                                             bottom: 8.0),
-                                                    child: Text(
-                                                        '${food.protein}%'),
+                                                    child:
+                                                        Text('${food.protein}'),
                                                   )),
                                               // color: Colors.yellow,
                                             ),
@@ -357,7 +357,7 @@ class FoodPopup extends StatelessWidget {
                                                         const EdgeInsets.only(
                                                             bottom: 8.0),
                                                     child:
-                                                        Text('${food.carbs}%'),
+                                                        Text('${food.carbs}'),
                                                   )),
                                               // color: Colors.yellow,
                                             ),
@@ -411,7 +411,7 @@ class FoodPopup extends StatelessWidget {
                                                     padding:
                                                         const EdgeInsets.only(
                                                             bottom: 8.0),
-                                                    child: Text('${food.fat}%'),
+                                                    child: Text('${food.fat}'),
                                                   )),
                                               // color: Colors.yellow,
                                             ),

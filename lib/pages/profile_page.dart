@@ -170,7 +170,7 @@ class _ProfilePageState extends State<ProfilePage> {
       // Navigate to login or home screen after successful logout
       // Example:
       // Navigator.of(context).pushReplacementNamed('/login');
-      Navigator.push(context, MaterialPageRoute(builder: (context) {
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
         return PreLogin();
       }));
     } catch (e) {

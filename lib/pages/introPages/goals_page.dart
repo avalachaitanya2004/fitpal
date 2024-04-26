@@ -18,14 +18,14 @@ class _GoalsPageState extends State<GoalsPage> {
   }
 
   final List<String> activity = <String>[
-    'Little or No Activity',
-    'Lightly Active',
-    'Moderately Active',
+    'WeightLoss',
+    'I wannna be Fit',
+    'Bodybuilding',
   ];
   final List<String> activityDescription = <String>[
-    'Mostly sitting through the day(eg. Desk Job,Bank Teller)',
-    'Mostly standing through the day(eg. Sales Associate,Teacher)',
-    'Mostly walking or doing physical activities through the day(eg. Tour Guide,Waiter)',
+    'Aiming for weightloss',
+    'Aiming to be fit',
+    'Aiming to build muscle and stay strong',
   ];
   final List<IconData> icon = <IconData>[
     Icons.chair_alt_outlined,

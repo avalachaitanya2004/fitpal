@@ -59,8 +59,23 @@ class _MealsPageState extends State<MealsPage> {
     print('++');
   }
 
+  String _getWeekday(DateTime date) {
+    List<String> weekdays = [
+      'Monday',
+      'Tuesday',
+      'Wednesday',
+      'Thursday',
+      'Friday',
+      'Saturday',
+      'Sunday'
+    ];
+    return weekdays[date.weekday - 1];
+  }
+
   @override
   Widget build(BuildContext context) {
+    DateTime today1 = DateTime.now();
+    String formattedDate = "${today1.day}th ${_getWeekday(today1)}";
     return SafeArea(
       child: Container(
         height: double.infinity,
@@ -121,7 +136,7 @@ class _MealsPageState extends State<MealsPage> {
                   child: Align(
                     alignment: Alignment.topLeft,
                     child: Text(
-                      '5th April, \nThursday',
+                      formattedDate,
                       style: TextStyle(fontSize: 40),
                     ),
                   ),

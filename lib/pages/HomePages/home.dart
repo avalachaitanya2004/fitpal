@@ -20,6 +20,7 @@ import 'package:fit_pal/utility/date_picker_widget.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 // import 'package:health/health.dart';
+// import 'package:health/health.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:liquid_progress_indicator_v2/liquid_progress_indicator.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -163,8 +164,8 @@ class _HomeState extends State<Home> {
     retrieveUID();
     fetchTodayWorkouts();
     // if (Platform.isIOS) {
-    //   fetchBPMData();
-    // }
+    // fetchBPMData();
+
     fetchUserData();
     getCurrentWeekXP(uid);
     callme();

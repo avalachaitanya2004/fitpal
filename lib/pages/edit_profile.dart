@@ -364,7 +364,7 @@ class _EditProfileState extends State<EditProfile> {
                         borderRadius: BorderRadius.circular(15),
                         borderSide: const BorderSide(color: Colors.black),
                       ),
-                      labelText: 'Old password',
+                      labelText: 'new password',
                       errorText: password_not_entered
                           ? 'Please enter password'
                           : (password_no_match
@@ -405,7 +405,7 @@ class _EditProfileState extends State<EditProfile> {
                         borderRadius: BorderRadius.circular(15),
                         borderSide: const BorderSide(color: Colors.black),
                       ),
-                      labelText: 'Old password',
+                      labelText: 'confirm password',
                       errorText: password_not_entered
                           ? 'Please enter password'
                           : (password_no_match
