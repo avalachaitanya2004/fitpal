@@ -122,7 +122,7 @@ class WorkoutHomeCard extends StatelessWidget {
                       )),
                   Spacer(),
                   Text(
-                    '${cal} kcal',
+                    '${cal.toStringAsFixed(0)} kcal',
                     // textAlign: TextAlign.left,
                     style: TextStyle(
                         // backgroundColor: Colors.green,

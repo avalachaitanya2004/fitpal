@@ -148,7 +148,9 @@ class _RegisterPageState extends State<RegisterPage> {
         is_loading1 = true;
       });
       Future.delayed(Duration(seconds: 1), () {
-        Navigator.pushReplacementNamed(context, '/home');
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
+          return InitializationController();
+        }));
       });
     } on FirebaseAuthException catch (e) {
       setState(() {

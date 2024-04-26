@@ -645,7 +645,7 @@ class _HomeState extends State<Home> {
                                                 MainAxisAlignment.center,
                                             children: [
                                               Text(
-                                                '${bpm}',
+                                                '120',
                                                 style: TextStyle(
                                                   fontFamily: 'Roboto',
                                                   // color: Colors.blue,

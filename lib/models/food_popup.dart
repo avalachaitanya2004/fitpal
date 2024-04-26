@@ -36,7 +36,10 @@ class FoodPopup extends StatelessWidget {
           width: double.infinity,
           decoration: BoxDecoration(
             image: DecorationImage(
-              image: NetworkImage(food.imageurl),
+              image: (food.imageurl == "")
+                  ? AssetImage("assets/images/calorie_preview.webp")
+              as ImageProvider<Object>
+                  : NetworkImage(food.imageurl) as ImageProvider<Object>,
               fit: BoxFit.cover,
             ),
           ),
