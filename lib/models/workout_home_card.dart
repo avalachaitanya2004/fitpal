@@ -76,6 +76,7 @@ class WorkoutHomeCard extends StatelessWidget {
                               return WorkoutStart(
                                 excercises: excercise,
                                 XP: XP,
+                                time: 100,
                               );
                             }));
                           },

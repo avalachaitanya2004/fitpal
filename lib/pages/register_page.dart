@@ -207,7 +207,7 @@ class _RegisterPageState extends State<RegisterPage> {
       }
     }
     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
-      return LoginController();
+      return InitializationController();
     }));
   }
 

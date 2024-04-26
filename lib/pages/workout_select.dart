@@ -191,6 +191,8 @@ class _WorkoutSelectState extends State<WorkoutSelect> {
   @override
   Widget build(BuildContext context) {
     print(custom.length);
+    XP = findxp();
+    time = findtime();
     return Container(
       color: Colors.white,
       height: double.infinity,
@@ -217,6 +219,7 @@ class _WorkoutSelectState extends State<WorkoutSelect> {
                           return WorkoutStart(
                             excercises: today,
                             XP: XP,
+                            time: time,
                           );
                         }));
                       },

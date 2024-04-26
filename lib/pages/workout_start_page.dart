@@ -6,9 +6,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class WorkoutStart extends StatefulWidget {
-  const WorkoutStart({super.key, required this.excercises, required this.XP});
+  const WorkoutStart(
+      {super.key,
+      required this.excercises,
+      required this.XP,
+      required this.time});
   final List<Excersise> excercises;
   final int XP;
+  final int time;
 
   @override
   State<WorkoutStart> createState() => _WorkoutStartState();
@@ -177,16 +182,19 @@ class _WorkoutStartState extends State<WorkoutStart> {
                         const SizedBox(
                           height: 40,
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            buildStatsCard("Time", '18', CupertinoIcons.clock,
-                                Colors.brown),
-                            buildStatsCard("XP", '${widget.XP}',
-                                CupertinoIcons.bolt, Colors.yellow.shade900),
-                            buildStatsCard("Cal", cal.toStringAsFixed(2),
-                                CupertinoIcons.flame, Colors.red),
-                          ],
+                        SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              buildStatsCard("Time", '${widget.time}',
+                                  CupertinoIcons.clock, Colors.brown),
+                              buildStatsCard("XP", '${widget.XP}',
+                                  CupertinoIcons.bolt, Colors.yellow.shade900),
+                              buildStatsCard("Cal", cal.toStringAsFixed(0),
+                                  CupertinoIcons.flame, Colors.red),
+                            ],
+                          ),
                         ),
                         SizedBox(
                           height: 10,
