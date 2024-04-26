@@ -6,10 +6,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:fit_pal/Controllers/initializationController.dart';
 import 'package:fit_pal/DataBaseServices/Intialziedata.dart';
+import 'package:fit_pal/DataBaseServices/calorie.dart';
 import 'package:fit_pal/DataBaseServices/useruid.dart';
 import 'package:fit_pal/DataChallenges/createChallenge.dart';
 import 'package:fit_pal/DataFood/food.dart';
 import 'package:fit_pal/DataFriends/getfriends.dart';
+import 'package:fit_pal/Profileimage.dart';
 import 'package:fit_pal/loadingPages/loadingpage1.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -187,38 +189,16 @@ class _LoginPageState extends State<LoginPage> {
       await signin();
       if (_userCredential != null) {
         AuthService.setUID(_userCredential!.user!.uid);
-        // UserData userData =
-        //     UserData(uid: _userCredential!.user!.uid, statusMap: {});
-        // await userData.addUsersListToDatabase(
-        //     _userCredential!.user!.uid); // Await this call
-        // AssignChallenge assignChallenge =
-        //     AssignChallenge(uid: _userCredential!.user!.uid);
-        // assignChallenge.assign('85nJuvpNP79aiMtHPN9C');
-        // assignChallenge.assign('grNIf8NbMQhG3iw5ENY6');
-        InitializeWorkout initializeWorkout =
-            InitializeWorkout(uid: _userCredential!.user!.uid);
-        initializeWorkout.addWorkout('yoga', 60);
-        initializeWorkout.addWorkout('sleep', 40);
-        // Dataservices dataservices =
-        //     Dataservices(uid: _userCredential!.user!.uid);
-        // dataservices.StreakandWater();
-        // dataservices.initializeWater(target: 12, quantity: 400);
-        // await dataservices.updateWaterIntakebyOne();
-        // await dataservices.updateWaterIntakebyOne();
-        // await dataservices.updateWaterIntakebyOne();
-        // await dataservices.updateWaterIntakebySubOne();
-        // Dataservices dataservices =
-        //     Dataservices(uid: _userCredential!.user!.uid);
-        // List<Map<String, dynamic>> customWorkouts =
-        //     await dataservices.fetchCustomWorkouts();
-        // InitializeWorkout initializeWorkout =
-        //     InitializeWorkout(uid: _userCredential!.user!.uid);
-        // Map<String, List<Map<String, dynamic>>> Hii =
-        //     await initializeWorkout.getPlaylistsAndExercises();
-        // print(Hii);
-        InitializeFoods initializeFoods =
-            InitializeFoods(uid: FirebaseAuth.instance.currentUser!.uid);
-        initializeFoods.getFoodForCurrentDay();
+        Createchallenge createchallenge = Createchallenge();
+        createchallenge.Assign(
+            FirebaseAuth.instance.currentUser!.uid, "SQb1kh8JFgP3R4G7zy3T");
+        createchallenge.Assign(
+            FirebaseAuth.instance.currentUser!.uid, "HRvjIOjKXZjvxCvImp25");
+        createchallenge.Assign(
+            FirebaseAuth.instance.currentUser!.uid, "5eydK5IoTKDypSSVvPD6");
+        UserData userData = UserData(
+            uid: FirebaseAuth.instance.currentUser!.uid, statusMap: {});
+        userData.addUsersListToDatabase(FirebaseAuth.instance.currentUser!.uid);
       }
     }
   }

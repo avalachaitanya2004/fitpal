@@ -1,13 +1,16 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fit_pal/DataBaseServices/Intialziedata.dart';
+import 'package:fit_pal/DataBaseServices/calorie.dart';
 import 'package:fit_pal/DataFood/food.dart';
 import 'package:fit_pal/models/excercises.dart';
 import 'package:fit_pal/models/food.dart';
 import 'package:fit_pal/models/food_card.dart';
 import 'package:fit_pal/models/workout_home_card.dart';
+import 'package:fit_pal/pages/preview_food.dart';
 import 'package:fit_pal/pages/water_card.dart';
 import 'package:fit_pal/utility/GlassMorphism.dart';
 import 'package:flutter/cupertino.dart';
@@ -23,6 +26,7 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:fit_pal/DataWorkout/assignworkout.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 // import 'package:health/health.dart';
+import 'package:intl/intl.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -164,6 +168,42 @@ class _HomeState extends State<Home> {
     fetchUserData();
     getCurrentWeekXP(uid);
     callme();
+    feedToModel();
+    calori();
+  }
+
+  Future<void> feedToModel() async {
+    String baseUrl, url = '', query = '';
+    baseUrl = 'http://10.81.16.240:5000/api2?';
+    // if (Platform.isAndroid) {
+    //   baseUrl = 'http://10.0.2.2:5000/api2?';
+    // } else {
+    //   baseUrl = 'http://localhost:5000/api2?';
+    // }
+    var args2 = [
+      'gender',
+      'age',
+      'height',
+      'weight',
+      'duration',
+      'heart_rate',
+      'body_temp'
+    ];
+    List<dynamic> seg2 = [0, 18, 170.5, 60, 24, 100.5, 38.3];
+    for (int i = 0; i < seg2.length; i++) {
+      if (i > 0) query += '&';
+      query += '${args2[i]}=${Uri.encodeComponent(seg2[i].toString())}';
+    }
+    setState(() {
+      url = baseUrl + query;
+    });
+    var data = await fetchdata(url);
+    var decoded = jsonDecode(data);
+    int caloriesBurnt = decoded['calories_burned'];
+    CalorieService calorieService =
+        CalorieService(uid: FirebaseAuth.instance.currentUser!.uid);
+    calorieService.addCaloriesForCurrentDate(caloriesBurnt);
+    print(caloriesBurnt);
   }
 
   void retrieveUID() {
@@ -250,6 +290,36 @@ class _HomeState extends State<Home> {
     print('++');
   }
 
+  int calorie = 0;
+
+  void calories(String FormattedDate) async {
+    CalorieService calorieService =
+        CalorieService(uid: FirebaseAuth.instance.currentUser!.uid);
+    Map<String, int>? caloriesMap =
+        await calorieService.getCaloriesForDate(FormattedDate);
+
+    if (caloriesMap != null) {
+      calorie = caloriesMap['caloriesToBurn']!;
+    } else {
+      calorie = 0;
+    }
+  }
+
+  void calori() async {
+    DateTime date = DateTime.now();
+    String FormattedDate = DateFormat('yyyyMMdd').format(date);
+    CalorieService calorieService =
+        CalorieService(uid: FirebaseAuth.instance.currentUser!.uid);
+    Map<String, int>? caloriesMap =
+        await calorieService.getCaloriesForDate(FormattedDate);
+
+    if (caloriesMap != null) {
+      calorie = caloriesMap['caloriesToBurn']!;
+    } else {
+      calorie = 0;
+    }
+  }
+
   final PageController _pages1 = PageController();
   final TextStyle _slider = TextStyle(
       fontFamily: 'Roboto', fontSize: 15, fontWeight: FontWeight.w500);
@@ -283,7 +353,9 @@ class _HomeState extends State<Home> {
                 selectionColor: Colors.black,
                 selectedTextColor: Colors.white,
                 onDateChange: (date) {
-                  // New date selected
+                  String formattedDate = DateFormat('yyyyMMdd').format(date);
+                  calories(formattedDate);
+                  print(formattedDate);
                   setState(() {
                     // _selectedValue = date;
                   });
@@ -306,7 +378,7 @@ class _HomeState extends State<Home> {
                       child: Column(
                         children: [
                           Text(
-                            '1286',
+                            calorie.toString(),
                             style: TextStyle(
                               height: 0.8,
                               // fontFamily: 'Bebas_Neue',

@@ -1,6 +1,10 @@
 import 'dart:io';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:fit_pal/DataBaseServices/Intialziedata.dart';
 import 'package:fit_pal/DataBaseServices/useruid.dart';
+import 'package:fit_pal/Profileimage.dart';
+import 'package:fit_pal/pages/profile_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
@@ -15,29 +19,77 @@ class EditProfile extends StatefulWidget {
 class _EditProfileState extends State<EditProfile> {
   File? _image;
   final ImagePicker _picker = ImagePicker();
-  Future getImage() async {
-    await _picker.pickImage(source: ImageSource.gallery).then((value) {
-      setState(() {
-        if (value != null) {
-          _image = File(value.path);
-        } else {
-          print('No image selected');
-        }
-      });
-    });
+  Future<void> getImage() async {
+    final XFile? imageFile =
+        await _picker.pickImage(source: ImageSource.gallery);
+
+    if (imageFile != null) {
+      try {
+        setState(() {
+          _image = File(imageFile.path);
+        });
+
+        String filename = DateTime.now().millisecondsSinceEpoch.toString();
+        Reference referenceRoot = FirebaseStorage.instance.ref();
+        Reference referenceDirImages = referenceRoot.child('Profile');
+        Reference referenceImageToUpload = referenceDirImages.child(filename);
+
+        await referenceImageToUpload.putFile(
+          File(imageFile.path),
+          SettableMetadata(contentType: 'image/jpeg'),
+        );
+
+        String imageUrl = await referenceImageToUpload.getDownloadURL();
+        print(imageUrl);
+        Profilepage profilePage =
+            Profilepage(uid: FirebaseAuth.instance.currentUser!.uid);
+        await profilePage.setProfileLink(imageUrl);
+
+        print('Image uploaded successfully: $imageUrl');
+      } catch (e) {
+        print('Error uploading image: $e');
+      }
+    } else {
+      print('No image selected');
+    }
+
     Navigator.pop(context);
   }
 
-  Future imageFromCamera() async {
-    await _picker.pickImage(source: ImageSource.camera).then((value) {
-      setState(() {
-        if (value != null) {
-          _image = File(value.path);
-        } else {
-          print('No image captured');
-        }
-      });
-    });
+  Future<void> imageFromCamera() async {
+    final XFile? imageFile =
+        await _picker.pickImage(source: ImageSource.camera);
+
+    if (imageFile != null) {
+      try {
+        setState(() {
+          _image = File(imageFile.path);
+        });
+
+        String filename = DateTime.now().millisecondsSinceEpoch.toString();
+        Reference referenceRoot = FirebaseStorage.instance.ref();
+        Reference referenceDirImages = referenceRoot.child('Profile');
+        Reference referenceImageToUpload = referenceDirImages.child(filename);
+
+        await referenceImageToUpload.putFile(
+          File(imageFile.path),
+          SettableMetadata(contentType: 'image/jpeg'),
+        );
+
+        String imageUrl = await referenceImageToUpload.getDownloadURL();
+        print(imageUrl);
+        Profilepage profilePage =
+            Profilepage(uid: FirebaseAuth.instance.currentUser!.uid);
+        await profilePage.setProfileLink(imageUrl);
+
+        print('Image uploaded successfully: $imageUrl');
+      } catch (e) {
+        print('Error uploading image: $e');
+      }
+    } else {
+      print('No image captured');
+    }
+
     Navigator.pop(context);
   }
 
@@ -56,7 +108,8 @@ class _EditProfileState extends State<EditProfile> {
     // Update name
     if (newName.isNotEmpty) {
       // Update name in Firestore
-      Dataservices dataservices = Dataservices(uid: AuthService.getUID()!);
+      Dataservices dataservices =
+          Dataservices(uid: FirebaseAuth.instance.currentUser!.uid);
       setState(() {
         dataservices.updateName(newName);
       });

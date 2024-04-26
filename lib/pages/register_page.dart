@@ -5,6 +5,7 @@ import 'package:fit_pal/Controllers/initializationController.dart';
 import 'package:fit_pal/DataBaseServices/Intialziedata.dart';
 import 'package:fit_pal/DataBaseServices/useruid.dart';
 import 'package:fit_pal/DataFriends/getfriends.dart';
+import 'package:fit_pal/Profileimage.dart';
 import 'package:fit_pal/loadingPages/loadingpage1.dart';
 import 'package:fit_pal/pages/introPages/intro_page_2.dart';
 import 'package:flutter/cupertino.dart';
@@ -198,6 +199,10 @@ class _RegisterPageState extends State<RegisterPage> {
         dataservices.StreakandWater();
         dataservices.initializeUserXPForConsecutiveDays();
         dataservices.initializeStreaks();
+        Profilepage profilepage =
+            Profilepage(uid: FirebaseAuth.instance.currentUser!.uid);
+        profilepage.setProfileLink(
+            "https://i.pinimg.com/564x/e9/51/25/e951250f7f452c8e278d12ac073b9b5b.jpg");
       }
     }
     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {

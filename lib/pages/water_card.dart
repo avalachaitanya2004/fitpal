@@ -282,7 +282,9 @@ class _WaterPageState extends State<WaterPage> {
         // Check if the 'size' field exists and is not null
         if (userData.containsKey('quantity') && userData['quantity'] != null) {
           setState(() {
-            size = userData['quantity'];
+            print('randioo');
+            size = userData['quantity'] as int;
+            print('randioiiiii');
           });
         }
       } else {
@@ -322,6 +324,9 @@ class _WaterPageState extends State<WaterPage> {
                             onTap: () {
                               setState(() {
                                 completed = completed - 1;
+                                Dataservices dataservices =
+                                    Dataservices(uid: uid);
+                                dataservices.updateComplete(completed);
                               });
                             },
                             child: Icon(Icons.remove),
@@ -366,6 +371,9 @@ class _WaterPageState extends State<WaterPage> {
                             onTap: () {
                               setState(() {
                                 completed = completed + 1;
+                                Dataservices dataservices =
+                                    Dataservices(uid: uid);
+                                dataservices.updateComplete(completed);
                               });
                             },
                             child: Icon(Icons.add),
@@ -474,8 +482,6 @@ class _WaterPageState extends State<WaterPage> {
                         Dataservices dataservices = Dataservices(uid: uid);
                         dataservices.updateQuantity(size);
                         dataservices.updateTarget(target);
-                        dataservices.updateComplete(completed);
-
                         //run to home page
                       },
                       child: Container(

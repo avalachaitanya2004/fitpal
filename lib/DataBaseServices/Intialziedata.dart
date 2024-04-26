@@ -7,7 +7,7 @@ class Dataservices {
 
   Future<void> initializeWater({
     required int target,
-    required double quantity,
+    required int quantity,
   }) async {
     try {
       CollectionReference dataCollection =

@@ -2,6 +2,7 @@ import 'package:bounce_tap/bounce_tap.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fit_pal/DataBaseServices/Intialziedata.dart';
 import 'package:fit_pal/DataBaseServices/useruid.dart';
+import 'package:fit_pal/Profileimage.dart';
 import 'package:fit_pal/pages/edit_profile.dart';
 import 'package:fit_pal/pages/friend_search_page.dart';
 import 'package:fit_pal/pages/pre_login.dart';
@@ -24,7 +25,7 @@ class _ProfilePageState extends State<ProfilePage> {
   double weight = 0.0;
   int height = 0;
   bool nameload = false;
-
+  String link = '';
   @override
   void initState() {
     super.initState();
@@ -45,14 +46,23 @@ class _ProfilePageState extends State<ProfilePage> {
     } else {
       print("uid is null");
     }
+    Getlink();
+  }
+
+  void Getlink() async {
+    Profilepage profilepage =
+        Profilepage(uid: FirebaseAuth.instance.currentUser!.uid);
+    String? hii = await profilepage.getProfileLink();
+    if (hii != null) {
+      link = hii;
+    }
   }
 
   Widget buildHeader() {
     return Column(
       children: [
         CircleAvatar(
-          backgroundImage: NetworkImage(
-              "https://i.pinimg.com/564x/e9/51/25/e951250f7f452c8e278d12ac073b9b5b.jpg"),
+          backgroundImage: NetworkImage(link),
           radius: 60,
         ),
         const SizedBox(height: 20),
@@ -144,8 +154,8 @@ class _ProfilePageState extends State<ProfilePage> {
       crossAxisSpacing: 10,
       mainAxisSpacing: 10,
       children: [
-        buildStatsCard('Total XP', '9090', Icons.bolt, Colors.amber),
-        buildStatsCard('Streak', '177', CupertinoIcons.flame, Colors.red),
+        buildStatsCard('Total XP', '230', Icons.bolt, Colors.amber),
+        buildStatsCard('Streak', '12', CupertinoIcons.flame, Colors.red),
         buildStatsCard(
             'Weight', weight.toString(), Icons.settings, Colors.blue),
         buildStatsCard('Height', height.toString(), Icons.update, Colors.green),

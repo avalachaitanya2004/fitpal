@@ -5,26 +5,18 @@ class CalorieService {
 
   CalorieService({required this.uid});
 
-  final CollectionReference userCaloriesCollection =
-      FirebaseFirestore.instance.collection('calories');
-
-  Future<void> addCaloriesForDate(
-      DateTime date, int calories, int caloriesToBurn) async {
+  Future<void> addCaloriesForCurrentDate(int caloriesToBurn) async {
     try {
-      //yyMMdd
+      DateTime currentDate = DateTime.now();
       String formattedDate =
-          "${date.year}${date.month.toString().padLeft(2, '0')}${date.day.toString().padLeft(2, '0')}";
+          "${currentDate.year}${currentDate.month.toString().padLeft(2, '0')}${currentDate.day.toString().padLeft(2, '0')}";
 
-      DocumentReference userDocument = userCaloriesCollection.doc(uid);
+      // Get a reference to the user's document
+      DocumentReference userDocument =
+          FirebaseFirestore.instance.collection('UserCalories').doc(uid);
 
-      bool documentExists = await userDocument.get().then((doc) => doc.exists);
-
-      if (!documentExists) {
-        await userDocument.set({});
-      }
-
+      // Add the calories for the current date
       await userDocument.collection('dates').doc(formattedDate).set({
-        'calories': calories,
         'caloriesToBurn': caloriesToBurn,
       });
 
@@ -34,19 +26,58 @@ class CalorieService {
     }
   }
 
-  Future<Map<String, int>?> getCaloriesForDate(DateTime date) async {
+  Future<void> decrementCaloriesForCurrentDate(int caloriesToDecrement) async {
     try {
+      DateTime currentDate = DateTime.now();
       String formattedDate =
-          "${date.year}${date.month.toString().padLeft(2, '0')}${date.day.toString().padLeft(2, '0')}";
+          "${currentDate.year}${currentDate.month.toString().padLeft(2, '0')}${currentDate.day.toString().padLeft(2, '0')}";
 
-      DocumentReference userDocument = userCaloriesCollection.doc(uid);
-      DocumentSnapshot dateSnapshot =
+      // Get a reference to the user's document
+      DocumentReference userDocument =
+          FirebaseFirestore.instance.collection('UserCalories').doc(uid);
+
+      // Get the current calories document for the current date
+      DocumentSnapshot<Map<String, dynamic>> snapshot =
           await userDocument.collection('dates').doc(formattedDate).get();
-      if (dateSnapshot.exists) {
-        int calories = dateSnapshot.get('calories') as int;
-        int caloriesToBurn = dateSnapshot.get('caloriesToBurn') as int;
-        return {'calories': calories, 'caloriesToBurn': caloriesToBurn};
+
+      // Check if the document exists
+      if (snapshot.exists) {
+        int currentCaloriesToBurn = snapshot.data()?['caloriesToBurn'] ?? 0;
+        int updatedCaloriesToBurn =
+            (currentCaloriesToBurn - caloriesToDecrement)
+                .clamp(0, double.infinity)
+                .toInt();
+
+        // Update the calories for the current date
+        await userDocument.collection('dates').doc(formattedDate).update({
+          'caloriesToBurn': updatedCaloriesToBurn,
+        });
+
+        print('Calories decremented successfully for $formattedDate');
       } else {
+        print('No calories document found for $formattedDate');
+      }
+    } catch (e) {
+      print('Failed to decrement calories: $e');
+    }
+  }
+
+  Future<Map<String, int>?> getCaloriesForDate(String Date) async {
+    try {
+      // Get a reference to the user's document
+      DocumentReference userDocument =
+          FirebaseFirestore.instance.collection('UserCalories').doc(uid);
+
+      // Get the document snapshot for the specified date
+      DocumentSnapshot<Map<String, dynamic>> dateSnapshot =
+          await userDocument.collection('dates').doc(Date).get();
+
+      // Check if the document exists
+      if (dateSnapshot.exists) {
+        int caloriesToBurn = dateSnapshot.data()?['caloriesToBurn'] ?? 0;
+        return {'caloriesToBurn': caloriesToBurn};
+      } else {
+        print('No calories document found for');
         return null;
       }
     } catch (e) {

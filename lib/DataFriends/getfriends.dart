@@ -81,12 +81,37 @@ class UserData {
           // If the UID is not the current user's UID
           Map<String, dynamic> userData = {
             'uid': otherUID,
-            'statusMap': {'status': 'U'}
-            // Initialize status to 'U' for all users
+            'statusMap': {
+              'status': 'U'
+            } // Initialize status to 'U' for all users
           };
           userList.add(userData);
         }
       });
+
+      // Get the existing status of users from Firestore
+      DocumentSnapshot<Map<String, dynamic>> userDocument =
+          await FirebaseFirestore.instance
+              .collection('people')
+              .doc(currentUserUID)
+              .get();
+
+      if (userDocument.exists) {
+        // If the document exists, check and update status if necessary
+        List<Map<String, dynamic>> existingUserList =
+            List<Map<String, dynamic>>.from(
+                userDocument.data()!['users'] ?? []);
+
+        // Iterate through existing users and update status if it's 'F'
+        existingUserList.forEach((user) {
+          if (user['statusMap']['status'] == 'F') {
+            // If the status is 'F', keep it as 'F'
+            userList.firstWhere(
+                    (newUser) => newUser['uid'] == user['uid'])['statusMap']
+                ['status'] = 'F';
+          }
+        });
+      }
 
       // Add userList to Firestore under collection 'people' with document ID as currentUserUID
       await FirebaseFirestore.instance
@@ -100,11 +125,14 @@ class UserData {
     }
   }
 
-  Future<void> updateFriendStatus(String currentid, String friendUID) async {
+  Future<void> updateFriendStatus(String currentUid, String friendUid) async {
     try {
       // Get the document of the current user from Firestore
       DocumentSnapshot<Map<String, dynamic>> currentUserDoc =
-          await FirebaseFirestore.instance.collection('people').doc(uid).get();
+          await FirebaseFirestore.instance
+              .collection('people')
+              .doc(currentUid)
+              .get();
 
       if (currentUserDoc.exists) {
         // Get the 'users' field from the current user's document
@@ -112,7 +140,7 @@ class UserData {
 
         // Find the index of the friend in the 'usersList'
         int friendIndex =
-            usersList.indexWhere((userData) => userData['uid'] == friendUID);
+            usersList.indexWhere((userData) => userData['uid'] == friendUid);
 
         if (friendIndex != -1) {
           // Update the status of the friend to 'F' in the statusMap
@@ -122,17 +150,50 @@ class UserData {
           // Update the Firestore document with the modified 'users' list
           await FirebaseFirestore.instance
               .collection('people')
-              .doc(uid)
+              .doc(currentUid)
               .update({
             'users': usersList,
           });
 
           print('Friend status updated successfully');
+
+          // Now update the friend's document with the current user's status
+          DocumentSnapshot<Map<String, dynamic>> friendDoc =
+              await FirebaseFirestore.instance
+                  .collection('people')
+                  .doc(friendUid)
+                  .get();
+
+          if (friendDoc.exists) {
+            List<dynamic> friendUsersList = friendDoc.data()!['users'];
+            int currentUserIndex = friendUsersList
+                .indexWhere((userData) => userData['uid'] == currentUid);
+
+            if (currentUserIndex != -1) {
+              Map<String, dynamic> currentUserStatusMap =
+                  friendUsersList[currentUserIndex]['statusMap'];
+              currentUserStatusMap['status'] = 'F';
+
+              // Update the Firestore document with the modified 'users' list for the friend
+              await FirebaseFirestore.instance
+                  .collection('people')
+                  .doc(friendUid)
+                  .update({
+                'users': friendUsersList,
+              });
+
+              print('Friend\'s status updated successfully');
+            } else {
+              print('Current user not found in the friend\'s list');
+            }
+          } else {
+            print('Friend document not found for UID: $friendUid');
+          }
         } else {
-          print('Friend with UID $friendUID not found in the user\'s list');
+          print('Friend with UID $friendUid not found in the user\'s list');
         }
       } else {
-        print('User document not found for UID: $uid');
+        print('User document not found for UID: $currentUid');
       }
     } catch (error) {
       print('Error updating friend status: $error');

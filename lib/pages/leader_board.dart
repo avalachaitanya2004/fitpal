@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fit_pal/DataBaseServices/Intialziedata.dart';
 import 'package:fit_pal/DataFriends/getfriends.dart';
+import 'package:fit_pal/Profileimage.dart';
 import 'package:fit_pal/pages/friend_search_page.dart';
 import 'package:flutter/material.dart';
 
@@ -12,8 +13,28 @@ class LeaderBoard extends StatefulWidget {
   State<LeaderBoard> createState() => _LeaderBoardState();
 }
 
+class CustomUser2 {
+  final String name;
+  final String email;
+  final int XP;
+  final int streak;
+  final String imageUrl;
+
+  CustomUser2({
+    required this.name,
+    required this.email,
+    required this.XP,
+    required this.streak,
+    required this.imageUrl,
+  });
+}
+
 class _LeaderBoardState extends State<LeaderBoard> {
+  String name = '';
+  String email = '';
   int XP = 0;
+  int streak = 0;
+  String imageUrl = '';
   Future<int> getCurrentWeekXP() async {
     // Get the start and end dates for the current week
     FirebaseAuth auth = FirebaseAuth.instance;
@@ -66,9 +87,102 @@ class _LeaderBoardState extends State<LeaderBoard> {
     return s;
   }
 
+  List<String> foundFriends = [];
+
+  List<CustomUser2> usersfriends = [];
+
+  // Future<int> getTotalXP(String userId) async {
+  //   // Get the start and end dates for the current week
+  //   final firestoreInstance = FirebaseFirestore.instance;
+  //   DateTime now = DateTime.now();
+  //   DateTime startDate = DateTime(now.year, now.month,
+  //       now.day - now.weekday + 1); // Start date of the current week (Monday)
+  //   DateTime endDate = startDate
+  //       .add(Duration(days: 6)); // End date of the current week (Sunday)
+
+  //   // Query Firestore for XP within the current week's range
+  //   DocumentSnapshot<Map<String, dynamic>> documentSnapshot =
+  //       await firestoreInstance.collection('XP').doc(userId).get();
+
+  //   // Initialize a map to store XP for each date in the current week
+  //   Map<String, int> currentWeekXP = {};
+
+  //   // Extract data from the document snapshot
+  //   Map<String, dynamic> data = documentSnapshot.data()!;
+  //   int sum = 0;
+  //   // Iterate over the data
+  //   data.forEach((key, value) {
+  //     // Check if the date is within the current week's range
+  //     sum += value as int;
+  //     currentWeekXP[key] = value;
+  //   });
+  //   int s = 0;
+
+  //   DateTime date2 = DateTime.now();
+  //   String dateString = date2.toIso8601String().substring(0, 10);
+  //   currentWeekXP.forEach((date, xp) {
+  //     if (dateString == date) {
+  //       print("yes");
+  //       setState(() {
+  //         // todayXP = xp;
+  //       });
+  //     }
+  //     s += xp;
+  //   });
+  //   setState(() {
+  //     // weekXP = s;
+  //   });
+
+  //   return sum;
+  // }
+
+  Future<void> loadUserData() async {
+    User? user = FirebaseAuth.instance.currentUser;
+    String uid = user!.uid;
+    UserData userData = UserData(uid: uid, statusMap: {});
+    foundFriends = await userData.getUserIdsWithStatusF();
+    for (int i = 0; i < foundFriends.length; i++) {
+      String uid1 = foundFriends[i];
+      Profilepage profilepage = Profilepage(uid: uid1);
+      String? link = await profilepage.getProfileLink();
+      Dataservices dataservices = Dataservices(uid: uid1);
+      Map<String, dynamic> userinfo1 = await dataservices.getUserInfo();
+      // int XP1 = await getTotalXP(uid1);
+      usersfriends.add(
+        CustomUser2(
+            name: userinfo1['name'],
+            email: userinfo1['email'],
+            XP: (7 * i + 5) * 10,
+            streak: 5 + i,
+            imageUrl: link.toString()),
+      );
+    }
+    Profilepage profilepage = Profilepage(uid: uid);
+    String? link = await profilepage.getProfileLink();
+    Dataservices dataservices = Dataservices(uid: uid);
+    Map<String, dynamic> userinfo1 = await dataservices.getUserInfo();
+    name = userinfo1['name'];
+    email = userinfo1['email'];
+    XP = 100;
+    streak = 15;
+    imageUrl = link.toString();
+
+    usersfriends.add(
+      CustomUser2(
+          name: name, email: email, XP: XP, streak: streak, imageUrl: imageUrl),
+    );
+
+    usersfriends.sort();
+    print(usersfriends);
+    print(usersfriends.length);
+    print('lanjodka');
+    setState(() {});
+  }
+
   @override
   void initState() {
     getCurrentWeekXP();
+    loadUserData();
     super.initState();
   }
 
@@ -102,13 +216,12 @@ class _LeaderBoardState extends State<LeaderBoard> {
               child: Column(
                 children: [
                   CircleAvatar(
-                    backgroundImage: NetworkImage(
-                        "https://i.pinimg.com/564x/e9/51/25/e951250f7f452c8e278d12ac073b9b5b.jpg"),
+                    backgroundImage: NetworkImage(imageUrl),
                     radius: 55,
                   ),
                   const SizedBox(height: 10),
-                  const Text(
-                    "Nandu",
+                  Text(
+                    name,
                     style: TextStyle(
                         fontSize: 22,
                         color: Colors.white,
@@ -124,15 +237,56 @@ class _LeaderBoardState extends State<LeaderBoard> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      ProfileStat(text: "${XP}", label: "XP"),
-                      ProfileStat(text: "35", label: "Rank"),
+                      ProfileStat(text: XP.toString(), label: "XP"),
+                      ProfileStat(
+                          text: (usersfriends.indexWhere(
+                                      (element) => element.name == name) +
+                                  1)
+                              .toString(),
+                          label: "Rank"),
                     ],
                   )
                 ],
               ),
             ),
             const SizedBox(height: 5),
-            ExpandedListView(),
+            Container(
+              margin: const EdgeInsets.all(20),
+              child: ListView.separated(
+                  physics:
+                      NeverScrollableScrollPhysics(), // Important for nested scrolling
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) {
+                    return ListTile(
+                      title: Row(
+                        children: [
+                          CircleAvatar(
+                            backgroundImage:
+                                NetworkImage(usersfriends[index].imageUrl),
+                          ),
+                          const SizedBox(width: 10),
+                          Text(usersfriends[index].name,
+                              style: TextStyle(fontSize: 17))
+                        ],
+                      ),
+                      leading: Text(
+                        "${index + 1}",
+                        style: const TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 18),
+                      ),
+                      trailing: Text(usersfriends[index].XP.toString(),
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 17)),
+                    );
+                  },
+                  separatorBuilder: (context, index) => const Divider(
+                        thickness: 1,
+                        color: Colors.black,
+                        indent: 10,
+                        endIndent: 10,
+                      ),
+                  itemCount: usersfriends.length),
+            ),
           ],
         ),
       ),
@@ -165,132 +319,6 @@ class ProfileStat extends StatelessWidget {
                 fontWeight: FontWeight.bold,
                 color: Colors.white)),
       ],
-    );
-  }
-}
-
-class ExpandedListView extends StatefulWidget {
-  @override
-  State<ExpandedListView> createState() => _ExpandedListViewState();
-}
-
-class _ExpandedListViewState extends State<ExpandedListView> {
-  List<String> foundFriends = [];
-
-  List<CustomUser> usersfriends = [];
-
-  Future<int> getTotalXP(String userId) async {
-    // Get the start and end dates for the current week
-    final firestoreInstance = FirebaseFirestore.instance;
-    DateTime now = DateTime.now();
-    DateTime startDate = DateTime(now.year, now.month,
-        now.day - now.weekday + 1); // Start date of the current week (Monday)
-    DateTime endDate = startDate
-        .add(Duration(days: 6)); // End date of the current week (Sunday)
-
-    // Query Firestore for XP within the current week's range
-    DocumentSnapshot<Map<String, dynamic>> documentSnapshot =
-        await firestoreInstance.collection('XP').doc(userId).get();
-
-    // Initialize a map to store XP for each date in the current week
-    Map<String, int> currentWeekXP = {};
-
-    // Extract data from the document snapshot
-    Map<String, dynamic> data = documentSnapshot.data()!;
-    int sum = 0;
-    // Iterate over the data
-    data.forEach((key, value) {
-      // Check if the date is within the current week's range
-      sum += value as int;
-      currentWeekXP[key] = value;
-    });
-    int s = 0;
-
-    DateTime date2 = DateTime.now();
-    String dateString = date2.toIso8601String().substring(0, 10);
-    currentWeekXP.forEach((date, xp) {
-      if (dateString == date) {
-        print("yes");
-        setState(() {
-          // todayXP = xp;
-        });
-      }
-      s += xp;
-    });
-    setState(() {
-      // weekXP = s;
-    });
-
-    return sum;
-  }
-
-  Future<void> loadUserData() async {
-    User? user = FirebaseAuth.instance.currentUser;
-    String uid = user!.uid;
-    UserData userData = UserData(uid: uid, statusMap: {});
-    // names = await userData.getUserIdsWithStatusU();
-    // for (int i = 0; i < names.length; i++) {
-    //   String uid1 = names[i];
-    //   Dataservices dataservices = Dataservices(uid: uid1);
-    //   Map<String, dynamic> userinfo1 = await dataservices.getUserInfo();
-    //   int XP1 = await getTotalXP(uid1);
-    //   notusersfriends.add(CustomUser(
-    //       name: userinfo1['name'],
-    //       email: userinfo1['email'],
-    //       XP: XP1,
-    //       streak: 5));
-    // }
-    foundFriends = await userData.getUserIdsWithStatusF();
-    for (int i = 0; i < foundFriends.length; i++) {
-      String uid1 = foundFriends[i];
-      Dataservices dataservices = Dataservices(uid: uid1);
-      Map<String, dynamic> userinfo1 = await dataservices.getUserInfo();
-      int XP1 = await getTotalXP(uid1);
-      usersfriends.add(CustomUser(
-          name: userinfo1['name'],
-          email: userinfo1['email'],
-          XP: XP1,
-          streak: 5));
-    }
-    setState(() {});
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.all(20),
-      child: ListView.separated(
-          physics:
-              NeverScrollableScrollPhysics(), // Important for nested scrolling
-          shrinkWrap: true,
-          itemBuilder: (context, index) {
-            return ListTile(
-              title: Row(
-                children: [
-                  const CircleAvatar(
-                    backgroundImage: NetworkImage(
-                        "https://i.pinimg.com/564x/e9/51/25/e951250f7f452c8e278d12ac073b9b5b.jpg"),
-                  ),
-                  const SizedBox(width: 10),
-                  Text("Nandu ", style: TextStyle(fontSize: 17))
-                ],
-              ),
-              leading: Text(
-                "${index + 1}",
-                style:
-                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-              ),
-              trailing: const Text("1300XP",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17)),
-            );
-          },
-          separatorBuilder: (context, index) => const Divider(
-                thickness: 1,
-                color: Colors.black,
-                indent: 10,
-                endIndent: 10,
-              ),
-          itemCount: 16),
     );
   }
 }
