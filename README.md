@@ -154,14 +154,14 @@ Ensure all steps are followed carefully to successfully run the Voyager project 
 
 
 ## Authors
-- [**Avala Chaitanya Lakshmi Prasad Yadav**](https://github.com/avalachaitanya2004')
+- [**Avala Chaitanya Lakshmi Prasad Yadav**](https://github.com/avalachaitanya2004)
 - [**Bezawada Sri Sai Anurag**](https://github.com/Anurag154504)
-- [**Dharavath Madhu**](https://github.com/Madhudharavath')
-- [**Gavireddy Diimppul**](https://github.com/diimppulg')
+- [**Dharavath Madhu**](https://github.com/Madhudharavath)
+- [**Gavireddy Diimppul**](https://github.com/diimppulg)
 - [**Mudasani Rushikesh**](https://github.com/Iknowimalone)
-- [**Ogireddy Sree Sudeep Reddy**](https://github.com/sudeepreddy999')
-- [**Perumalpalli Aditya**](https://github.com/Aditya0407')
-- [**Seemakurthi Nandan Sri Siva Ramakrishna**](https://github.com/Nandu-25')
+- [**Ogireddy Sree Sudeep Reddy**](https://github.com/sudeepreddy999)
+- [**Perumalpalli Aditya**](https://github.com/Aditya0407)
+- [**Seemakurthi Nandan Sri Siva Ramakrishna**](https://github.com/Nandu-25)
 ## FAQ
 **Q: How do I sign up or log in to the app?**
 
